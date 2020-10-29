@@ -1,0 +1,511 @@
+\documentclass[a4paper,12pt]{article}
+
+
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsthm,amsmath,amsfonts,amssymb,amsbsy}
+\usepackage{cite,graphicx,color,euscript,epstopdf,url}
+\usepackage{setspace}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{cleveref}
+\usepackage{autonum}
+
+
+\newcommand{\crefrangeconjunction}{--}
+
+
+\crefformat{equation}{(#2#1#3)}
+\crefrangeformat{equation}{(#3#1#4)--(#5#2#6)}
+
+
+\newtheorem{assumption}{Assumption}[section]
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proposition}{Proposition}[section]
+\newtheorem{corollary}{Corollary}[section]
+\newtheorem{remark}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{algorithm}{Algorithm}[section]
+\newtheorem{conjecture}{Conjecture}[section]
+
+
+
+\topmargin=0mm
+\oddsidemargin=0mm
+\headsep=0mm
+\headheight=0mm
+\textwidth=150mm
+\textheight=215mm
+
+
+
+\makeatletter
+\renewcommand{\@biblabel}[1]{#1.}
+\makeatother
+
+
+
+\newcounter{count}
+
+
+
+
+\begin{document}
+
+
+
+\title{Numerical solution of a first-order Hamilton--Jacobi equation for dynamic equilibrium of pathogen cohorts}
+
+
+\author{Steven Glasford \\ Advisor: Dr.~Ivan Yegorov}
+
+
+\date{MATH~491, Fall~2020}
+
+
+
+\maketitle
+
+
+
+\section{Introduction}
+
+In this report, we study a zero-sum feedback game for a system of nonlinear ordinary differential equations describing
+one-seasonal dynamics of two biotrophic fungal cohorts within a common host plant. The cohorts can be understood as
+resident and mutant populations. The invasion functional takes the form of the difference between the two marginal fitness
+criteria and represents the cost in the definition of the value of the differential game. A general dynamic game approach
+of \cite{YegorovGrognardMailleretHalkettBernhard2019} is exploited. The Cauchy problem for the resulting first-order
+Hamilton--Jacobi partial differential equation (HJ PDE) is numerically solved via a finite difference method using
+the ROC-HJ software~\cite{ROCHJ2019}. Interpretations of the obtained numerical simulation results are also
+provided.
+
+
+\section{Statement of the model}
+
+Consider one-seasonal dynamics of two biotrophic fungal cohorts within one host plant. Let us refer to them as to
+cohorts~$ 1 $ and $ 2 $. For cohort~$ i $, let $ n_i $ be the lesion density, which is the number of mycelia per unit area of
+the host. For simplicity, $ n_1 $ and $ n_2 $ are assumed to be constant during the entire infection period within the season,
+which means that new infectious agents do not penetrate into the host during the analyzed period. Even though this is typically
+a strong restriction for infections in nature, it still allows for drawing significant conclusions with relevant biological
+interpretations and also applies to experimental infection protocols.
+
+Denote the average size of a mycelium in cohort~$ i $ by $ M_i $. Let $ S_i $ be the average quantity of spores produced by a mycelium
+in cohort~$ i $. The infection age~$ t $ within the season is interpreted as a time variable. Note that the mycelial sizes~$ M_1 $ and
+$ M_2 $ can be measured in terms of equivalent amounts of infecting spores (for instance, if a mycelium appears from one spore at
+the beginning of the infection period, the initial mycelial size can be set as one equivalent of an infecting spore or simply as one
+spore).
+
+The nutrient flux uptaken by cohort~$ i $ is determined by a function $ f_i = f_i(M_1, M_2) $ and allocated between two
+different pathogen activities such as within-host multiplication (mycelial growth) and production of asexual spores.
+For brevity, we do not explicitly show the dependence on the constant parameters $ n_1, n_2 $ when writing $ f_i = f_i(M_1, M_2) $,
+$ i = 1,2 $. Let $ u_i = u_i(t) $ be a related resource allocation (control) function taking values between zero and one. Suppose that
+the whole flux goes to mycelial growth when $ u_i(t) = 0 $ and to spore production when $ u_i(t) = 1 $, while, for $ 0 < u_i(t) < 1 $,
+there is an intermediate configuration.
+
+Let $ g = g(M) $ be the rate of mycelial decay for both cohorts. Assume also that spores are produced with a constant yield
+$ \delta > 0 $ as compared to mycelial growth.
+
+The time span of the infections within the season is a fixed interval~$ [0, T] $.
+
+The following dynamic model can thus be formulated \cite{YegorovGrognardMailleretHalkettBernhard2019}:
+\begin{equation}
+\left\{ \begin{aligned}
+& \frac{\mathrm{d} M_1(t)}{\mathrm{d} t} \:\: = \:\: (1 - u_1(t)) \, f_1(M_1(t), M_2(t)) \: - \: g(M_1(t)), \\
+& \frac{\mathrm{d} M_2(t)}{\mathrm{d} t} \:\: = \:\: (1 - u_2(t)) \, f_2(M_1(t), M_2(t)) \: - \: g(M_2(t)), \\
+& \frac{\mathrm{d} S_1(t)}{\mathrm{d} t} \:\: = \:\: \delta \, u_1(t) \, f_1(M_1(t), M_2(t)), \\
+& \frac{\mathrm{d} S_2(t)}{\mathrm{d} t} \:\: = \:\: \delta \, u_2(t) \, f_2(M_1(t), M_2(t)), \\
+& M_1(0) = M_1^0, \quad M_2(0) = M_2^0, \quad S_1(0) = S_1^0, \quad S_2(0) = S_2^0, \\
+& 0 \leqslant u_1(t) \leqslant 1, \quad 0 \leqslant u_2(t) \leqslant 1, \quad t \in [0, T].
+\end{aligned} \right.  \label{1}
+\end{equation}
+Since the right-hand sides of the third and fourth equations in (\ref{1}) do not contain $ S_1 $ and $ S_2 $, one does not need
+to treat $ S_1 $ and $ S_2 $ explicitly, so that $ M_1 $ and $ M_2 $ can be considered as the only state variables.
+
+The reproductive success of cohort~$ i $ is determined by
+\begin{equation}
+\int\limits_0^T \frac{\mathrm{d} S_i(t)}{\mathrm{d} t} \, e^{-\mu t} \: dt \:\: = \:\: \delta \,
+\int\limits_0^T u_i(t) \, f_i(M_1(t), M_2(t)) \, e^{-\mu t} \: dt,  \label{3_1}
+\end{equation}
+where $ e^{-\mu t} $ describes exponential extinction of the infections, and $ \mu $ is a positive constant. Since $ \delta $ is
+a positive constant, we can divide \cref{3_1} by $ \delta $ and arrive at
+\begin{equation}
+J_i(u_1(\cdot), u_2(\cdot)) \:\: = \:\: \int\limits_0^T u_i(t) \, f_i(M_1(t), M_2(t)) \, e^{-\mu t} \: dt.  \label{3}
+\end{equation}
+
+In line with \cite{YegorovGrognardMailleretHalkettBernhard2019,BernhardGrognardMailleretAkhmetzhanov2010},
+we study one-seasonal competition between the two pathogen cohorts in terms of their average reproductive outputs by
+seeking the saddle control strategies in the following zero-sum two-player differential game:
+\begin{equation}
+\left\{ \begin{aligned}
+& \frac{\mathrm{d} M_1(t)}{\mathrm{d} t} \:\: = \:\: (1 - u_1(t)) \, f_1(M_1(t), M_2(t)) \: - \: g(M_1(t)), \\
+& \frac{\mathrm{d} M_2(t)}{\mathrm{d} t} \:\: = \:\: (1 - u_2(t)) \, f_2(M_1(t), M_2(t)) \: - \: g(M_2(t)), \\
+& M_1(0) = M_1^0, \quad M_2(0) = M_2^0, \\
+& 0 \leqslant u_1(t) \leqslant 1, \quad 0 \leqslant u_2(t) \leqslant 1, \quad t \in [0, T],
+\end{aligned} \right.  \label{7}
+\end{equation}
+\begin{equation}
+J(u_1(\cdot), u_2(\cdot)) \:\: \longrightarrow \:\: \inf_{u_1(\cdot)} \: \sup_{u_2(\cdot)} \:\: \mbox{or} \:\:
+\sup_{u_2(\cdot)} \: \inf_{u_1(\cdot)} \, ,  \label{8}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+& J(u_1(\cdot), u_2(\cdot)) \:\: = \:\: J_2(u_1(\cdot), u_2(\cdot)) \: - \:
+J_1(u_1(\cdot), u_2(\cdot)) \\
+& \quad
+= \:\: \int\limits_0^T \left( u_2(t) \, f_2(M_1(t), M_2(t)) \: - \: u_1(t) \, f_1(M_1(t), M_2(t)) \right) \,
+e^{-\mu t} \: dt.
+\end{aligned}  \label{9}
+\end{equation}
+
+According to \cite{YegorovGrognardMailleretHalkettBernhard2019}, we represent the nutrient fluxes and decay rates as
+\begin{equation}
+f_i(M_1, M_2) \: = \: \nu(n_1 M_1 + n_2 M_2) \, \cdot \, \rho(M_i) \:\:\:
+\forall M_1 \geqslant 0 \:\:\: \forall M_2 \geqslant 0, \quad i = 1,2,  \label{4}
+\end{equation}
+\begin{equation}
+\rho(M) \: = \: \alpha \: \dfrac{M}{M + k} \quad \forall M \geqslant 0,  \label{5_1}
+\end{equation}
+\begin{equation}
+\nu(n_1 M_1 + n_2 M_2) \: = \: \dfrac{1}{1 + \beta \, (n_1 M_1 + n_2 M_2)} \quad
+\forall M_1 \geqslant 0 \quad \forall M_2 \geqslant 0,  \label{5_2}
+\end{equation}
+\begin{equation}
+g(M) \: = \: \gamma M \quad \forall M \geqslant 0.  \label{6}
+\end{equation}
+Moreover, the following parameter values are chosen for numerical simulations:
+\begin{equation}
+\arraycolsep=1.3pt
+\def\arraystretch{1.5}
+\begin{array}{c}
+\alpha \: = \: 0.2 \cdot 10^4 \:\: \mathrm{spores} / \mathrm{day}, \quad
+k \: = \: (1/6) \cdot 10^4 \:\: \mathrm{spores}, \\
+\beta \: = \: 10^{-5} \:\: \mathrm{cm}^2 / \mathrm{spores}^2, \quad \gamma \: = \: 0.06 \:\: 1 / \mathrm{day}, \quad
+\mu \: = \: 0.03 \:\: 1 / \mathrm{day}, \\
+n_1 \: = \: 9 \:\: \mathrm{spores} / \mathrm{cm}^2, \quad n_2 \: = \: 1 \:\: \mathrm{spore} / \mathrm{cm}^2, \\
+T \: = \: 60 \:\: \mathrm{days}.
+\end{array}  \label{19}
+\end{equation}
+
+As was shown in \cite{YegorovGrognardMailleretHalkettBernhard2019}, the bounded domain
+\begin{equation}
+G \:\: = \:\: \left\{ (M_1, M_2) \: \in \: \mathbb{R}^2 \: \colon \: 0 < M_1 < \bar{M}_1, \:
+0 < M_2 < \bar{M}_2 \right\}  \label{2}
+\end{equation}
+with
+\begin{equation}
+\bar{M}_1 \: = \: \bar{M}_2 \: > \: \alpha / \gamma - k  \label{2_1}
+\end{equation}
+is an invariant set in the state space (that is, if a state trajectory starts in $ G $, it cannot leave $ G $).
+The parameters~$ \bar{M}_1, \bar{M}_2 $ can be understood as carrying capacity estimates.
+
+
+\section{Uninvadable and evolutionary stable strategies}
+
+In this section, we describe a motivation for the game-theoretic statement~{\rm \cref{7,8,9}}.
+
+Based on the terminology of Adaptive Dynamics \cite{DercoleRinaldi2008}, let us interpret cohort~{\rm 1} as a resident and
+cohort~{\rm 2} as a mutant. Denote the corresponding classes of considered strategies as $ \mathcal{U}_1 $ and $ \mathcal{U}_2 $. For
+a pair of strategies $ \: (u_1, u_2) \, \in \, \mathcal{U}_1 \times \mathcal{U}_2, \: $ we agree that the resident is
+not invaded by the mutant if and only if
+$$
+J(u_1, u_2) \: = \: J_2(u_1, u_2) - J_1(u_1, u_2) \: \leqslant \: 0.
+$$
+A strategy $ \hat{u}_1 \in \mathcal{U}_1 $ is hence called uninvadable if and only if
+$$
+J \left( \hat{u}_1, u_2 \right) \: \leqslant \: 0 \quad \forall u_2 \in \mathcal{U}_2,
+$$
+which is equivalent to
+$$
+\sup_{u_2 \, \in \, \mathcal{U}_2} \: J \left( \hat{u}_1, u_2 \right) \:\: \leqslant \:\: 0.
+$$
+Such a $ \hat{u}_1 $ exists if
+\begin{equation}
+\inf_{u_1 \, \in \, \mathcal{U}_1} \: \sup_{u_2 \, \in \, \mathcal{U}_2} \: J(u_1, u_2) \:\: = \:\:
+\min_{u_1 \, \in \, \mathcal{U}_1} \: \sup_{u_2 \, \in \, \mathcal{U}_2} \: J(u_1, u_2) \:\: \leqslant \:\: 0  \label{9_2}
+\end{equation}
+or
+\begin{equation}
+\inf_{u_1 \, \in \, \mathcal{U}_1} \: \sup_{u_2 \, \in \, \mathcal{U}_2} \: J(u_1, u_2) \:\: < \:\: 0  \label{9_4}
+\end{equation}
+(the latter inequality is mentioned in order to include the case when the infimum with respect to $ u_1 $ is not reached).
+This motivates our game-theoretic statement~{\rm \cref{7,8,9},} where the first player tries to maximize its
+resistance to an invasion by the second one{\rm ,} and vice versa.
+
+If $ M_1^0 = M_2^0 $ and $ \mathcal{U}_1 = \mathcal{U}_2 = \mathcal{U} ${\rm ,} then $ J(u, u) = 0 $ for all $ u \in \mathcal{U} ${\rm ,}
+and {\rm (\ref{9_2})} is simplified to
+\begin{equation}
+\min_{u_1 \, \in \, \mathcal{U}} \: \sup_{u_2 \, \in \, \mathcal{U}} \: J(u_1, u_2) \:\: = \:\: 0.  \label{9_3}
+\end{equation}
+In this case{\rm ,} a strategy
+$$
+\hat{u}_1 \:\: \in \:\: \mathrm{Arg} \min_{u_1 \, \in \, \mathcal{U}} \left( \sup_{u_2 \, \in \, \mathcal{U}} \: J(u_1, u_2) \right)
+$$
+is called evolutionary stable if the related maximum with respect to $ u_2 $ is unique{\rm :}
+$$
+\mathrm{Arg} \max_{u_2 \, \in \, \mathcal{U}} \: J \left( \hat{u}_1, u_2 \right) \:\: = \:\: \left\{ \hat{u}_1 \right\}.
+$$
+
+This approach to define evolutionary stable strategies was initially proposed in \cite{BernhardGrognardMailleretAkhmetzhanov2010}
+and further developed in \cite{YegorovGrognardMailleretHalkettBernhard2019}.
+
+
+\section{Hamilton--Jacobi--Isaacs equation}
+
+Introduce the following function known as Hamiltonian:
+\begin{equation}
+\begin{aligned}
+& H(t, M_1, M_2, u_1, u_2, p_1, p_2) \:\: = \:\:
+p_1 \, ((1 - u_1) \, f_1(M_1, M_2) \: - \: g(M_1)) \\
+& \qquad\qquad\qquad\qquad\qquad\quad \:\:\:\,
++ \:\: p_2 \, ((1 - u_2) \, f_2(M_1, M_2) \: - \: g(M_2)) \\
+& \qquad\qquad\qquad\qquad\qquad\quad \:\:\:\,
++ \:\: e^{-\mu t} \, (u_2 \, f_2(M_1, M_2) \: - \: u_1 \, f_1(M_1, M_2)) \\
+& \forall t \in [0, T] \quad \forall \: (M_1, M_2) \: \in \: G \quad \forall \: (u_1, u_2) \: \in \: [0, 1]^2 \quad
+\forall \: (p_1, p_2) \: \in \: \mathbb{R}^2
+\end{aligned}  \label{12}
+\end{equation}
+(this is the sum of the dot product of $ \: p = (p_1, p_2) \: $ with
+$ \: (\mathrm{d} M_1 / \mathrm{d} t, \, \mathrm{d} M_1 / \mathrm{d} t) \: $ and the integrand in $ \: J(u_1(\cdot), u_2(\cdot)), \: $
+see \cref{7} and \cref{9}). The Hamiltonian satisfies the saddle point condition with respect to the control variables~$ u_1 $ and
+$ u_2 $:
+\begin{equation}
+\begin{aligned}
+& \min_{u_1 \in [0, 1]} \: \max_{u_2 \in [0, 1]} \: H(t, M_1, M_2, u_1, u_2, p_1, p_2) \\
+& \qquad
+= \:\: \max_{u_2 \in [0, 1]} \: \min_{u_1 \in [0, 1]} \: H(t, M_1, M_2, u_1, u_2, p_1, p_2) \:\:
+= \:\: \mathcal{H} (t, M_1, M_2, p_1, p_2) \\
+& \forall t \in [0, T] \quad \forall \: (M_1, M_2) \: \in \: G \quad \forall \: (p_1, p_2) \: \in \: \mathbb{R}^2
+\end{aligned}  \label{13}
+\end{equation}
+(here minimax and maximin give the same result). Due to the theoretical results of \cite[\S XI.6]{FlemingSoner2006}, the value function
+$ \: V \colon [0, T] \times G \to \mathbb{R} \: $ in the formulated feedback differential game is a unique solution of the following
+Cauchy problem for the Hamilton--Jacobi--Isaacs partial differential equation (HJI PDE):
+\begin{equation}
+\left\{ \begin{aligned}
+& \frac{\partial V(t, M_1, M_2)}{\partial t} \: + \: \mathcal{H} \left( t, M_1, M_2,
+\frac{\partial V(t, M_1, M_2)}{\partial M_1}, \frac{\partial V(t, M_1, M_2)}{\partial M_2} \right) \:\: = \:\: 0, \\
+& V(T, M_1, M_2) \: = \: 0, \\
+& t \in [0, T], \quad (M_1, M_2) \: \in \: G.
+\end{aligned} \right.  \label{15}
+\end{equation}
+The solution may in general be nonsmooth and should be understood in a generalized (viscosity or minimax) sense
+\cite{FlemingSoner2006,Subbotin1995}.
+
+Due to the general properties of value functions of zero-sum feedback differential games \cite{BotkinHoffmannTurova2011},
+the value function~$ V $ in our problem is Lipschitz continuous in $ [0, T] \times G $. By Rademacher's theorem, it is
+differentiable almost everywhere in $ (0, T) \times G $, except for possibly a subset of Lebesgue measure zero.
+
+For points~$ (t, M_1, M_2) $ at which the value function is differentiable, the saddle feedback control strategies can be
+obtained from the relations
+$$
+\begin{aligned}
+& u_1(t, M_1, M_2) \:\: \in \:\: \mathrm{Arg} \min_{w_1 \in [0, 1]} \left\{ \max_{w_2 \in [0, 1]} \:
+H \left( t, M_1, M_2, w_1, w_2, {}^{{}^{{}^{{}^{{}^{}}}}} \right. \right. \\
+& \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad
+\left. \left. \frac{\partial V(t, M_1, M_2)}{\partial M_1}, \, \frac{\partial V(t, M_1, M_2)}{\partial M_2} \right) \right\}, \\
+& u_2(t, M_1, M_2) \:\: \in \:\: \mathrm{Arg} \max_{w_2 \in [0, 1]} \left\{ \min_{w_1 \in [0, 1]} \:
+H \left( t, M_1, M_2, w_1, w_2, {}^{{}^{{}^{{}^{{}^{}}}}} \right. \right. \\
+& \qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad
+\left. \left. \frac{\partial V(t, M_1, M_2)}{\partial M_1}, \, \frac{\partial V(t, M_1, M_2)}{\partial M_2} \right) \right\},
+\end{aligned}
+$$
+which are reduced to
+\begin{equation}
+\begin{aligned}
+& u_1(t, M_1, M_2) \:\: = \:\: \begin{cases}
+0, & e^{-\mu t} \: + \: \frac{\partial V(t, M_1, M_2)}{\partial M_1} \: < \: 0, \\
+1, & e^{-\mu t} \: + \: \frac{\partial V(t, M_1, M_2)}{\partial M_1} \: > \: 0, \\
+\mbox{arbitrary from} \:\: [0, 1], & e^{-\mu t} \: + \: \frac{\partial V(t, M_1, M_2)}{\partial M_1} \: = \: 0,
+\end{cases} \\
+& u_2(t, M_1, M_2) \:\: = \:\: \begin{cases}
+0, & e^{-\mu t} \: - \: \frac{\partial V(t, M_1, M_2)}{\partial M_2} \: < \: 0, \\
+1, & e^{-\mu t} \: - \: \frac{\partial V(t, M_1, M_2)}{\partial M_2} \: > \: 0, \\
+\mbox{arbitrary from} \:\: [0, 1], & e^{-\mu t} \: - \: \frac{\partial V(t, M_1, M_2)}{\partial M_2} \: = \: 0.
+\end{cases}
+\end{aligned}  \label{16}
+\end{equation}
+These are resource allocation strategies that enable for equilibrium coexistence of the two pathogen cohorts.
+
+
+\section{Numerical solution}
+
+The Cauchy problem~\cref{15} for the HJI PDE is considered with the nutrient fluxes~\cref{4,5_1,5_2}, decay rate~\cref{6}, and
+parameter values~\cref{19}. The numerical solution has been obtained via a finite difference method
+\cite{FlemingSoner2006,OsherShu1991,BotkinHoffmannTurova2011,BokanForcadelZidani2010} using the ROC-HJ software~\cite{ROCHJ2019}.
+
+For practical purposes, it is reasonable to rewrite \cref{15} in reverse time $ \tau = T - t $ as
+\begin{equation}
+\left\{ \begin{aligned}
+& \frac{\partial V(T - \tau, M_1, M_2)}{\partial \tau} \:\: + \:\: \max_{u_1 \in [0, 1]} \: \min_{u_2 \in [0, 1]} \:
+\left( -H \left( T - \tau, \, M_1, \, M_2, \, u_1, \, u_2,  {}^{{}^{{}^{{}^{{}^{}}}}} \right. \right. \\
+& \qquad\qquad\qquad\qquad\qquad
+\left. \left. \frac{\partial V(T - \tau, M_1, M_2)}{\partial M_1}, \,
+\frac{\partial V(T - \tau, M_1, M_2)}{\partial M_2} \right) \right) \:\: = \:\: 0, \\
+& V(T - \tau, M_1, M_2) \left|_{\tau = 0} \right. \: = \: 0, \\
+& \tau \in [0, T], \quad (M_1, M_2) \: \in \: G,
+\end{aligned} \right.  \label{75}
+\end{equation}
+and then to rewrite (\ref{75}) in the new normalized state variables
+\begin{equation}
+m_i \, = \, M_i \cdot 10^{-4}, \quad i = 1,2  \label{75_1}
+\end{equation}
+(such changes of the time and state variables lead to an equivalent problem).
+
+We specify the carrying capacity estimates as $ \: \bar{M}_1 = \bar{M}_2 = \bar{M} = 3.5 \cdot 10^4 $,
+$ \: \bar{m} = \bar{M} \cdot 10^{-4} = 3.5, \: $ and discretize the computational region
+$$
+\left\{ (m_1, m_2, \tau) \: \colon \: 0 \leqslant m_1 \leqslant \bar{m}, \:\: 0 \leqslant m_2 \leqslant \bar{m}, \:\:
+0 \leqslant \tau \leqslant T \right\}
+$$
+by the spatial step $ \: \Delta m_1 = \Delta m_2 = \Delta m = 2 \cdot 10^{-3} \: $ and time step $ \Delta \tau = 5 \cdot 10^{-3} $.
+
+Monotone finite difference methods (including the classical Lax--Friedrichs scheme) ensure theoretical convergence properties with
+error estimates, but they are mostly of first order and may generate so-called numerical diffusion problems on long time intervals.
+One way to attenuate such practical issues is to use higher-order ENO (essentially non-oscillatory) schemes such as those originally
+proposed in \cite{OsherShu1991}. They are not necessarily monotone, and there is lack of associated convergence theorems. However,
+their relevance has been justified by various numerical experiments \cite{OsherShu1991,BokanForcadelZidani2010}.
+
+We have used the second-order ENO scheme (to approximate the partial derivatives with respect to the state variables) which is
+coupled with the second-order Runge--Kutta time discretization scheme and implemented in \cite{ROCHJ2019}. In order to evaluate
+the partial derivatives $ \partial V / \partial M_i $, $ i = 1,2 $, in the saddle feedback control representations~\cref{16},
+we have applied the standard second-order symmetrized approximation \cite[\S 5.7]{PressTeukolskyVetterlingFlannery2007}.
+
+Figs.~\ref{Fig_4} and \ref{Fig_5} show the reductions of the approximate value function and corresponding saddle feedback control
+strategies to the coordinate plane $ (m_1, m_2) $ for the time instants $ \tau = 0 $ ($ t = T = 60 $), $ \tau = 5 $ ($ t = T - 5 = 55 $),
+$ \tau = \tau^{**} \approx 11.175 $ ($ t = T - \tau^{**} \approx 48.825 $), and $ \tau = T = 60 $ ($ t = 0 $). Here $ \tau^{**} $ is
+a reverse time instant that triggers the appearance of singular control regimes and is obtained together with the equilibrium
+steady state~$ \left( M^{**}, M^{**} \right) $ from the analysis based on Pontryagin's principle
+\cite{YegorovGrognardMailleretHalkettBernhard2019}. Note that Pontryagin's principle for zero-sum two-player differential games describes
+necessary conditions for saddle open-loop strategies \cite{Yong2015}.
+
+\begin{figure}
+\center{ \includegraphics[width = 0.48 \textwidth]{Figure_4a.pdf}
+\includegraphics[width = 0.48 \textwidth]{Figure_4b_1.pdf} \\
+\includegraphics[width = 0.48 \textwidth]{Figure_4c_1.pdf}
+\includegraphics[width = 0.48 \textwidth]{Figure_4d_1.pdf}
+}
+\bf \caption{\it Finite-difference approximation of the value function~$ V $ at several time instants.}
+\label{Fig_4}
+\end{figure}
+
+\begin{figure}
+\center{ \includegraphics[width = 0.48 \textwidth]{Figure_5a_1.pdf}
+\includegraphics[width = 0.48 \textwidth]{Figure_5a_2.pdf} \\
+\includegraphics[width = 0.48 \textwidth]{Figure_5b_1.pdf}
+\includegraphics[width = 0.48 \textwidth]{Figure_5b_2.pdf} \\
+\includegraphics[width = 0.48 \textwidth]{Figure_5c_1.pdf}
+\includegraphics[width = 0.48 \textwidth]{Figure_5c_2.pdf} \\
+\includegraphics[width = 0.48 \textwidth]{Figure_5d_1.pdf}
+\includegraphics[width = 0.48 \textwidth]{Figure_5d_2.pdf}
+}
+\bf \caption{\it Finite-difference approximations of the saddle feedback control strategies at several time instants.
+White and gray colors show the regions of the control values $ 0 $ and $ 1 ${\rm ,} respectively. The fields of
+the corresponding forward-time velocities are also illustrated.}
+\label{Fig_5}
+\end{figure}
+
+Fig.~\ref{Fig_5} illustrates the appearance and time evolution of four approximate switching curves. For $ \tau \geqslant \tau^{**} $,
+they intersect at the point~$ \: \left( m^{**}, m^{**} \right) \, = \, 10^{-4} \cdot \left( M^{**}, M^{**} \right) $. With the further
+increase of $ \tau $, the feedback control portrait approaches a stationary form. A three-dimensional picture of the four control
+switching surfaces is given in Fig.~\ref{Fig_7}. For $ \tau \geqslant \tau^{**} $, the point~$ \left( m^{**}, m^{**} \right) $ attracts
+forward-time trajectories and determines an equilibrium steady-state regime for both cohorts, while the four surfaces can be
+interpreted as turnpikes.
+
+\begin{figure}
+\center{ \includegraphics[width = 0.98 \textwidth]{Figure_7.pdf} }
+\bf \caption{\it The four control switching surfaces in the three-dimensional space~$ (m_1, m_2, \tau) $.}
+\label{Fig_7}
+\end{figure}
+
+From Fig.~{\rm \ref{Fig_4}d,} one can see that{\rm ,} in the considered domain of initial states{\rm ,}
+the value~$ V \left( 0, M_1^0, M_2^0 \right) $ of the zero-sum feedback differential game is negative for
+$ M_1^0 > M_2^0 ${\rm ,} zero for $ M_1^0 = M_2^0 ${\rm ,} and positive for $ M_1^0 < M_2^0 $. The saddle feedback
+resource allocation strategy of cohort~{\rm 1} is uninvadable if $ M_1^0 \geqslant M_2^0 $. Similarly{\rm ,}
+the saddle feedback resource allocation strategy of cohort~{\rm 2} is uninvadable if $ M_1^0 \leqslant M_2^0 $.
+
+
+\section{Conclusion}
+
+The current report discusses a mathematical development that allows for the construction of benchmark pathogenic resource
+allocation strategies against which actual infection mechanisms may be compared.
+
+We have studied resource allocation equilibrium for one-seasonal dynamics of two biotrophic fungal cohorts within a common host
+plant. It is also relevant to investigate long-seasonal dynamics and associated evolutionary equilibria of competing pathogen
+cohorts. One may exploit certain discrete rules so as the transition from one season to another \cite{MailleretLemesle2009,Akhmetzhanov2012}.
+Another important research direction is to characterize not only such equilibria themselves but also whether they represent evolutionary
+attractors or not, and how they can be approached through evolution.
+
+
+\begin{thebibliography}{}
+
+\bibitem{YegorovGrognardMailleretHalkettBernhard2019}
+I.~Yegorov, F.~Grognard, L.~Mailleret, F.~Halkett, P.~Bernhard. A dynamic game approach to uninvadable strategies for biotrophic
+pathogens. {\it Dynamic Games and Applications} 2020; {\bf 10}(1): 257--296.
+
+\bibitem{ROCHJ2019}
+Bokanowski,~O., Desilles,~A., Zidani,~H., and Zhao,~J.
+User's guide for the ROC-HJ solver: Finite Differences and Semi-Lagrangian methods. January~21,~2019. Version 2.5.4.
+URL: \url{https://uma.ensta-paristech.fr/soft/ROC-HJ}
+
+\bibitem{BernhardGrognardMailleretAkhmetzhanov2010}
+Bernhard,~P., Grognard,~F., Mailleret,~L., and Akhmetzhanov,~A.
+ESS for life-history traits of cooperating consumers facing cheating mutants.
+[Research Report] RR--7314, INRIA, 2010. URL: \url{https://hal.inria.fr/inria-00491489v2}
+
+\bibitem{DercoleRinaldi2008}
+Dercole,~F. and Rinaldi,~S.
+{\it Analysis of Evolutionary Processes{\rm :} The Adaptive Dynamics Approach and Its Applications}.
+Princeton University Press: Princeton, 2008.
+
+\bibitem{FlemingSoner2006}
+Fleming,~W.\,H. and Soner,~H.\,M.
+{\it Controlled Markov Processes and Viscosity Solutions}.
+Springer-Verlag: New York, 2006.
+
+\bibitem{Subbotin1995}
+Subbotin,~A.\,I.
+{\it Generalized Solutions of First-Order PDEs{\rm :} The Dynamical Optimization Perspective}.
+Birkhauser: Boston, 1995.
+
+\bibitem{BotkinHoffmannTurova2011}
+Botkin,~N.\,D., Hoffmann,~K.-H., and Turova,~V.-L.
+Stable numerical schemes for solving Hamilton--Jacobi--Bellman--Isaacs equations.
+{\it SIAM Journal on Scientific Computing} 2011; {\bf 33}(2): 992--1007.
+
+\bibitem{OsherShu1991}
+Osher,~S. and Shu,~C.-W. High order essentially non-oscillatory schemes for Hamilton--Jacobi equations.
+{\it SIAM Journal on Numerical Analysis} 1991; {\bf 28}(4): 907--922.
+
+\bibitem{BokanForcadelZidani2010}
+Bokanowski,~O., Forcadel,~N., and Zidani,~H.
+Reachability and minimal times for state constrained nonlinear problems without any controllability assumption.
+{\it SIAM Journal on Control and Optimization} 2010; {\bf 48}: 4292--4316.
+
+\bibitem{PressTeukolskyVetterlingFlannery2007}
+Press,~W.\,H., Teukolsky,~S.\,A., Vetterling,~W.\,T., and Flannery,~B.\,P.
+{\it Numerical Recipes{\rm :} The Art of Scientific Computing}. Cambridge University Press: New~York, 2007.
+
+\bibitem{Yong2015}
+Yong,~J.
+{\it Differential Games{\rm :} A Concise Introduction}.
+World Scientific Publishing: Singapore, 2015.
+
+\bibitem{MailleretLemesle2009}
+Mailleret,~L. and Lemesle,~V.
+A note on semi-discrete modelling in life sciences.
+{\it Philosophical Transactions of the Royal Society A} 2009; {\bf 367}: 4779--4799.
+
+\bibitem{Akhmetzhanov2012}
+Akhmetzhanov,~A.\,R., Grognard,~F., Mailleret,~L., and Bernhard,~P.
+Join forces or cheat: Evolutionary analysis of a consumer-resource system.
+In {\it Advances in Dynamic Games{\rm ,}
+Volume {\rm 12} of the series Annals of the International Society of Dynamic Games}, 73--95.
+Springer: New York, 2012.
+
+\end{thebibliography}
+
+
+
+\end{document}
