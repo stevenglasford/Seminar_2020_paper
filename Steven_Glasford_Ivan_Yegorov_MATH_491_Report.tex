@@ -15,26 +15,6 @@
 \usepackage{cleveref}
 \usepackage{autonum}
 
-% Set how Code will appear in the document.
-\lstset{ 
-    language=C++, % choose the language of the code
-    basicstyle=\fontfamily{pcr}\selectfont\footnotesize\color{red},
-    keywordstyle=\color{black}\bfseries, % style for keywords
-    numbers=none, % where to put the line-numbers
-    numberstyle=\tiny, % the size of the fonts that are used for the line-numbers     
-    % backgroundcolor=\color{darkgray},
-    showspaces=false, % show spaces adding particular underscores
-    showstringspaces=false, % underline spaces within strings
-    showtabs=false, % show tabs within strings adding particular underscores
-    frame=single, % adds a frame around the code
-    tabsize=2, % sets default tabsize to 2 spaces
-    rulesepcolor=\color{gray},
-    rulecolor=\color{black},
-    captionpos=b, % sets the caption-position to bottom
-    breaklines=true, % sets automatic line breaking
-    breakatwhitespace=false, 
-}
-
 
 % Set the margin and appearance, as set by class standards.
 \setlength{\oddsidemargin}{0.25in}  %please do not change
@@ -72,48 +52,28 @@
 \renewcommand{\@biblabel}[1]{#1.}
 \makeatother
 
-%\newcounter{count}
-
 \author{Steven Glasford \\ Advisor: Dr.~Ivan Yegorov}
 \title{Numerical Solution of a dynamic equilibrium of pathogen cohorts.}
-%Numerical solution of a first-order Hamilton--Jacobi of pathogen cohorts} %Numerical solution of a first-order Hamilton--Jacobi equation for dynamic equilibrium of pathogen cohorts}
-
-
+%The following is the first title that we chose, 
+%but we changed it to allow for a shorter and sleeker title.
+%%%{Numerical solution of a first-order Hamilton--Jacobi of pathogen cohorts} %Numerical solution of a first-order Hamilton--Jacobi equation for dynamic equilibrium of pathogen cohorts}
 
 \begin{document}
 
-
-
-
-
-
-
-
-
-\date{MATH~491, Fall~2020}
-
-
+%The first draft of this paper is due 4 November 2020
+\date{4~November~2020, MATH~491, Fall~2020}
 
 \maketitle
-
-
 
 \section{Introduction}
 
 In this report, we study a zero-sum feedback game for a system of nonlinear ordinary differential equations describing the
 one-seasonal dynamics of two biotrophic fungal cohorts within a shared host plant. The first fungus can be understood as the resident, while the second is the mutant.  
-% a resident and a mutant population.
 The invasion functional takes the form of the difference between the two marginal fitness criteria and represents the cost in defining the differential game's value. A general dynamic game approach
 of \cite{YegorovGrognardMailleretHalkettBernhard2019} is explored and discussed. 
 The Cauchy problem for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this situation is numerically solved using
 the ROC-HJ software~\cite{ROCHJ2019}.
-% The Cauchy problem for the resulting first-order
-% Hamilton--Jacobi partial differential equation (HJ PDE) is numerically solved via a finite difference method using
-% the ROC-HJ software~\cite{ROCHJ2019}. 
 Analysis of the numerical simulation interpretations obtained by this package is further investigated later in this document.
-% Interpretations of the numerical simulation obtained from this package are also explored.
-% Interpretations of the obtained numerical simulation results are also
-% provided.
 
 
 \section{Statement of the model}
@@ -132,7 +92,6 @@ the beginning of the infection period, the initial mycelial size can be set as o
 spore).
 
 To determine the nutrient flux by cohort~$ i $ we use the function, $ f_i = f_i(M_1, M_2) $, which is allocated 
-% The nutrient flux uptaken by cohort~$ i $ is determined by a function $ f_i = f_i(M_1, M_2) $ and allocated 
 between two
 different pathogen activities such as within-host multiplication (mycelial growth) and producing asexual spores.
 For brevity, we do not explicitly show the dependence on the constant parameters $ n_1, n_2 $ when writing $ f_i = f_i(M_1, M_2) $,
@@ -141,7 +100,6 @@ the whole flux goes to mycelial growth when $ u_i(t) = 0 $ and to spore producti
 there is an intermediate configuration.
 
 Let $ g = g(M) $ be the rate of mycelial decay for both cohorts. Assume the constant yield of spores, $ \delta > 0 $, as compared to mycelial growth.
-%also that spores are produced with a constant yield $ \delta > 0 $ as compared to mycelial growth.
 
 The period of the infections within the season is a fixed interval~$ [0, T] $.
 
@@ -266,7 +224,6 @@ or
 \inf_{u_1 \, \in \, \mathcal{U}_1} \: \sup_{u_2 \, \in \, \mathcal{U}_2} \: J(u_1, u_2) \:\: < \:\: 0  \label{9_4}
 \end{equation}
 (The latter inequality arises from when the infimum $u_1$ is not satisfied).
-%(we mention the latter inequality to include the case for when the infimum $ u_1 $ is not reached).
 Equation \cref{9_2} motivates our game-theoretic statement~{\rm \cref{7,8,9},} where the first player tries to maximize its
 resistance to an invasion by the second one{\rm ,} and vice versa.
 
@@ -371,13 +328,11 @@ Most of the preconfigured files and procedures of ROC-HJ allow for a quick trans
 
 
 \cite{ROCHJ2019} provides further details of the type of assignments and other variables that need additional configuration in order for ROC-HJ to find a solution. To use ROC-HJ, we must assign a few variables to describe the kind of problem. Fig. \ref{code:defaults} contains some of the variables which describe the problem.
-%In our case, we mainly edited our data file and assigned; an example of a few of the default configurations that must be set can be found one in fig. \ref{code:defaults}.
 \begin{figure}
     \inputminted[
         frame=lines,
         framesep=2mm,
         baselinestretch=1.2,
-        %bgcolor=e0e0e0,
         fontsize=\footnotesize,
         firstline=17, 
         lastline=20]{c}{data.h}
@@ -392,9 +347,7 @@ With these as well as many more options that we had to set to correctly assign t
     \inputminted[frame=lines,
         framesep=2mm,
         baselinestretch=1.2,
-        %bgcolor=e0e0e0,
         fontsize=\footnotesize,
-        %linenos,
         firstline=156, 
         lastline=176]{c}{data.h}
     \caption{Function in C++ written for ROC-HJ describing the distributed cost equation.}
@@ -406,26 +359,19 @@ With these as well as many more options that we had to set to correctly assign t
     \inputminted[frame=lines,
         framesep=2mm,
         baselinestretch=1.2,
-        %bgcolor=e0e0e0,
         fontsize=\footnotesize,
-        %linenos,
         firstline=133, 
         lastline=154]{c}{data.h}
-    \caption{A C++ function for use by ROC-HJ to describe the required dynamic equation. 
-    %This function is written in C++ for ROC-HJ describing the dynamic equation.
-    }
+    \caption{A C++ function for use by ROC-HJ to describe the required dynamic equation.}
     \label{code:dynamic}
 \end{figure}
 
 Within the \texttt{data\_*.h} file, there is much more information describing the function. 
 One can find more information and details about this project's configuration variables by viewing the data file directly at \cite{data_ivan.h}.
-%but these have been left out to save space, and more information about the file can be found
-
 
 \section{Numerical solution}
 
 We consider the Cauchy problem~\cref{15} for the HJI PDE with the nutrient fluxes~\cref{4,5_1,5_2}, decay rate~\cref{6}, and
-% The Cauchy problem~\cref{15} for the HJI PDE is considered with the nutrient fluxes~\cref{4,5_1,5_2}, decay rate~\cref{6}, and
 parameter values~\cref{19}. The numerical solution has been obtained via a finite difference method
 \cite{FlemingSoner2006,OsherShu1991,BotkinHoffmannTurova2011,BokanForcadelZidani2010} using the ROC-HJ software~\cite{ROCHJ2019}.
 
@@ -504,8 +450,6 @@ Fig.~\ref{Fig_5} illustrates the appearance and time evolution of four approxima
 they intersect at the point~$ \: \left( m^{**}, m^{**} \right) \, = \, 10^{-4} \cdot \left( M^{**}, M^{**} \right) $. With the further
 increase of $ \tau $, the feedback control portrait approaches a stationary form. 
 Fig.~\ref{Fig_7} is a three-dimensional portrait of the four control switching surfaces.
-% A three-dimensional picture of the four control
-% switching surfaces is given in Fig.~\ref{Fig_7}. 
 For $ \tau \geqslant \tau^{**} $, the point~$ \left( m^{**}, m^{**} \right) $ attracts
 forward-time trajectories and determines a steady-state equilibrium regime for both cohorts, while one can interpret the four surfaces as turnpikes.
 
@@ -533,7 +477,6 @@ plant. It is also relevant to investigate long-seasonal dynamics and associated 
 cohorts. One may exploit specific discrete rules to transition from one season to another \cite{MailleretLemesle2009,Akhmetzhanov2012}.
 Another important research direction is to characterize such equilibria themselves and whether they represent evolutionary
 attractors or not and how the situation may change through evolution. 
-%they can be approached through evolution.
 
 
 \pagebreak
