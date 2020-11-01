@@ -1,24 +1,62 @@
-\documentclass[a4paper,12pt]{article}
+\RequirePackage{etex}
 
+\documentclass[11pt]{amsart}
 
-
+\usepackage{minted}
+\usepackage{amsfonts,amssymb,amscd,amsmath,mathrsfs,amsthm}
+\usepackage{xcolor}
+\usepackage{listings}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsthm,amsmath,amsfonts,amssymb,amsbsy}
-\usepackage{cite,graphicx,color,euscript,epstopdf,url}
+\usepackage{cite,graphicx,color,euscript,epstopdf,url,float}
 \usepackage{setspace}
-\usepackage[colorlinks=true]{hyperref}
+\usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{autonum}
 
+% Set how Code will appear in the document.
+\lstset{ 
+    language=C++, % choose the language of the code
+    basicstyle=\fontfamily{pcr}\selectfont\footnotesize\color{red},
+    keywordstyle=\color{black}\bfseries, % style for keywords
+    numbers=none, % where to put the line-numbers
+    numberstyle=\tiny, % the size of the fonts that are used for the line-numbers     
+    % backgroundcolor=\color{darkgray},
+    showspaces=false, % show spaces adding particular underscores
+    showstringspaces=false, % underline spaces within strings
+    showtabs=false, % show tabs within strings adding particular underscores
+    frame=single, % adds a frame around the code
+    tabsize=2, % sets default tabsize to 2 spaces
+    rulesepcolor=\color{gray},
+    rulecolor=\color{black},
+    captionpos=b, % sets the caption-position to bottom
+    breaklines=true, % sets automatic line breaking
+    breakatwhitespace=false, 
+}
 
+
+% Set the margin and appearance, as set by class standards.
+\setlength{\oddsidemargin}{0.25in}  %please do not change
+\setlength{\evensidemargin}{0.25in} %please do not change
+\setlength{\marginparwidth}{0in} %please do not change
+\setlength{\marginparsep}{0in} %please do not change
+\setlength{\marginparpush}{0in} %please do not change
+\setlength{\topmargin}{0in} %please do not change
+\setlength{\footskip}{.3in} %please do not change
+\setlength{\textheight}{8.75in} %please do not change
+\setlength{\textwidth}{6in} %please do not change
+\setlength{\parskip}{4pt} %please do not change
+
+% Add new functions
+% Add new function for changing how the equations look
 \newcommand{\crefrangeconjunction}{--}
 
-
+% Change how referencing equations looks
 \crefformat{equation}{(#2#1#3)}
 \crefrangeformat{equation}{(#3#1#4)--(#5#2#6)}
 
-
+% Use some standard appearances for math principles
 \newtheorem{assumption}{Assumption}[section]
 \newtheorem{definition}{Definition}[section]
 \newtheorem{theorem}{Theorem}[section]
@@ -30,25 +68,15 @@
 \newtheorem{algorithm}{Algorithm}[section]
 \newtheorem{conjecture}{Conjecture}[section]
 
-
-
-\topmargin=0mm
-\oddsidemargin=0mm
-\headsep=0mm
-\headheight=0mm
-\textwidth=150mm
-\textheight=215mm
-
-
-
 \makeatletter
 \renewcommand{\@biblabel}[1]{#1.}
 \makeatother
 
+%\newcounter{count}
 
-
-\newcounter{count}
-
+\author{Steven Glasford \\ Advisor: Dr.~Ivan Yegorov}
+\title{Numerical Solution of a dynamic equilibrium of pathogen cohorts.}
+%Numerical solution of a first-order Hamilton--Jacobi of pathogen cohorts} %Numerical solution of a first-order Hamilton--Jacobi equation for dynamic equilibrium of pathogen cohorts}
 
 
 
@@ -56,10 +84,10 @@
 
 
 
-\title{Numerical solution of a first-order Hamilton--Jacobi equation for dynamic equilibrium of pathogen cohorts}
 
 
-\author{Steven Glasford \\ Advisor: Dr.~Ivan Yegorov}
+
+
 
 
 \date{MATH~491, Fall~2020}
@@ -72,42 +100,50 @@
 
 \section{Introduction}
 
-In this report, we study a zero-sum feedback game for a system of nonlinear ordinary differential equations describing
-one-seasonal dynamics of two biotrophic fungal cohorts within a common host plant. The cohorts can be understood as
-resident and mutant populations. The invasion functional takes the form of the difference between the two marginal fitness
-criteria and represents the cost in the definition of the value of the differential game. A general dynamic game approach
-of \cite{YegorovGrognardMailleretHalkettBernhard2019} is exploited. The Cauchy problem for the resulting first-order
-Hamilton--Jacobi partial differential equation (HJ PDE) is numerically solved via a finite difference method using
-the ROC-HJ software~\cite{ROCHJ2019}. Interpretations of the obtained numerical simulation results are also
-provided.
+In this report, we study a zero-sum feedback game for a system of nonlinear ordinary differential equations describing the
+one-seasonal dynamics of two biotrophic fungal cohorts within a shared host plant. The first fungus can be understood as the resident, while the second is the mutant.  
+% a resident and a mutant population.
+The invasion functional takes the form of the difference between the two marginal fitness criteria and represents the cost in defining the differential game's value. A general dynamic game approach
+of \cite{YegorovGrognardMailleretHalkettBernhard2019} is explored and discussed. 
+The Cauchy problem for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this situation is numerically solved using
+the ROC-HJ software~\cite{ROCHJ2019}.
+% The Cauchy problem for the resulting first-order
+% Hamilton--Jacobi partial differential equation (HJ PDE) is numerically solved via a finite difference method using
+% the ROC-HJ software~\cite{ROCHJ2019}. 
+Analysis of the numerical simulation interpretations obtained by this package is further investigated later in this document.
+% Interpretations of the numerical simulation obtained from this package are also explored.
+% Interpretations of the obtained numerical simulation results are also
+% provided.
 
 
 \section{Statement of the model}
 
-Consider one-seasonal dynamics of two biotrophic fungal cohorts within one host plant. Let us refer to them as to
+Consider the one-seasonal dynamics of two biotrophic fungal cohorts within one host plant. Let us refer to them as to
 cohorts~$ 1 $ and $ 2 $. For cohort~$ i $, let $ n_i $ be the lesion density, which is the number of mycelia per unit area of
-the host. For simplicity, $ n_1 $ and $ n_2 $ are assumed to be constant during the entire infection period within the season,
-which means that new infectious agents do not penetrate into the host during the analyzed period. Even though this is typically
-a strong restriction for infections in nature, it still allows for drawing significant conclusions with relevant biological
-interpretations and also applies to experimental infection protocols.
+the host. For simplicity, assume $ n_1 $ and $ n_2 $ to be constant during the entire infection period within the season,
+which means that new infectious agents do not penetrate the host during the analyzed period. Even though this is typically
+a substantial restriction for infections in nature, it still allows for drawing significant conclusions with relevant biological
+interpretations and adhering to standard experimental infection protocols.
 
 Denote the average size of a mycelium in cohort~$ i $ by $ M_i $. Let $ S_i $ be the average quantity of spores produced by a mycelium
-in cohort~$ i $. The infection age~$ t $ within the season is interpreted as a time variable. Note that the mycelial sizes~$ M_1 $ and
-$ M_2 $ can be measured in terms of equivalent amounts of infecting spores (for instance, if a mycelium appears from one spore at
-the beginning of the infection period, the initial mycelial size can be set as one equivalent of an infecting spore or simply as one
+in cohort~$ i $. The infection age~$ t $ within the season is a time variable. Note that the mycelial sizes~$ M_1 $ and
+$ M_2 $ are measured in terms of equivalent amounts of infecting spores (for instance, if a mycelium appears from one spore at
+the beginning of the infection period, the initial mycelial size can be set as one equivalent of an infecting spore or only as one
 spore).
 
-The nutrient flux uptaken by cohort~$ i $ is determined by a function $ f_i = f_i(M_1, M_2) $ and allocated between two
-different pathogen activities such as within-host multiplication (mycelial growth) and production of asexual spores.
+To determine the nutrient flux by cohort~$ i $ we use the function, $ f_i = f_i(M_1, M_2) $, which is allocated 
+% The nutrient flux uptaken by cohort~$ i $ is determined by a function $ f_i = f_i(M_1, M_2) $ and allocated 
+between two
+different pathogen activities such as within-host multiplication (mycelial growth) and producing asexual spores.
 For brevity, we do not explicitly show the dependence on the constant parameters $ n_1, n_2 $ when writing $ f_i = f_i(M_1, M_2) $,
-$ i = 1,2 $. Let $ u_i = u_i(t) $ be a related resource allocation (control) function taking values between zero and one. Suppose that
+$ i = 1,2 $. Let $ u_i = u_i(t) $ be a related resource allocation (control) function, taking values between zero and one. Suppose that
 the whole flux goes to mycelial growth when $ u_i(t) = 0 $ and to spore production when $ u_i(t) = 1 $, while, for $ 0 < u_i(t) < 1 $,
 there is an intermediate configuration.
 
-Let $ g = g(M) $ be the rate of mycelial decay for both cohorts. Assume also that spores are produced with a constant yield
-$ \delta > 0 $ as compared to mycelial growth.
+Let $ g = g(M) $ be the rate of mycelial decay for both cohorts. Assume the constant yield of spores, $ \delta > 0 $, as compared to mycelial growth.
+%also that spores are produced with a constant yield $ \delta > 0 $ as compared to mycelial growth.
 
-The time span of the infections within the season is a fixed interval~$ [0, T] $.
+The period of the infections within the season is a fixed interval~$ [0, T] $.
 
 The following dynamic model can thus be formulated \cite{YegorovGrognardMailleretHalkettBernhard2019}:
 \begin{equation}
@@ -123,12 +159,12 @@ The following dynamic model can thus be formulated \cite{YegorovGrognardMaillere
 Since the right-hand sides of the third and fourth equations in (\ref{1}) do not contain $ S_1 $ and $ S_2 $, one does not need
 to treat $ S_1 $ and $ S_2 $ explicitly, so that $ M_1 $ and $ M_2 $ can be considered as the only state variables.
 
-The reproductive success of cohort~$ i $ is determined by
+The reproductive success of cohort~$ i $ is determined by:
 \begin{equation}
 \int\limits_0^T \frac{\mathrm{d} S_i(t)}{\mathrm{d} t} \, e^{-\mu t} \: dt \:\: = \:\: \delta \,
 \int\limits_0^T u_i(t) \, f_i(M_1(t), M_2(t)) \, e^{-\mu t} \: dt,  \label{3_1}
 \end{equation}
-where $ e^{-\mu t} $ describes exponential extinction of the infections, and $ \mu $ is a positive constant. Since $ \delta $ is
+where $ e^{-\mu t} $ describes the exponential extinction of the infections, and $ \mu $ is a positive constant. Since $ \delta $ is
 a positive constant, we can divide \cref{3_1} by $ \delta $ and arrive at
 \begin{equation}
 J_i(u_1(\cdot), u_2(\cdot)) \:\: = \:\: \int\limits_0^T u_i(t) \, f_i(M_1(t), M_2(t)) \, e^{-\mu t} \: dt.  \label{3}
@@ -174,7 +210,7 @@ f_i(M_1, M_2) \: = \: \nu(n_1 M_1 + n_2 M_2) \, \cdot \, \rho(M_i) \:\:\:
 \begin{equation}
 g(M) \: = \: \gamma M \quad \forall M \geqslant 0.  \label{6}
 \end{equation}
-Moreover, the following parameter values are chosen for numerical simulations:
+Moreover, the following parameter values are useful for the numerical simulations and arise from the analysis of \cite{YegorovGrognardMailleretHalkett2017}:
 \begin{equation}
 \arraycolsep=1.3pt
 \def\arraystretch{1.5}
@@ -197,22 +233,22 @@ with
 \begin{equation}
 \bar{M}_1 \: = \: \bar{M}_2 \: > \: \alpha / \gamma - k  \label{2_1}
 \end{equation}
-is an invariant set in the state space (that is, if a state trajectory starts in $ G $, it cannot leave $ G $).
+is an invariant set in the state space (if a state trajectory starts in $ G $, it cannot leave $ G $).
 The parameters~$ \bar{M}_1, \bar{M}_2 $ can be understood as carrying capacity estimates.
 
 
-\section{Uninvadable and evolutionary stable strategies}
+\section{Uninvadable and evolutionarily stable strategies}
 
-In this section, we describe a motivation for the game-theoretic statement~{\rm \cref{7,8,9}}.
+This section describes our motivation for the game-theoretic statement~{\rm \cref{7,8,9}}.
 
 Based on the terminology of Adaptive Dynamics \cite{DercoleRinaldi2008}, let us interpret cohort~{\rm 1} as a resident and
 cohort~{\rm 2} as a mutant. Denote the corresponding classes of considered strategies as $ \mathcal{U}_1 $ and $ \mathcal{U}_2 $. For
-a pair of strategies $ \: (u_1, u_2) \, \in \, \mathcal{U}_1 \times \mathcal{U}_2, \: $ we agree that the resident is
+a pair of methods $ \: (u_1, u_2) \, \in \, \mathcal{U}_1 \times \mathcal{U}_2, \: $ the resident is
 not invaded by the mutant if and only if
 $$
 J(u_1, u_2) \: = \: J_2(u_1, u_2) - J_1(u_1, u_2) \: \leqslant \: 0.
 $$
-A strategy $ \hat{u}_1 \in \mathcal{U}_1 $ is hence called uninvadable if and only if
+A strategy $ \hat{u}_1 \in \mathcal{U}_1 $ is hence uninvadable if and only if
 $$
 J \left( \hat{u}_1, u_2 \right) \: \leqslant \: 0 \quad \forall u_2 \in \mathcal{U}_2,
 $$
@@ -229,8 +265,9 @@ or
 \begin{equation}
 \inf_{u_1 \, \in \, \mathcal{U}_1} \: \sup_{u_2 \, \in \, \mathcal{U}_2} \: J(u_1, u_2) \:\: < \:\: 0  \label{9_4}
 \end{equation}
-(the latter inequality is mentioned in order to include the case when the infimum with respect to $ u_1 $ is not reached).
-This motivates our game-theoretic statement~{\rm \cref{7,8,9},} where the first player tries to maximize its
+(The latter inequality arises from when the infimum $u_1$ is not satisfied).
+%(we mention the latter inequality to include the case for when the infimum $ u_1 $ is not reached).
+Equation \cref{9_2} motivates our game-theoretic statement~{\rm \cref{7,8,9},} where the first player tries to maximize its
 resistance to an invasion by the second one{\rm ,} and vice versa.
 
 If $ M_1^0 = M_2^0 $ and $ \mathcal{U}_1 = \mathcal{U}_2 = \mathcal{U} ${\rm ,} then $ J(u, u) = 0 $ for all $ u \in \mathcal{U} ${\rm ,}
@@ -242,12 +279,12 @@ In this case{\rm ,} a strategy
 $$
 \hat{u}_1 \:\: \in \:\: \mathrm{Arg} \min_{u_1 \, \in \, \mathcal{U}} \left( \sup_{u_2 \, \in \, \mathcal{U}} \: J(u_1, u_2) \right)
 $$
-is called evolutionary stable if the related maximum with respect to $ u_2 $ is unique{\rm :}
+is called evolutionary stable if the related maximum for $ u_2 $ is unique{\rm :}
 $$
 \mathrm{Arg} \max_{u_2 \, \in \, \mathcal{U}} \: J \left( \hat{u}_1, u_2 \right) \:\: = \:\: \left\{ \hat{u}_1 \right\}.
 $$
 
-This approach to define evolutionary stable strategies was initially proposed in \cite{BernhardGrognardMailleretAkhmetzhanov2010}
+This approach to defining stable evolutionary strategies was initially proposed in \cite{BernhardGrognardMailleretAkhmetzhanov2010}
 and further developed in \cite{YegorovGrognardMailleretHalkettBernhard2019}.
 
 
@@ -268,8 +305,8 @@ p_1 \, ((1 - u_1) \, f_1(M_1, M_2) \: - \: g(M_1)) \\
 \end{equation}
 (this is the sum of the dot product of $ \: p = (p_1, p_2) \: $ with
 $ \: (\mathrm{d} M_1 / \mathrm{d} t, \, \mathrm{d} M_1 / \mathrm{d} t) \: $ and the integrand in $ \: J(u_1(\cdot), u_2(\cdot)), \: $
-see \cref{7} and \cref{9}). The Hamiltonian satisfies the saddle point condition with respect to the control variables~$ u_1 $ and
-$ u_2 $:
+see \cref{7} and \cref{9}). The Hamiltonian satisfies the saddle point condition concerning the control variables~$ u_1 $ and
+$ u_2 $:r
 \begin{equation}
 \begin{aligned}
 & \min_{u_1 \in [0, 1]} \: \max_{u_2 \in [0, 1]} \: H(t, M_1, M_2, u_1, u_2, p_1, p_2) \\
@@ -290,15 +327,14 @@ Cauchy problem for the Hamilton--Jacobi--Isaacs partial differential equation (H
 & t \in [0, T], \quad (M_1, M_2) \: \in \: G.
 \end{aligned} \right.  \label{15}
 \end{equation}
-The solution may in general be nonsmooth and should be understood in a generalized (viscosity or minimax) sense
+In general, the solution may be nonsmooth and understood in a generalized (viscosity or minimax) sense
 \cite{FlemingSoner2006,Subbotin1995}.
 
 Due to the general properties of value functions of zero-sum feedback differential games \cite{BotkinHoffmannTurova2011},
-the value function~$ V $ in our problem is Lipschitz continuous in $ [0, T] \times G $. By Rademacher's theorem, it is
+the value function~$ V $ in our problem is Lipschitz continuous in $ [0, T] \times G $. Rademacher's theorem, is
 differentiable almost everywhere in $ (0, T) \times G $, except for possibly a subset of Lebesgue measure zero.
 
-For points~$ (t, M_1, M_2) $ at which the value function is differentiable, the saddle feedback control strategies can be
-obtained from the relations
+For points~$ (t, M_1, M_2) $ at which the value function is differentiable, one can obtain the saddle feedback control strategies from the relations
 $$
 \begin{aligned}
 & u_1(t, M_1, M_2) \:\: \in \:\: \mathrm{Arg} \min_{w_1 \in [0, 1]} \left\{ \max_{w_2 \in [0, 1]} \:
@@ -311,7 +347,7 @@ H \left( t, M_1, M_2, w_1, w_2, {}^{{}^{{}^{{}^{{}^{}}}}} \right. \right. \\
 \left. \left. \frac{\partial V(t, M_1, M_2)}{\partial M_1}, \, \frac{\partial V(t, M_1, M_2)}{\partial M_2} \right) \right\},
 \end{aligned}
 $$
-which are reduced to
+which reduce to
 \begin{equation}
 \begin{aligned}
 & u_1(t, M_1, M_2) \:\: = \:\: \begin{cases}
@@ -328,10 +364,68 @@ which are reduced to
 \end{equation}
 These are resource allocation strategies that enable for equilibrium coexistence of the two pathogen cohorts.
 
+\section{Code used for the Numerical ROC-HJ}
+
+As is the case with many differential equations, it is challenging to solve this equation, which means we need to use a numerical solver to do this task. We used ROC-HJ, which is written in C++ and allows for a fast and easy transcription of the functions above into machine code. 
+Most of the preconfigured files and procedures of ROC-HJ allow for a quick transcription of a Hamilton-Jacobi equation.
+
+
+\cite{ROCHJ2019} provides further details of the type of assignments and other variables that need additional configuration in order for ROC-HJ to find a solution. To use ROC-HJ, we must assign a few variables to describe the kind of problem. Fig. \ref{code:defaults} contains some of the variables which describe the problem.
+%In our case, we mainly edited our data file and assigned; an example of a few of the default configurations that must be set can be found one in fig. \ref{code:defaults}.
+\begin{figure}
+    \inputminted[
+        frame=lines,
+        framesep=2mm,
+        baselinestretch=1.2,
+        %bgcolor=e0e0e0,
+        fontsize=\footnotesize,
+        firstline=17, 
+        lastline=20]{c}{data.h}
+\caption{A few configuration variables needed to solve the equation using ROC-HJ}
+\label{code:defaults}
+\end{figure}
+
+With these as well as many more options that we had to set to correctly assign the type of problem that we needed for the system to function precisely, we also needed to specify both a cost function (fig. \ref{code:cost}) and a dynamic equation (fig. \ref{code:dynamic}) to produce the data that we need
+
+\begin{figure}
+    \centering
+    \inputminted[frame=lines,
+        framesep=2mm,
+        baselinestretch=1.2,
+        %bgcolor=e0e0e0,
+        fontsize=\footnotesize,
+        %linenos,
+        firstline=156, 
+        lastline=176]{c}{data.h}
+    \caption{Function in C++ written for ROC-HJ describing the distributed cost equation.}
+    \label{code:cost}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \inputminted[frame=lines,
+        framesep=2mm,
+        baselinestretch=1.2,
+        %bgcolor=e0e0e0,
+        fontsize=\footnotesize,
+        %linenos,
+        firstline=133, 
+        lastline=154]{c}{data.h}
+    \caption{A C++ function for use by ROC-HJ to describe the required dynamic equation. 
+    %This function is written in C++ for ROC-HJ describing the dynamic equation.
+    }
+    \label{code:dynamic}
+\end{figure}
+
+Within the \texttt{data\_*.h} file, there is much more information describing the function. 
+One can find more information and details about this project's configuration variables by viewing the data file directly at \cite{data_ivan.h}.
+%but these have been left out to save space, and more information about the file can be found
+
 
 \section{Numerical solution}
 
-The Cauchy problem~\cref{15} for the HJI PDE is considered with the nutrient fluxes~\cref{4,5_1,5_2}, decay rate~\cref{6}, and
+We consider the Cauchy problem~\cref{15} for the HJI PDE with the nutrient fluxes~\cref{4,5_1,5_2}, decay rate~\cref{6}, and
+% The Cauchy problem~\cref{15} for the HJI PDE is considered with the nutrient fluxes~\cref{4,5_1,5_2}, decay rate~\cref{6}, and
 parameter values~\cref{19}. The numerical solution has been obtained via a finite difference method
 \cite{FlemingSoner2006,OsherShu1991,BotkinHoffmannTurova2011,BokanForcadelZidani2010} using the ROC-HJ software~\cite{ROCHJ2019}.
 
@@ -362,13 +456,13 @@ $$
 by the spatial step $ \: \Delta m_1 = \Delta m_2 = \Delta m = 2 \cdot 10^{-3} \: $ and time step $ \Delta \tau = 5 \cdot 10^{-3} $.
 
 Monotone finite difference methods (including the classical Lax--Friedrichs scheme) ensure theoretical convergence properties with
-error estimates, but they are mostly of first order and may generate so-called numerical diffusion problems on long time intervals.
+error estimates, but they are mostly of the first order and may generate so-called numerical diffusion problems on long time intervals.
 One way to attenuate such practical issues is to use higher-order ENO (essentially non-oscillatory) schemes such as those originally
-proposed in \cite{OsherShu1991}. They are not necessarily monotone, and there is lack of associated convergence theorems. However,
-their relevance has been justified by various numerical experiments \cite{OsherShu1991,BokanForcadelZidani2010}.
+proposed in \cite{OsherShu1991}. They are not necessarily monotone, and there is a lack of associated convergence theorems. However,
+their relevance is justifiable by various numerical experiments \cite{OsherShu1991,BokanForcadelZidani2010}.
 
-We have used the second-order ENO scheme (to approximate the partial derivatives with respect to the state variables) which is
-coupled with the second-order Runge--Kutta time discretization scheme and implemented in \cite{ROCHJ2019}. In order to evaluate
+We have used the second-order ENO scheme (to approximate the partial derivatives concerning the state variables),
+coupled with the second-order Runge--Kutta time discretization scheme and implemented in \cite{ROCHJ2019}. To evaluate
 the partial derivatives $ \partial V / \partial M_i $, $ i = 1,2 $, in the saddle feedback control representations~\cref{16},
 we have applied the standard second-order symmetrized approximation \cite[\S 5.7]{PressTeukolskyVetterlingFlannery2007}.
 
@@ -401,17 +495,19 @@ necessary conditions for saddle open-loop strategies \cite{Yong2015}.
 \includegraphics[width = 0.48 \textwidth]{Figure_5d_2.pdf}
 }
 \bf \caption{\it Finite-difference approximations of the saddle feedback control strategies at several time instants.
-White and gray colors show the regions of the control values $ 0 $ and $ 1 ${\rm ,} respectively. The fields of
-the corresponding forward-time velocities are also illustrated.}
+White and gray colors show the regions of the control values $ 0 $ and $ 1 ${\rm ,} respectively. Also illustrated are the fields of
+the corresponding forward-time velocities.}
 \label{Fig_5}
 \end{figure}
 
 Fig.~\ref{Fig_5} illustrates the appearance and time evolution of four approximate switching curves. For $ \tau \geqslant \tau^{**} $,
 they intersect at the point~$ \: \left( m^{**}, m^{**} \right) \, = \, 10^{-4} \cdot \left( M^{**}, M^{**} \right) $. With the further
-increase of $ \tau $, the feedback control portrait approaches a stationary form. A three-dimensional picture of the four control
-switching surfaces is given in Fig.~\ref{Fig_7}. For $ \tau \geqslant \tau^{**} $, the point~$ \left( m^{**}, m^{**} \right) $ attracts
-forward-time trajectories and determines an equilibrium steady-state regime for both cohorts, while the four surfaces can be
-interpreted as turnpikes.
+increase of $ \tau $, the feedback control portrait approaches a stationary form. 
+Fig.~\ref{Fig_7} is a three-dimensional portrait of the four control switching surfaces.
+% A three-dimensional picture of the four control
+% switching surfaces is given in Fig.~\ref{Fig_7}. 
+For $ \tau \geqslant \tau^{**} $, the point~$ \left( m^{**}, m^{**} \right) $ attracts
+forward-time trajectories and determines a steady-state equilibrium regime for both cohorts, while one can interpret the four surfaces as turnpikes.
 
 \begin{figure}
 \center{ \includegraphics[width = 0.98 \textwidth]{Figure_7.pdf} }
@@ -426,18 +522,21 @@ resource allocation strategy of cohort~{\rm 1} is uninvadable if $ M_1^0 \geqsla
 the saddle feedback resource allocation strategy of cohort~{\rm 2} is uninvadable if $ M_1^0 \leqslant M_2^0 $.
 
 
+
 \section{Conclusion}
 
-The current report discusses a mathematical development that allows for the construction of benchmark pathogenic resource
-allocation strategies against which actual infection mechanisms may be compared.
+The current report discusses a mathematical development that allows for constructing benchmark pathogenic resource
+allocation strategies against which we may compare actual infection mechanisms.
 
-We have studied resource allocation equilibrium for one-seasonal dynamics of two biotrophic fungal cohorts within a common host
+We have studied resource allocation equilibrium for the one-seasonal dynamics of two biotrophic fungal cohorts within a shared host
 plant. It is also relevant to investigate long-seasonal dynamics and associated evolutionary equilibria of competing pathogen
-cohorts. One may exploit certain discrete rules so as the transition from one season to another \cite{MailleretLemesle2009,Akhmetzhanov2012}.
-Another important research direction is to characterize not only such equilibria themselves but also whether they represent evolutionary
-attractors or not, and how they can be approached through evolution.
+cohorts. One may exploit specific discrete rules to transition from one season to another \cite{MailleretLemesle2009,Akhmetzhanov2012}.
+Another important research direction is to characterize such equilibria themselves and whether they represent evolutionary
+attractors or not and how the situation may change through evolution. 
+%they can be approached through evolution.
 
 
+\pagebreak
 \begin{thebibliography}{}
 
 \bibitem{YegorovGrognardMailleretHalkettBernhard2019}
@@ -504,8 +603,24 @@ In {\it Advances in Dynamic Games{\rm ,}
 Volume {\rm 12} of the series Annals of the International Society of Dynamic Games}, 73--95.
 Springer: New York, 2012.
 
+\bibitem{YegorovGrognardMailleretHalkett2017}
+Yegorov,~I., Grognard,~F., Mailleret,~L., Halkett,~F.
+Optimal resource allocation for biotrophic plant
+pathogens.
+IFAC-PapersOnline 50(1):3154–3159.
+
+\bibitem{data_ivan.h}
+Glaford,~S, Yegorov,~I.
+\texttt{data\_*.h} used by ROC-HJ to set the problem statement.
+\url{https://raw.githubusercontent.com/stevenglasford/Seminar_NDSU_2020/main/ivan_to_2.5/data/data_user_biotroph_fungi_game.h}
+
 \end{thebibliography}
 
+\hspace{1in}
+
+\noindent\thanks{Advisor: Dr. Ivan Yegorov\\}
+\email{steven.glasford@ndsu.edu\\}
+\address{Department of Mathematics, North Dakota State University, PO Box 6050, Fargo, ND 58108-6050, USA}
 
 
 \end{document}
