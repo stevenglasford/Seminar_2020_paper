@@ -528,20 +528,24 @@ $$
 by the spatial step $ \: \Delta m_1 = \Delta m_2 = \Delta m = 2 \cdot 10^{-3}
 \: $ and time step $ \Delta \tau = 5 \cdot 10^{-3} $.
 
-Monotone finite difference methods (including the 
-classical Lax--Friedrichs scheme %todo: 
+Monotone finite difference methods %todo: cite and explain
+(including the 
+classical Lax--Friedrichs scheme %todo: define and cite
 ) ensure theoretical convergence properties with error estimates, but
-they are mostly of the first order and may generate so-called numerical
-diffusion problems on long time intervals. One way to attenuate such practical
-issues is to use higher-order ENO (essentially non-oscillatory) schemes such
-as those originally proposed in \cite{OsherShu1991}. They are not necessarily
+they are mostly of the first order and may generate so-called 
+numerical diffusion problems %todo: define and cite
+on long time intervals. One way to attenuate such practical
+issues is to use 
+higher-order ENO (essentially non-oscillatory) schemes %todo: define and cite
+such as those originally proposed in \cite{OsherShu1991}. They are not necessarily
 monotone, and there is a lack of associated convergence theorems. However,
 their relevance is justifiable by various numerical experiments 
 \cite{OsherShu1991,BokanForcadelZidani2010}.
 
 We have used the second-order ENO scheme (to approximate the partial
-derivatives concerning the state variables), coupled with the second-order
-Runge--Kutta time discretization scheme and implemented in \cite{ROCHJ2019}.
+derivatives concerning the state variables), coupled with the 
+second-order Runge--Kutta time discretization scheme %todo: cite and explain
+and implemented in \cite{ROCHJ2019}.
 To evaluate the partial derivatives $ \partial V / \partial M_i $, $ i = 1,2 $,
 in the saddle feedback control representations~\cref{16}, we have applied the
 standard second-order symmetrized approximation
@@ -551,12 +555,14 @@ Figs.~\ref{Fig_4} and \ref{Fig_5} show the reductions of the approximate
 value function and corresponding saddle feedback control strategies to the
 coordinate plane $ (m_1, m_2) $ for the time instants 
 $ \tau = 0 $ ($ t = T = 60 $), $ \tau = 5 $ ($ t = T - 5 = 55 $),
-$ \tau = \tau^{**} \approx 11.175 $ ($ t = T - \tau^{**} \approx 48.825 $),
+$ \tau = \tau^{**} %todo: define or explain tau**
+\approx 11.175 $ ($ t = T - \tau^{**} \approx 48.825 $),
 and $ \tau = T = 60 $ ($ t = 0 $). Here $ \tau^{**} $ is a 
 reverse time instant %todo: define and cite
 that triggers the appearance of singular control regimes and is obtained
 together with the equilibrium steady state~$ \left( M^{**}, M^{**} \right) $
-from the analysis based on Pontryagin's principle 
+from the analysis based on 
+Pontryagin's principle %todo: explain and maybe cite (cones and hyperplanes)
 \cite{YegorovGrognardMailleretHalkettBernhard2019}. Note that Pontryagin's
 principle for zero-sum two-player differential games describes necessary
 conditions for saddle open-loop strategies \cite{Yong2015}.
@@ -592,13 +598,17 @@ illustrated are the fields of the corresponding forward-time velocities.}
 Fig.~\ref{Fig_5} illustrates the appearance and time evolution of four
 approximate switching curves. For $ \tau \geqslant \tau^{**} $, they intersect
 at the point~$ \: \left( m^{**}, m^{**} \right) \, = \, 10^{-4}
-\cdot \left( M^{**}, M^{**} \right) $. With the further increase of $ \tau $,
-the feedback control portrait approaches a stationary form. Fig.~\ref{Fig_7}
-is a three-dimensional portrait of the four control switching surfaces. For
-$ \tau \geqslant \tau^{**} $, the point~$ \left( m^{**}, m^{**} \right) $
+\cdot \left( M^{**}, M^{**} \right) $. With the further increase of $ \tau $, the 
+feedback control portrait %todo: reword and describe better
+approaches a stationary form. Fig.~\ref{Fig_7}
+is a three-dimensional portrait %todo: use something other than portrait
+of the 
+four control switching surfaces. %todo: what is a four control switching surface, define and cite
+For $ \tau \geqslant \tau^{**} $, the point~$ \left( m^{**}, m^{**} \right) $
 attracts forward-time trajectories and determines a steady-state equilibrium
 regime for both cohorts, while one can interpret the four surfaces as turnpikes.
 
+%todo: describe what is happening in the figures
 \begin{figure}
 \center{ \includegraphics[width = 0.98 \textwidth]{Figure_7.pdf} }
 \bf \caption{\it The four control switching surfaces in the three-dimensional
@@ -617,14 +627,20 @@ allocation strategy of cohort~{\rm 2} is uninvadable if $ M_1^0
 
 
 \section{Conclusion}
+%todo: reword the conclusion so it is not as heavily technical
 
-The current report discusses a mathematical development that allows for
-constructing benchmark pathogenic resource allocation strategies against which
+The current report discusses a mathematical development that allows for constructing 
+benchmark pathogenic resource allocation strategies %todo: explain more fully and provide desciption before mentioning it.
+against which
 we may compare actual infection mechanisms.
 
 We have studied resource allocation equilibrium for the one-seasonal dynamics
 of two biotrophic fungal cohorts within a shared host plant. It is also relevant
-to investigate long-seasonal dynamics and associated evolutionary equilibria of
+to investigate 
+long-seasonal dynamics %todo: define or replace with something more descriptive
+and 
+associated evolutionary equilibria %todo: replace with something that is more understandable
+of
 competing pathogen cohorts. One may exploit specific discrete rules to
 transition from one season to another \cite{MailleretLemesle2009,Akhmetzhanov2012}.
 Another important research direction is to characterize such equilibria
