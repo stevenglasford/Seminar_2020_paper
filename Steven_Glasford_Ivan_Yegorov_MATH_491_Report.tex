@@ -1,5 +1,6 @@
 \RequirePackage{etex}
 
+
 \documentclass[11pt]{amsart}
 
 \usepackage{minted}
@@ -52,12 +53,19 @@
 \renewcommand{\@biblabel}[1]{#1.}
 \makeatother
 
-\author{Steven Glasford \\ Advisor: Dr.~Ivan Yegorov}
-\title{Numerical Solution of a dynamic equilibrium of pathogen cohorts.}
+\author{Steven~Glasford}
+\title{Modeling~warring~fungi~on~a~plant.}
+%Title of the first draft
+%\title{Numerical Solution of a dynamic equilibrium of pathogen cohorts.}
 %The following is the first title that we chose, 
 %but we changed it to allow for a shorter and sleeker title.
 %%%% Numerical solution of a first-order Hamilton--Jacobi equation for dynamic 
 %%%% equilibrium of pathogen cohorts.
+
+\thanks{Advisor: Dr. Ivan Yegorov}
+\email{steven.glasford@ndsu.edu}
+\address{Department of Mathematics, North Dakota State University, PO Box 6050,
+Fargo, ND 58108-6050, USA}
 
 \begin{document}
 
@@ -66,21 +74,31 @@
 
 \maketitle
 
-\section{Introduction}
+\begin{abstract}
+    In the wild it is very common for fungi and other pathogens to attempt to enter plant hosts, this typically results in competition from other pathogens as well for a single host. Also common is the case when a fungus mutates, where by natural selection, or by the act of introduction into a different environment. This leads to a case where the fungus that has not mutated (the resident) might have to compete with its mutated cousin. In this paper we investigate a zero sum game between a resident and mutant strain of fungi to see if one fungi wins over the other. We also explore the case in which the two strains enter an equilibrium point where both are able to exist. Furthermore, this paper simulates this situation on a single plant for a single season, and does not discuss the potential for evolution between seasons, or the dynamics of multiple plants of the same species.
+\end{abstract}
 
-In this report, we study a zero-sum feedback game for a system of nonlinear
-ordinary differential equations describing the one-seasonal dynamics of two
-biotrophic fungal cohorts within a shared host plant. The first fungus can be
-understood as the resident, while the second is the mutant.  The invasion
-functional takes the form of the difference between the two marginal fitness
-criteria and represents the cost in defining the differential game's value.
+
+\section{Introduction}
+In this paper, we study a zero-sum feedback game for a system of 
+nonlinear ordinary differential equations 
+describing the one-seasonal dynamics of %todo: reword, make basic
+two biotrophic fungal cohorts within a shared host plant. %todo 
+The first fungus can be understood as the resident, while the second is the mutant.  The 
+invasion functional %todo
+takes the form of the difference between the 
+two marginal fitness criteria %todo
+and represents the cost in defining the 
+differential game's value. %todo
 A general dynamic game approach of
 \cite{YegorovGrognardMailleretHalkettBernhard2019}
-is explored and discussed. The Cauchy problem for the first-order
-Hamilton--Jacobi partial differential equation (HJ PDE) created by this
+is explored and discussed. 
+The Cauchy problem %todo: give more information, define in the appendix and cite
+for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this
 situation is numerically solved using the ROC-HJ software~\cite{ROCHJ2019}.
-Analysis of the numerical simulation interpretations obtained by this package
-is further investigated later in this document.
+Analysis of the numerical simulations obtained by this software package, as well as a graphical description is further investigated later in this document.
+
+
 
 
 \section{Statement of the model}
@@ -124,14 +142,14 @@ The following dynamic model can thus be formulated
 \cite{YegorovGrognardMailleretHalkettBernhard2019}:
 \begin{equation}
 \left\{ \begin{aligned}
-& \frac{\mathrm{d} M_1(t)}{\mathrm{d} t} \:\: = \:\: (1 - u_1(t)) \,
-  f_1(M_1(t), M_2(t)) \: - \: g(M_1(t)), \\
-& \frac{\mathrm{d} M_2(t)}{\mathrm{d} t} \:\: = \:\: (1 - u_2(t)) \,
-  f_2(M_1(t), M_2(t)) \: - \: g(M_2(t)), \\
+& \frac{\mathrm{d} M_1(t)}{\mathrm{d} t} \:\: = \:\: \left(1 - u_1(t)\right) \,
+  f_1\left(M_1(t), M_2(t)\right) \: - \: g\left(M_1(t)\right), \\
+& \frac{\mathrm{d} M_2(t)}{\mathrm{d} t} \:\: = \:\: \left(1 - u_2(t)\right) \,
+  f_2\left(M_1(t), M_2(t)\right) \: - \: g\left(M_2(t)\right), \\
 & \frac{\mathrm{d} S_1(t)}{\mathrm{d} t} \:\: = \:\: \delta \, u_1(t) \,
-  f_1(M_1(t), M_2(t)), \\
+  f_1\left(M_1(t), M_2(t)\right), \\
 & \frac{\mathrm{d} S_2(t)}{\mathrm{d} t} \:\: = \:\: \delta \, u_2(t) \,
-  f_2(M_1(t), M_2(t)), \\
+  f_2\left(M_1(t), M_2(t)\right), \\
 & M_1(0) = M_1^0, \quad M_2(0) = M_2^0, \quad S_1(0) = S_1^0,
   \quad S_2(0) = S_2^0, \\
 & 0 \leqslant u_1(t) \leqslant 1, \quad 0 \leqslant u_2(t) \leqslant 1,
@@ -147,14 +165,14 @@ The reproductive success of cohort~$ i $ is determined by:
 \begin{equation}
 \int\limits_0^T \frac{\mathrm{d} S_i(t)}{\mathrm{d} t} \, e^{-\mu t}
     \: dt \:\: = \:\: \delta \,
-\int\limits_0^T u_i(t) \, f_i(M_1(t), M_2(t)) \, e^{-\mu t} \: dt,  \label{3_1}
+\int\limits_0^T u_i(t) \, f_i\left(M_1(t), M_2(t)\right) \, e^{-\mu t} \: dt,  \label{3_1}
 \end{equation}
 where $ e^{-\mu t} $ describes the exponential extinction of the infections,
 and $ \mu $ is a positive constant. Since $ \delta $ is a positive constant,
 we can divide \cref{3_1} by $ \delta $ and arrive at
 \begin{equation}
-J_i(u_1(\cdot), u_2(\cdot)) \:\: = \:\: \int\limits_0^T u_i(t) \, f_i(M_1(t),
-  M_2(t)) \, e^{-\mu t} \: dt.  \label{3}
+J_i\left(u_1(\cdot), u_2(\cdot)\right) \:\: = \:\: \int\limits_0^T u_i(t) \, f_i\left(M_1(t),
+  M_2(t)\right) \, e^{-\mu t} \: dt.  \label{3}
 \end{equation}
 
 In line with \cite{YegorovGrognardMailleretHalkettBernhard2019,
@@ -165,10 +183,10 @@ seeking the saddle control strategies in the following zero-sum two-player
 differential game:
 \begin{equation}
 \left\{ \begin{aligned}
-& \frac{\mathrm{d} M_1(t)}{\mathrm{d} t} \:\: = \:\: (1 - u_1(t)) \,
-  f_1(M_1(t), M_2(t)) \: - \: g(M_1(t)), \\
-& \frac{\mathrm{d} M_2(t)}{\mathrm{d} t} \:\: = \:\: (1 - u_2(t)) \,
-  f_2(M_1(t), M_2(t)) \: - \: g(M_2(t)), \\
+& \frac{\mathrm{d} M_1(t)}{\mathrm{d} t} \:\: = \:\: \left(1 - u_1(t)\right) \,
+  f_1\left(M_1(t), M_2(t)\right) \: - \: g\left(M_1(t)\right), \\
+& \frac{\mathrm{d} M_2(t)}{\mathrm{d} t} \:\: = \:\: \left(1 - u_2(t)\right) \,
+  f_2\left(M_1(t), M_2(t)\right) \: - \: g\left(M_2(t)\right), \\
 & M_1(0) = M_1^0, \quad M_2(0) = M_2^0, \\
 & 0 \leqslant u_1(t) \leqslant 1, \quad 0 \leqslant u_2(t) \leqslant 1,
   \quad t \in [0, T],
@@ -181,8 +199,8 @@ J(u_1(\cdot), u_2(\cdot)) \:\: \longrightarrow \:\: \inf_{u_1(\cdot)} \:
 \end{equation}
 \begin{equation}
 \begin{aligned}
-& J(u_1(\cdot), u_2(\cdot)) \:\: = \:\: J_2(u_1(\cdot), u_2(\cdot)) \: - \:
-J_1(u_1(\cdot), u_2(\cdot)) \\
+& J\left(u_1(\cdot), u_2(\cdot)\right) \:\: = \:\: J_2\left(u_1(\cdot), u_2(\cdot)\right) \: - \:
+J_1\left(u_1(\cdot), u_2(\cdot)\right) \\
 & \quad
 = \:\: \int\limits_0^T \left( u_2(t) \, f_2(M_1(t), M_2(t)) \: - \: u_1(t)
   \, f_1(M_1(t), M_2(t)) \right) \,
@@ -316,9 +334,9 @@ Introduce the following function known as Hamiltonian:
 \begin{equation}
 \begin{aligned}
 & H(t, M_1, M_2, u_1, u_2, p_1, p_2) \:\: = \:\:
-p_1 \, ((1 - u_1) \, f_1(M_1, M_2) \: - \: g(M_1)) \\
+p_1 \, \left((1 - u_1) \, f_1(M_1, M_2) \: - \: g(M_1)\right) \\
 & \qquad\qquad\qquad\qquad\qquad\quad \:\:\:\,
-+ \:\: p_2 \, ((1 - u_2) \, f_2(M_1, M_2) \: - \: g(M_2)) \\
++ \:\: p_2 \, \left((1 - u_2) \, f_2(M_1, M_2) \: - \: g(M_2)\right) \\
 & \qquad\qquad\qquad\qquad\qquad\quad \:\:\:\,
 + \:\: e^{-\mu t} \, (u_2 \, f_2(M_1, M_2) \: - \: u_1 \, f_1(M_1, M_2)) \\
 & \forall t \in [0, T] \quad \forall \: (M_1, M_2) \: \in \: G \quad \forall
@@ -331,7 +349,7 @@ $ \: (\mathrm{d} M_1 / \mathrm{d} t, \, \mathrm{d} M_1 / \mathrm{d} t) \: $ and
 the integrand in $ \: J(u_1(\cdot), u_2(\cdot)), \: $ see \cref{7} and
 \cref{9}). The Hamiltonian satisfies the saddle point condition concerning
 the control variables~$ u_1 $ and
-$ u_2 $:r
+$ u_2 $
 \begin{equation}
 \begin{aligned}
 & \min_{u_1 \in [0, 1]} \: \max_{u_2 \in [0, 1]} \: H(t, M_1, M_2, u_1, u_2,
@@ -430,7 +448,7 @@ describe the problem.
 With these as well as many more options that we had to set to correctly assign
 the type of problem that we needed for the system to function precisely, we
 also needed to specify both a cost function (fig. \ref{code:cost}) and a
-dynamic equation (fig. \ref{code:dynamic}) to produce the data that we need
+dynamic equation (fig. \ref{code:dynamic}) to produce the data that we need.
 
 
 Within the \texttt{data\_*.h} file, there is much more information describing
@@ -583,6 +601,20 @@ Another important research direction is to characterize such equilibria
 themselves and whether they represent evolutionary attractors or not and how the
 situation may change through evolution.
 
+\appendix
+
+\Commonsection{Common terms}
+\begin{itemize}
+    \item \textbf{Zero-sum feedback game}: 
+    \item \textbf{Pathogen}: this is an infectious organism, this paper mostly discusses fungal invaders.
+    \item \textbf{Resident pathogen}: this is the original organism and has not been mutated.
+    \item \textbf{Mutant pathogen}: this is a strain of the same species of organism as the resident species, but has been mutated, through physical separation or natural mutation.
+    \item \textbf{Mycelia}: the ``roots'' of a fungus, made of extremely fine branches called hyphae. 
+    \item \textbf{Cohort}: cohort typically means a person or thing that is typically on ``your side''. In this paper it typically refers to a pathogen that belongs to the same species, but differs slightly and is not of the same organism.
+    \item \textbf{Biotrophic}: describes a parasite attached to plant. Describing a plant parasite.
+    \item \textbf{Nutrient flux}: the amount of nutrients consumed by the pathogen.
+\end{itemize}
+
 \begin{thebibliography}{}
 
 \bibitem{YegorovGrognardMailleretHalkettBernhard2019}
@@ -715,10 +747,7 @@ ROC-HJ to set the problem statement.}
 
 \hspace{1in}
 
-\noindent\thanks{Advisor: Dr. Ivan Yegorov\\}
-\email{steven.glasford@ndsu.edu\\}
-\address{Department of Mathematics, North Dakota State University, PO Box 6050,
-Fargo, ND 58108-6050, USA}
+\noindent
 
 
 \end{document}
