@@ -80,8 +80,10 @@ Fargo, ND 58108-6050, USA}
 
 
 \section{Introduction}
-In this paper, we study a zero-sum feedback game for a system of 
-nonlinear ordinary differential equations 
+%todo: add motivation
+In this paper, we study a zero-sum feedback game %todo: add a definition in appendix and cite
+for a system of 
+nonlinear ordinary differential equations %todo: add details to appendix and cite or find resource to cite to
 describing the one-seasonal dynamics of %todo: reword, make basic
 two biotrophic fungal cohorts within a shared host plant. %todo 
 The first fungus can be understood as the resident, while the second is the mutant.  The 
@@ -102,7 +104,7 @@ Analysis of the numerical simulations obtained by this software package, as well
 
 
 \section{Statement of the model}
-
+%todo: add motivation
 Consider the one-seasonal dynamics of two biotrophic fungal cohorts within one
 host plant. Let us refer to them as to cohorts~$ 1 $ and $ 2 $. For
 cohort~$ i $, let $ n_i $ be the lesion density, which is the number of mycelia
@@ -122,7 +124,8 @@ of infecting spores (for instance, if a mycelium appears from one spore at the
 beginning of the infection period, the initial mycelial size can be set as one
 equivalent of an infecting spore or only as one spore).
 
-To determine the nutrient flux by cohort~$ i $ we use the function,
+To determine the nutrient flux %todo: define and cite
+by cohort~$ i $ we use the function,
 $ f_i = f_i(M_1, M_2) $, which is allocated between two different pathogen
 activities such as within-host multiplication (mycelial growth) and producing
 asexual spores. For brevity, we do not explicitly show the dependence on the
@@ -133,8 +136,7 @@ to mycelial growth when $ u_i(t) = 0 $ and to spore production when
 $ u_i(t) = 1 $, while, for $ 0 < u_i(t) < 1 $, there is an intermediate
 configuration.
 
-Let $ g = g(M) $ be the rate of mycelial decay for both cohorts. Assume the
-constant yield of spores, $ \delta > 0 $, as compared to mycelial growth.
+Let $ g = g(M) $ be the rate of mycelial decay for both cohorts. Assume the constant yield of spores, $ \delta > 0 $, as compared to mycelial growth. %todo: describe this more simply
 
 The period of the infections within the season is a fixed interval~$ [0, T] $.
 
@@ -158,8 +160,8 @@ The following dynamic model can thus be formulated
 \end{equation}
 Since the right-hand sides of the third and fourth equations in (\ref{1}) do
 not contain $ S_1 $ and $ S_2 $, one does not need to treat $ S_1 $ and $ S_2 $
-explicitly, so that $ M_1 $ and $ M_2 $ can be considered as the only state
-variables.
+explicitly, so that $ M_1 $ and $ M_2 $ can be considered as the only
+state variables. %todo: define and cite
 
 The reproductive success of cohort~$ i $ is determined by:
 \begin{equation}
@@ -171,16 +173,18 @@ where $ e^{-\mu t} $ describes the exponential extinction of the infections,
 and $ \mu $ is a positive constant. Since $ \delta $ is a positive constant,
 we can divide \cref{3_1} by $ \delta $ and arrive at
 \begin{equation}
+%define and describe the Jacobi function, maybe add something to appendix
 J_i\left(u_1(\cdot), u_2(\cdot)\right) \:\: = \:\: \int\limits_0^T u_i(t) \, f_i\left(M_1(t),
   M_2(t)\right) \, e^{-\mu t} \: dt.  \label{3}
+  
 \end{equation}
 
 In line with \cite{YegorovGrognardMailleretHalkettBernhard2019,
 BernhardGrognardMailleretAkhmetzhanov2010},
 we study one-seasonal competition between the two pathogen cohorts in terms of
-their average reproductive outputs by
-seeking the saddle control strategies in the following zero-sum two-player
-differential game:
+their average reproductive outputs by seeking the 
+saddle control strategies %todo: define and cite, give example in appendix
+in the following zero-sum two-player differential game:
 \begin{equation}
 \left\{ \begin{aligned}
 & \frac{\mathrm{d} M_1(t)}{\mathrm{d} t} \:\: = \:\: \left(1 - u_1(t)\right) \,
@@ -193,8 +197,9 @@ differential game:
 \end{aligned} \right.  \label{7}
 \end{equation}
 \begin{equation}
-J(u_1(\cdot), u_2(\cdot)) \:\: \longrightarrow \:\: \inf_{u_1(\cdot)} \:
-  \sup_{u_2(\cdot)} \:\: \mbox{or} \:\:
+J(u_1(\cdot), u_2(\cdot)) \:\: \longrightarrow \:\: 
+\inf_{u_1(\cdot)} \:  \sup_{u_2(\cdot)} %todo: add more information and describe what infimum and supremum, maybe describe before or cite in the bottom appendix
+\:\: \mbox{or} \:\:
 \sup_{u_2(\cdot)} \: \inf_{u_1(\cdot)} \, ,  \label{8}
 \end{equation}
 \begin{equation}
@@ -209,7 +214,9 @@ e^{-\mu t} \: dt.
 \end{equation}
 
 According to \cite{YegorovGrognardMailleretHalkettBernhard2019}, we represent
-the nutrient fluxes and decay rates as
+the nutrient fluxes %todo: cite what nutrient fluxes are
+and decay rates %todo: describe decay rates
+as
 \begin{equation}
 f_i(M_1, M_2) \: = \: \nu(n_1 M_1 + n_2 M_2) \, \cdot \, \rho(M_i) \:\:\:
 \forall M_1 \geqslant 0 \:\:\: \forall M_2 \geqslant 0, \quad i = 1,2, 
@@ -258,12 +265,18 @@ with
 \end{equation}
 is an invariant set in the state space (if a state trajectory starts in $ G $,
 it cannot leave $ G $). The parameters~$ \bar{M}_1, \bar{M}_2 $ can be
-understood as carrying capacity estimates.
+understood as 
+carrying capacity estimates. %todo: define carrying capacities at least, reference from appendix
 
 
 \section{Uninvadable and evolutionarily stable strategies}
+%todo: define uninvadable give example
+%todo: define evolutionrily stable strategies give example
+%todo: add motivation
 
-This section describes our motivation for the game-theoretic statement
+This section describes our motivation for the 
+game-theoretic %todo: define and cite
+statement
 {\rm \cref{7,8,9}}.
 
 Based on the terminology of Adaptive Dynamics \cite{DercoleRinaldi2008}, let
@@ -308,6 +321,8 @@ If $ M_1^0 = M_2^0 $ and $ \mathcal{U}_1 = \mathcal{U}_2 = \mathcal{U} ${\rm ,}
 then $ J(u, u) = 0 $ for all $ u \in \mathcal{U} ${\rm ,} and {\rm (\ref{9_2})}
 is simplified to
 \begin{equation}
+%todo: define Arg or remove if meaningless
+
 \min_{u_1 \, \in \, \mathcal{U}} \: \sup_{u_2 \, \in \, \mathcal{U}} \:
   J(u_1, u_2) \:\: = \:\: 0.  \label{9_3}
 \end{equation}
@@ -329,6 +344,7 @@ in \cite{YegorovGrognardMailleretHalkettBernhard2019}.
 
 
 \section{Hamilton--Jacobi--Isaacs equation}
+%todo: add motivation
 
 Introduce the following function known as Hamiltonian:
 \begin{equation}
@@ -376,14 +392,23 @@ Hamilton--Jacobi--Isaacs partial differential equation (HJI PDE):
 & t \in [0, T], \quad (M_1, M_2) \: \in \: G.
 \end{aligned} \right.  \label{15}
 \end{equation}
-In general, the solution may be nonsmooth and understood in a generalized
-(viscosity or minimax) sense \cite{FlemingSoner2006,Subbotin1995}.
+In general, the solution may be 
+nonsmooth %todo: define and provide example
+and understood in a generalized
+(viscosity %todo: provide more explanation
+or 
+minimax %todo define minimax and cite
+) sense \cite{FlemingSoner2006,Subbotin1995}.
 
 Due to the general properties of value functions of zero-sum feedback
 differential games \cite{BotkinHoffmannTurova2011}, the value function~$ V $
-in our problem is Lipschitz continuous in $ [0, T] \times G $. Rademacher's
-theorem, is differentiable almost everywhere in $ (0, T) \times G $, except
-for possibly a subset of Lebesgue measure zero.
+in our problem is 
+Lipschitz continuous %todo: define in appendix and cite
+in $ [0, T] \times G $. 
+Rademacher's theorem, %todo: describe in appendix and cite
+is differentiable almost everywhere in $ (0, T) \times G $, except
+for possibly a 
+subset of Lebesgue measure zero. %todo: define and cite
 
 For points~$ (t, M_1, M_2) $ at which the value function is differentiable,
 one can obtain the saddle feedback control strategies from the relations
@@ -425,9 +450,11 @@ M_1, M_2)}{\partial M_2} \: = \: 0.
 \end{aligned}  \label{16}
 \end{equation}
 These are resource allocation strategies that enable for equilibrium
-coexistence of the two pathogen cohorts.
+coexistence of the two pathogen cohorts. %todo: describe in more detail
 
 \section{Code used for the Numerical ROC-HJ}
+%todo: add motivation
+%todo: add details on how and where to access
 
 As is the case with many differential equations, it is challenging to solve
 this equation, which means we need to use a numerical solver to do this task.
@@ -456,6 +483,7 @@ the function. One can find more information and details about this project's
 configuration variables by viewing the data file directly at \cite{data_ivan.h}.
 
 \section{Numerical solution}
+%todo: add motivation
 
 We consider the Cauchy problem~\cref{15} for the HJI PDE with the nutrient
 fluxes~\cref{4,5_1,5_2}, decay rate~\cref{6}, and parameter values~\cref{19}.
@@ -490,8 +518,8 @@ m_i \, = \, M_i \cdot 10^{-4}, \quad i = 1,2  \label{75_1}
 
 We specify the carrying capacity estimates as $ \: \bar{M}_1 = \bar{M}_2 =
 \bar{M} = 3.5 \cdot 10^4 $,
-$ \: \bar{m} = \bar{M} \cdot 10^{-4} = 3.5, \: $ and discretize the
-computational region
+$ \: \bar{m} = \bar{M} \cdot 10^{-4} = 3.5, \: $ and 
+discretize the computational region %todo: add more details and explain
 $$
 \left\{ (m_1, m_2, \tau) \: \colon \: 0 \leqslant m_1 \leqslant \bar{m}, \:\: 0
 \leqslant m_2 \leqslant \bar{m}, \:\:
@@ -500,8 +528,9 @@ $$
 by the spatial step $ \: \Delta m_1 = \Delta m_2 = \Delta m = 2 \cdot 10^{-3}
 \: $ and time step $ \Delta \tau = 5 \cdot 10^{-3} $.
 
-Monotone finite difference methods (including the classical Lax--Friedrichs
-scheme) ensure theoretical convergence properties with error estimates, but
+Monotone finite difference methods (including the 
+classical Lax--Friedrichs scheme %todo: 
+) ensure theoretical convergence properties with error estimates, but
 they are mostly of the first order and may generate so-called numerical
 diffusion problems on long time intervals. One way to attenuate such practical
 issues is to use higher-order ENO (essentially non-oscillatory) schemes such
@@ -523,7 +552,8 @@ value function and corresponding saddle feedback control strategies to the
 coordinate plane $ (m_1, m_2) $ for the time instants 
 $ \tau = 0 $ ($ t = T = 60 $), $ \tau = 5 $ ($ t = T - 5 = 55 $),
 $ \tau = \tau^{**} \approx 11.175 $ ($ t = T - \tau^{**} \approx 48.825 $),
-and $ \tau = T = 60 $ ($ t = 0 $). Here $ \tau^{**} $ is a reverse time instant
+and $ \tau = T = 60 $ ($ t = 0 $). Here $ \tau^{**} $ is a 
+reverse time instant %todo: define and cite
 that triggers the appearance of singular control regimes and is obtained
 together with the equilibrium steady state~$ \left( M^{**}, M^{**} \right) $
 from the analysis based on Pontryagin's principle 
