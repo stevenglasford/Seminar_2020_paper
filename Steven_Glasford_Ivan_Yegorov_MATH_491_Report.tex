@@ -70,7 +70,7 @@ Fargo, ND 58108-6050, USA}
 \begin{document}
 
 %The first draft of this paper is due 4 November 2020
-\date{4~November~2020, MATH~491, Fall~2020}
+\date{Fall~2020}
 
 \maketitle
 
@@ -80,41 +80,47 @@ Fargo, ND 58108-6050, USA}
 
 
 \section{Introduction}
-Pathogens are what makes people, pets and every other living organism sick. They are a broad group and can do everything from make a person sick with COVID-19, to blight rotting potatoes in the field starving people. Plant pathogens are everywhere, going outside to the park, it is not uncommon for a person to see brown spots on leaves of trees caused by fungus or to see lichens growing on the bark of oak trees. In this paper, a zero-sum feedback game [\ref{terms}.\ref{term:zerosum}] of two competing pathogens on a single plant, battling for dominance on the plant. To do this we use a system of nonlinear ordinary differential equations [\ref{terms}.\ref{term:nonlinearODE}] and use computers and numerical analysis to solve and describe the dynamics of a single growing season of two invading fungal pathogens on a single plant. The first fungus can be understood as the resident, while the second is the mutant. The mutant fungus is of the same species, but is a different individual.  The function that describes the invasion of the fungi is the difference between the two marginal fitness criteria [\ref{terms}.\ref{term:marginal}], and represents the cost in defining the  differential game's value [\ref{terms}.\ref{term:differentialgame}].  A general dynamic game approach of \cite{YegorovGrognardMailleretHalkettBernhard2019} is explored and discussed. The Cauchy problem [\ref{terms}.\ref{term:cauchy}] for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this situation is numerically solved using the ROC-HJ software~\cite{ROCHJ2019}. Analysis of the numerical simulations obtained by this software package, as well as a graphical description is further investigated later in this document.
+Pathogens are what makes people, pets and every other living organism sick. They are a broad group and can do everything from make a person sick with COVID-19, to blight rotting potatoes in the field starving people. Plant pathogens are everywhere, going outside to the park, it is not uncommon for a person to see brown spots on leaves of trees caused by fungus or to see lichens growing on the bark of oak trees. 
+
+In this paper, a zero-sum feedback game [\ref{terms}.\ref{term:zerosum}] of two competing pathogens on a single plant, battling for dominance on the plant. To do this we use a system of nonlinear ordinary differential equations [\ref{terms}.\ref{term:nonlinearODE}] and use computers and numerical analysis to solve and describe the dynamics of a single growing season of two invading fungal pathogens on a single plant. 
+
+The first fungus can be understood as the resident, while the second is the mutant. The mutant fungus is of the same species, but is a different individual.  The function that describes the invasion of the fungi is the difference between the two marginal fitness criteria [\ref{terms}.\ref{term:marginal}], and represents the cost in defining the  differential game's value [\ref{terms}.\ref{term:differentialgame}].  A general dynamic game approach of \cite{YegorovGrognardMailleretHalkettBernhard2019} is explored and discussed. The Cauchy problem [\ref{terms}.\ref{term:cauchy}] for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this situation is numerically solved using the ROC-HJ software~\cite{ROCHJ2019}. 
+
+Analysis of the numerical simulations obtained by this software package, as well as a graphical description is further investigated later in this document.
 
 
 \section{Statement of the model}
 Before we can properly analyze the numerical solutions we must first define the model. We consider the dynamics of two biotrophic [\ref{terms}.\ref{term:biotrohpic}] fungal cohorts [\ref{terms}.\ref{term:cohort}] on one plant in a single season.  Let us refer to them as to cohorts~$ 1 $ and $ 2 $. For
-cohort~$ i $, let $ n_i $ be the lesion density, which is the number of mycelia
+cohort~$ i $, let $ n_i $ the lesion density, which is the number of mycelia [\ref{terms}.\ref{term:mycelia}]
 per unit area of the host. For simplicity, assume $ n_1 $ and $ n_2 $ to be
 constant during the entire infection period within the season, which means that
-new infectious agents do not penetrate the host during the analyzed period.
-Even though this is typically a substantial restriction for infections in
-nature, it still allows for drawing significant conclusions with relevant
-biological interpretations and adhering to standard experimental infection
-protocols.
+only the resident and the mutant exist on the plant, and there are no new invaders do not penetrate the host during the analyzed period.
+In the wild this is  a substantial restriction for infections in, but it still allows for us to draw significant conclusions with relevant
+biological interpretations while adhering to standard experimental infection protocols.
 
-Denote the average size of a mycelium in cohort~$ i $ by $ M_i $. Let $ S_i $
-be the average quantity of spores produced by a mycelium in cohort~$ i $. The
-infection age~$ t $ within the season is a time variable. Note that the
+We denote the average size of a mycelium in cohort~$ i $ by $ M_i $. and Let $ S_i $
+be the average quantity of spores produced by a mycelium in cohort~$ i $. The duration of the
+infection ~$ t $ within the season is a time variable. Note that the
 mycelial sizes~$ M_1 $ and $ M_2 $ are measured in terms of equivalent amounts
 of infecting spores (for instance, if a mycelium appears from one spore at the
 beginning of the infection period, the initial mycelial size can be set as one
 equivalent of an infecting spore or only as one spore).
 
-To determine the nutrient flux %todo: define and cite
+To determine the nutrient flux [\ref{terms}.\ref{term:nutrientflux}],
 by cohort~$ i $ we use the function,
 $ f_i = f_i(M_1, M_2) $, which is allocated between two different pathogen
 activities such as within-host multiplication (mycelial growth) and producing
 asexual spores. For brevity, we do not explicitly show the dependence on the
 constant parameters $ n_1, n_2 $ when writing $ f_i = f_i(M_1, M_2) $,
 $ i = 1,2 $. Let $ u_i = u_i(t) $ be a related resource allocation (control)
-function, taking values between zero and one. Suppose that the whole flux goes
-to mycelial growth when $ u_i(t) = 0 $ and to spore production when
-$ u_i(t) = 1 $, while, for $ 0 < u_i(t) < 1 $, there is an intermediate
-configuration.
+function, taking values between zero and one. 
+When $ u_i(t) = 0 $ the particular fungus only produces mycelia, while when $ u_i(t) = 1 $ the fungus produces spores, and when $ 0 < u_i(t) < 1 $ the fungus is doing both at some degree.
+% Suppose that the whole flux goes
+% to mycelial growth when $ u_i(t) = 0 $ and to spore production when
+% $ u_i(t) = 1 $, while, for $ 0 < u_i(t) < 1 $, there is an intermediate
+% configuration. In other words, the fungus expends all of its energy to produce mycelia when 
 
-Let $ g = g(M) $ be the rate of mycelial decay for both cohorts. Assume the constant yield of spores, $ \delta > 0 $, as compared to mycelial growth. %todo: describe this more simply
+Let $ g = g(M) $ be the rate of mycelial decay for both cohorts, we assume that the mutation does not. We assume a constant yield of spores, $ \delta > 0 $, as compared to mycelial growth. 
 
 The period of the infections within the season is a fixed interval~$ [0, T] $.
 
@@ -139,29 +145,27 @@ The following dynamic model can thus be formulated
 Since the right-hand sides of the third and fourth equations in (\ref{1}) do
 not contain $ S_1 $ and $ S_2 $, one does not need to treat $ S_1 $ and $ S_2 $
 explicitly, so that $ M_1 $ and $ M_2 $ can be considered as the only
-state variables. %todo: define and cite
+state variables [\ref{terms}.\ref{term:statevariables}]. %todo: define and cite
 
-The reproductive success of cohort~$ i $ is determined by:
+The reproductive success (the amount of growth on the plant) of cohort~$ i $ is determined by:
 \begin{equation}
 \int\limits_0^T \frac{\mathrm{d} S_i(t)}{\mathrm{d} t} \, e^{-\mu t}
     \: dt \:\: = \:\: \delta \,
 \int\limits_0^T u_i(t) \, f_i\left(M_1(t), M_2(t)\right) \, e^{-\mu t} \: dt,  \label{3_1}
 \end{equation}
-where $ e^{-\mu t} $ describes the exponential extinction of the infections,
+where $ e^{-\mu t} $ describes the exponential extinction of the infections as the plant develops immunity,
 and $ \mu $ is a positive constant. Since $ \delta $ is a positive constant,
-we can divide \cref{3_1} by $ \delta $ and arrive at
+we can divide \cref{3_1} by $ \delta $ and arrive at the following, where $J$ is a Jacobi function [\ref{mathdefs}.\ref{math:jacobi}]
 
-%define and describe the Jacobi function, maybe add something to appendix
 \begin{equation}
 J_i\left(u_1(\cdot), u_2(\cdot)\right) \:\: = \:\: \int\limits_0^T u_i(t) \, f_i\left(M_1(t),
   M_2(t)\right) \, e^{-\mu t} \: dt.  \label{3}
 \end{equation}
 
-In line with \cite{YegorovGrognardMailleretHalkettBernhard2019,
+
+Following with \cite{YegorovGrognardMailleretHalkettBernhard2019,
 BernhardGrognardMailleretAkhmetzhanov2010},
-we study one-seasonal competition between the two pathogen cohorts in terms of
-their average reproductive outputs by seeking the 
-saddle control strategies %todo: define and cite, give example in appendix
+we look at the competition between the two cohorts in a single season by investigating their individual reproductive outputs and seeking the saddle control strategies [\ref{terms}.\ref{term:saddlecontrol}] (where the two pathogens enter a sort of ``tie'')
 in the following zero-sum two-player differential game:
 \begin{equation}
 \left\{ \begin{aligned}
@@ -176,7 +180,7 @@ in the following zero-sum two-player differential game:
 \end{equation}
 \begin{equation}
 J(u_1(\cdot), u_2(\cdot)) \:\: \longrightarrow \:\: 
-\inf_{u_1(\cdot)} \:  \sup_{u_2(\cdot)} %todo: add more information and describe what infimum and supremum, maybe describe before or cite in the bottom appendix
+\inf_{u_1(\cdot)} \:  \sup_{u_2(\cdot)} 
 \:\: \mbox{or} \:\:
 \sup_{u_2(\cdot)} \: \inf_{u_1(\cdot)} \, ,  \label{8}
 \end{equation}
@@ -190,11 +194,13 @@ J_1\left(u_1(\cdot), u_2(\cdot)\right) \\
 e^{-\mu t} \: dt.
 \end{aligned}  \label{9}
 \end{equation}
+Where $\inf$ is the infimum [\ref{mathdefs}.\ref{math:infimum}] and $\sup$ is the supremum [\ref{mathdefs}.\ref{math:supremum}].
+
 
 According to \cite{YegorovGrognardMailleretHalkettBernhard2019}, we represent
-the nutrient fluxes %todo: cite what nutrient fluxes are
-and decay rates %todo: describe decay rates
-as
+the nutrient fluxes [\ref{terms}.\ref{term:nutrientflux}] and decay rates as
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%todo: what are \nu and \rho
 \begin{equation}
 f_i(M_1, M_2) \: = \: \nu(n_1 M_1 + n_2 M_2) \, \cdot \, \rho(M_i) \:\:\:
 \forall M_1 \geqslant 0 \:\:\: \forall M_2 \geqslant 0, \quad i = 1,2, 
@@ -638,9 +644,19 @@ situation may change through evolution.
     \item\label{term:biotrohpic} \textbf{Biotrophic}: describes a parasite attached to plant. Describing a plant parasite.
     \item\label{term:nutrientflux} \textbf{Nutrient flux}: the amount of nutrients consumed by the pathogen.
     \item\label{term:cauchy} \textbf{The Cauchy problem}
-    \item\label{term:differentialgame} \textbf{differential game's value}
-    \item\label{term:marginal} \textbf{two marginal fitness criteria}
-    \item\label{term:nonlinearODE} \textbf{nonlinear ordinary differential equations}
+    \item\label{term:differentialgame} \textbf{Differential game's value}:
+    \item\label{term:marginal} \textbf{Two marginal fitness criteria}:
+    \item\label{term:nonlinearODE} \textbf{Nonlinear ordinary differential equations}:
+    \item\label{term:statevariables} \textbf{State Variables}:
+    \item\label{term:saddlecontrol} \textbf{Saddle control strategies}:
+    
+\end{enumerate}
+
+\section{Useful Mathematical Definitions}\label{mathdefs}
+\begin{enumerate}
+    \item\label{math:jacobi} \textbf{Jacobi}
+    \item\label{math:infimum} \textbf{Infimum}:
+    \item\label{math:supremum} \textbf{Supremum}:
 \end{enumerate}
 
 \section{}\label{appendix:references}Appendix
