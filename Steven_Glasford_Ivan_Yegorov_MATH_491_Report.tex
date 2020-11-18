@@ -80,33 +80,11 @@ Fargo, ND 58108-6050, USA}
 
 
 \section{Introduction}
-Pathogens are what makes people, pets and every other living organism sick. They are a broad group and can do everything from make a person sick with COVID-19, to blight rotting potatoes in the field starving people.
-Plant pathogens are everywhere, going outside to the park, it is not uncommon for a person to see brown spots on leaves of trees caused by fungus or to see lichens growing on the bark of oak trees. 
-In this paper, a zero-sum feedback game %todo: define zero sum in the appendix
-of two competing pathogens on a single plant, battling for dominance on the plant. To do this we use a system of 
-nonlinear ordinary differential equations %todo: add details to appendix and cite or find resource to cite to
-and use computers and numerical analysis to solve and
-describe the dynamics of a single growing season of two invading fungal pathogens on a single plant.
-
-The first fungus can be understood as the resident, while the second is the mutant. The mutant fungus is of the same species, but is a different individual.  The function that describes the invasion of the fungi is the difference between the 
-two marginal fitness criteria %todo
-and represents the cost in defining the 
-differential game's value. %todo
-A general dynamic game approach of
-\cite{YegorovGrognardMailleretHalkettBernhard2019}
-is explored and discussed. 
-The Cauchy problem %todo: give more information, define in the appendix and cite
-for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this
-situation is numerically solved using the ROC-HJ software~\cite{ROCHJ2019}.
-Analysis of the numerical simulations obtained by this software package, as well as a graphical description is further investigated later in this document.
-
-
+Pathogens are what makes people, pets and every other living organism sick. They are a broad group and can do everything from make a person sick with COVID-19, to blight rotting potatoes in the field starving people. Plant pathogens are everywhere, going outside to the park, it is not uncommon for a person to see brown spots on leaves of trees caused by fungus or to see lichens growing on the bark of oak trees. In this paper, a zero-sum feedback game [\ref{terms}.\ref{term:zerosum}] of two competing pathogens on a single plant, battling for dominance on the plant. To do this we use a system of nonlinear ordinary differential equations [\ref{terms}.\ref{term:nonlinearODE}] and use computers and numerical analysis to solve and describe the dynamics of a single growing season of two invading fungal pathogens on a single plant. The first fungus can be understood as the resident, while the second is the mutant. The mutant fungus is of the same species, but is a different individual.  The function that describes the invasion of the fungi is the difference between the two marginal fitness criteria [\ref{terms}.\ref{term:marginal}], and represents the cost in defining the  differential game's value [\ref{terms}.\ref{term:differentialgame}].  A general dynamic game approach of \cite{YegorovGrognardMailleretHalkettBernhard2019} is explored and discussed. The Cauchy problem [\ref{terms}.\ref{term:cauchy}] for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this situation is numerically solved using the ROC-HJ software~\cite{ROCHJ2019}. Analysis of the numerical simulations obtained by this software package, as well as a graphical description is further investigated later in this document.
 
 
 \section{Statement of the model}
-%todo: add motivation
-Consider the one-seasonal dynamics of two biotrophic fungal cohorts within one
-host plant. Let us refer to them as to cohorts~$ 1 $ and $ 2 $. For
+Before we can properly analyze the numerical solutions we must first define the model. We consider the dynamics of two biotrophic [\ref{terms}.\ref{term:biotrohpic}] fungal cohorts [\ref{terms}.\ref{term:cohort}] on one plant in a single season.  Let us refer to them as to cohorts~$ 1 $ and $ 2 $. For
 cohort~$ i $, let $ n_i $ be the lesion density, which is the number of mycelia
 per unit area of the host. For simplicity, assume $ n_1 $ and $ n_2 $ to be
 constant during the entire infection period within the season, which means that
@@ -172,11 +150,11 @@ The reproductive success of cohort~$ i $ is determined by:
 where $ e^{-\mu t} $ describes the exponential extinction of the infections,
 and $ \mu $ is a positive constant. Since $ \delta $ is a positive constant,
 we can divide \cref{3_1} by $ \delta $ and arrive at
-\begin{equation}
+
 %define and describe the Jacobi function, maybe add something to appendix
+\begin{equation}
 J_i\left(u_1(\cdot), u_2(\cdot)\right) \:\: = \:\: \int\limits_0^T u_i(t) \, f_i\left(M_1(t),
   M_2(t)\right) \, e^{-\mu t} \: dt.  \label{3}
-  
 \end{equation}
 
 In line with \cite{YegorovGrognardMailleretHalkettBernhard2019,
@@ -649,18 +627,23 @@ situation may change through evolution.
 
 \appendix
 
-\Commonsection{Common terms}
-\begin{itemize}
-    \item \textbf{Zero-sum feedback game}: 
-    \item \textbf{Pathogen}: this is an infectious organism, this paper mostly discusses fungal invaders.
-    \item \textbf{Resident pathogen}: this is the original organism and has not been mutated.
-    \item \textbf{Mutant pathogen}: this is a strain of the same species of organism as the resident species, but has been mutated, through physical separation or natural mutation.
-    \item \textbf{Mycelia}: the ``roots'' of a fungus, made of extremely fine branches called hyphae. 
-    \item \textbf{Cohort}: cohort typically means a person or thing that is typically on ``your side''. In this paper it typically refers to a pathogen that belongs to the same species, but differs slightly and is not of the same organism.
-    \item \textbf{Biotrophic}: describes a parasite attached to plant. Describing a plant parasite.
-    \item \textbf{Nutrient flux}: the amount of nutrients consumed by the pathogen.
-\end{itemize}
+\section{Common terms}\label{terms}
+\begin{enumerate}
+    \item\label{term:zerosum} \textbf{Zero-sum feedback game}: 
+    \item\label{term:pathogen} \textbf{Pathogen}: this is an infectious organism, this paper mostly discusses fungal invaders.
+    \item\label{term:resident} \textbf{Resident pathogen}: this is the original organism and has not been mutated.
+    \item\label{term:mutant} \textbf{Mutant pathogen}: this is a strain of the same species of organism as the resident species, but has been mutated, through physical separation or natural mutation.
+    \item\label{term:mycelia} \textbf{Mycelia}: the ``roots'' of a fungus, made of extremely fine branches called hyphae. 
+    \item\label{term:cohort} \textbf{Cohort}: cohort typically means a person or thing that is typically on ``your side''. In this paper it typically refers to a pathogen that belongs to the same species, but differs slightly and is not of the same organism.
+    \item\label{term:biotrohpic} \textbf{Biotrophic}: describes a parasite attached to plant. Describing a plant parasite.
+    \item\label{term:nutrientflux} \textbf{Nutrient flux}: the amount of nutrients consumed by the pathogen.
+    \item\label{term:cauchy} \textbf{The Cauchy problem}
+    \item\label{term:differentialgame} \textbf{differential game's value}
+    \item\label{term:marginal} \textbf{two marginal fitness criteria}
+    \item\label{term:nonlinearODE} \textbf{nonlinear ordinary differential equations}
+\end{enumerate}
 
+\section{}\label{appendix:references}Appendix
 \begin{thebibliography}{}
 
 \bibitem{YegorovGrognardMailleretHalkettBernhard2019}
@@ -751,6 +734,7 @@ ROC-HJ to set the problem statement.}
 
 \end{thebibliography}
 
+\section{Code Snippets}
 
 \begin{figure}
     \inputminted[
@@ -772,7 +756,7 @@ ROC-HJ to set the problem statement.}
         baselinestretch=1.2,
         fontsize=\footnotesize,
         firstline=156, 
-        lastline=176]{c}{data.h}
+        lastline=176]{c}{code/data.h}
     \caption{Function in C++ written for ROC-HJ describing the distributed
              cost equation.}
     \label{code:cost}
