@@ -320,9 +320,9 @@ second one{\rm ,} and vice versa.
 If $ M_1^0 = M_2^0 $ and $ \mathcal{U}_1 = \mathcal{U}_2 = \mathcal{U} ${\rm ,}
 then $ J(u, u) = 0 $ for all $ u \in \mathcal{U} ${\rm ,} and {\rm (\ref{9_2})}
 is simplified to
-\begin{equation}
-%todo: define Arg or remove if meaningless
 
+%todo: define Arg or remove if meaningless
+\begin{equation}
 \min_{u_1 \, \in \, \mathcal{U}} \: \sup_{u_2 \, \in \, \mathcal{U}} \:
   J(u_1, u_2) \:\: = \:\: 0.  \label{9_3}
 \end{equation}
@@ -568,10 +568,10 @@ principle for zero-sum two-player differential games describes necessary
 conditions for saddle open-loop strategies \cite{Yong2015}.
 
 \begin{figure}
-\center{ \includegraphics[width = 0.48 \textwidth]{Figure_4a.pdf}
-\includegraphics[width = 0.48 \textwidth]{Figure_4b_1.pdf} \\
-\includegraphics[width = 0.48 \textwidth]{Figure_4c_1.pdf}
-\includegraphics[width = 0.48 \textwidth]{Figure_4d_1.pdf}
+\center{ \includegraphics[width = 0.48 \textwidth]{figures/Figure_4a.pdf}
+\includegraphics[width = 0.48 \textwidth]{figures/Figure_4b_1.pdf} \\
+\includegraphics[width = 0.48 \textwidth]{figures/Figure_4c_1.pdf}
+\includegraphics[width = 0.48 \textwidth]{figures/Figure_4d_1.pdf}
 }
 \bf \caption{\it Finite-difference approximation of the value function~$ V $
                  at several time instants.}
@@ -579,14 +579,14 @@ conditions for saddle open-loop strategies \cite{Yong2015}.
 \end{figure}
 
 \begin{figure}
-\center{ \includegraphics[width = 0.48 \textwidth]{Figure_5a_1.pdf}
-\includegraphics[width = 0.48 \textwidth]{Figure_5a_2.pdf} \\
-\includegraphics[width = 0.48 \textwidth]{Figure_5b_1.pdf}
-\includegraphics[width = 0.48 \textwidth]{Figure_5b_2.pdf} \\
-\includegraphics[width = 0.48 \textwidth]{Figure_5c_1.pdf}
-\includegraphics[width = 0.48 \textwidth]{Figure_5c_2.pdf} \\
-\includegraphics[width = 0.48 \textwidth]{Figure_5d_1.pdf}
-\includegraphics[width = 0.48 \textwidth]{Figure_5d_2.pdf}
+\center{ \includegraphics[width = 0.48 \textwidth]{figures/Figure_5a_1.pdf}
+\includegraphics[width = 0.48 \textwidth]{figures/Figure_5a_2.pdf} \\
+\includegraphics[width = 0.48 \textwidth]{figures/Figure_5b_1.pdf}
+\includegraphics[width = 0.48 \textwidth]{figures/Figure_5b_2.pdf} \\
+\includegraphics[width = 0.48 \textwidth]{figures/Figure_5c_1.pdf}
+\includegraphics[width = 0.48 \textwidth]{figures/Figure_5c_2.pdf} \\
+\includegraphics[width = 0.48 \textwidth]{figures/Figure_5d_1.pdf}
+\includegraphics[width = 0.48 \textwidth]{figures/Figure_5d_2.pdf}
 }
 \bf \caption{\it Finite-difference approximations of the saddle feedback
 control strategies at several time instants. White and gray colors show the
@@ -610,7 +610,7 @@ regime for both cohorts, while one can interpret the four surfaces as turnpikes.
 
 %todo: describe what is happening in the figures
 \begin{figure}
-\center{ \includegraphics[width = 0.98 \textwidth]{Figure_7.pdf} }
+\center{ \includegraphics[width = 0.98 \textwidth]{figures/Figure_7.pdf} }
 \bf \caption{\it The four control switching surfaces in the three-dimensional
 space~$ (m_1, m_2, \tau) $.}
 \label{Fig_7}
@@ -759,7 +759,7 @@ ROC-HJ to set the problem statement.}
         baselinestretch=1.2,
         fontsize=\footnotesize,
         firstline=17, 
-        lastline=20]{c}{data.h}
+        lastline=20]{c}{code/data.h}
 \caption{A few configuration variables needed to solve the equation using
          ROC-HJ}
 \label{code:defaults}
@@ -785,7 +785,7 @@ ROC-HJ to set the problem statement.}
         baselinestretch=1.2,
         fontsize=\footnotesize,
         firstline=133, 
-        lastline=154]{c}{data.h}
+        lastline=154]{c}{code/data.h}
     \caption{A C++ function for use by ROC-HJ to describe the required
              dynamic equation.}
     \label{code:dynamic}
