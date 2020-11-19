@@ -199,8 +199,7 @@ Where $\inf$ is the infimum [\ref{mathdefs}.\ref{math:infimum}] and $\sup$ is th
 
 According to \cite{YegorovGrognardMailleretHalkettBernhard2019}, we represent
 the nutrient fluxes [\ref{terms}.\ref{term:nutrientflux}] and decay rates as
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%todo: what are \nu and \rho
+
 \begin{equation}
 f_i(M_1, M_2) \: = \: \nu(n_1 M_1 + n_2 M_2) \, \cdot \, \rho(M_i) \:\:\:
 \forall M_1 \geqslant 0 \:\:\: \forall M_2 \geqslant 0, \quad i = 1,2, 
@@ -218,7 +217,9 @@ f_i(M_1, M_2) \: = \: \nu(n_1 M_1 + n_2 M_2) \, \cdot \, \rho(M_i) \:\:\:
 \begin{equation}
 g(M) \: = \: \gamma M \quad \forall M \geqslant 0.  \label{6}
 \end{equation}
-Moreover, the following parameter values are useful for the numerical
+Where $\rho$ is a positive function that specifies the flow of resources obtained by a single mycelium, and $\nu$ describes the negative consequences as the pathogens compete for resources from the single plant  \cite{YegorovGrognardMailleretHalkettBernhard2019}.
+
+Furthermore, the following parameter values are also useful for the numerical
 simulations and arise from the analysis of
 \cite{YegorovGrognardMailleretHalkett2017}:
 \begin{equation}
@@ -250,18 +251,11 @@ with
 is an invariant set in the state space (if a state trajectory starts in $ G $,
 it cannot leave $ G $). The parameters~$ \bar{M}_1, \bar{M}_2 $ can be
 understood as 
-carrying capacity estimates. %todo: define carrying capacities at least, reference from appendix
+carrying capacity [\ref{terms}.\ref{term:carryingcapacity}] estimates. 
 
 
 \section{Uninvadable and evolutionarily stable strategies}
-%todo: define uninvadable give example
-%todo: define evolutionrily stable strategies give example
-%todo: add motivation
-
-This section describes our motivation for the 
-game-theoretic %todo: define and cite
-statement
-{\rm \cref{7,8,9}}.
+In war there are times in which neither party wins. Where there is a boundary or other concession exist, under this circumstance the resident is uninvadable. In this section we describe the strategies and functions used to model a stable and uninvadable resident pathogen, in other words we see see were the two pathogens enter a stalemate and we look deeper at the game-theoretic statements from {\rm \cref{7,8,9}}.
 
 Based on the terminology of Adaptive Dynamics \cite{DercoleRinaldi2008}, let
 us interpret cohort~{\rm 1} as a resident and cohort~{\rm 2} as a mutant.
@@ -274,7 +268,7 @@ J(u_1, u_2) \: = \: J_2(u_1, u_2) - J_1(u_1, u_2) \: \leqslant \: 0.
 $$
 A strategy 
 $ \hat{u}_1 \in \mathcal{U}_1 $
-is hence uninvadable if and only if
+is hence uninvadable, and the winner of the war is the resident if and only if
 $$
 J \left( \hat{u}_1, u_2 \right) \: \leqslant \: 0 \quad \forall u_2 \in
   \mathcal{U}_2,
@@ -282,8 +276,11 @@ $$
 which is equivalent to
 $$
 \sup_{u_2 \, \in \, \mathcal{U}_2} \: J \left( \hat{u}_1, u_2 \right) \:\:
-  \leqslant \:\: 0.
+  \leqslant \:\: 0
 $$
+where $\sup$ is the supremum [\ref{mathdefs}.\ref{math:supremum}].
+
+
 Such a $ \hat{u}_1 $ exists if
 \begin{equation}
 \inf_{u_1 \, \in \, \mathcal{U}_1} \: \sup_{u_2 \, \in \, \mathcal{U}_2} \:
@@ -296,10 +293,10 @@ or
 \inf_{u_1 \, \in \, \mathcal{U}_1} \: \sup_{u_2 \, \in \, \mathcal{U}_2} \:
   J(u_1, u_2) \:\: < \:\: 0  \label{9_4}
 \end{equation}
-(The latter inequality arises from when the infimum $u_1$ is not satisfied).
+(The latter inequality arises from when the infimum [\ref{mathdefs}.\ref{math:infimum}] $u_1$ is not satisfied).
 Equation \cref{9_2} motivates our game-theoretic statement~{\rm \cref{7,8,9},}
 where the first player tries to maximize its resistance to an invasion by the
-second one{\rm ,} and vice versa.
+second one{\rm ,} and vice versa. In other words, the resident fungus tries to grow and fight the opposing mutant fungus, and the mutant fungus tries to do the same.
 
 If $ M_1^0 = M_2^0 $ and $ \mathcal{U}_1 = \mathcal{U}_2 = \mathcal{U} ${\rm ,}
 then $ J(u, u) = 0 $ for all $ u \in \mathcal{U} ${\rm ,} and {\rm (\ref{9_2})}
@@ -308,19 +305,26 @@ is simplified to
 %todo: define Arg or remove if meaningless
 \begin{equation}
 \min_{u_1 \, \in \, \mathcal{U}} \: \sup_{u_2 \, \in \, \mathcal{U}} \:
-  J(u_1, u_2) \:\: = \:\: 0.  \label{9_3}
+  J(u_1, u_2) \:\: = \:\: 0  \label{9_3}
 \end{equation}
+
+
+This is the boundary where neither the resident and the mutant win, and there is a stalemate.
 In this case{\rm ,} a strategy
+
 $$
 \hat{u}_1 \:\: \in \:\: \mathrm{Arg} \min_{u_1 \, \in \, \mathcal{U}}
   \left( \sup_{u_2 \, \in \, \mathcal{U}} \: J(u_1, u_2) \right)
 $$
-is called evolutionary stable if the related maximum for $ u_2 $ is
-unique{\rm :}
+
+where $\mathrm{Arg} \min$ is the argument of the minimum [\ref{mathdefs}.\ref{math:Argmaxmin}]. The strategy is called evolutionary stable, and there is a boundary where neither pathogen wins if the related maximum for $ u_2 $ is
+unique:
 $$
 \mathrm{Arg} \max_{u_2 \, \in \, \mathcal{U}} \: J \left( \hat{u}_1, u_2
   \right) \:\: = \:\: \left\{ \hat{u}_1 \right\}.
 $$
+where $\mathrm{Arg}\max$ is the argument of the maximum [\ref{mathdefs}.\ref{math:Argmaxmin}]
+
 
 This approach to defining stable evolutionary strategies was initially proposed
 in \cite{BernhardGrognardMailleretAkhmetzhanov2010} and further developed
@@ -328,9 +332,9 @@ in \cite{YegorovGrognardMailleretHalkettBernhard2019}.
 
 
 \section{Hamilton--Jacobi--Isaacs equation}
-%todo: add motivation
+In order to determine how the evolutionary strategies change over time we must develop a system of differential functions. This circumstance is very well able to be solved using a Hamilton--Jacobi-Isaacs equation, and for brevity we exclude the reasoning behind using this, but more information and futher analysis can be found in \cite{YegorovGrognardMailleretHalkettBernhard2019}.
 
-Introduce the following function known as Hamiltonian:
+We introduce the following function known as Hamiltonian:
 \begin{equation}
 \begin{aligned}
 & H(t, M_1, M_2, u_1, u_2, p_1, p_2) \:\: = \:\:
@@ -347,7 +351,8 @@ p_1 \, \left((1 - u_1) \, f_1(M_1, M_2) \: - \: g(M_1)\right) \\
 (this is the sum of the dot product of $ \: p = (p_1, p_2) \: $ with
 $ \: (\mathrm{d} M_1 / \mathrm{d} t, \, \mathrm{d} M_1 / \mathrm{d} t) \: $ and
 the integrand in $ \: J(u_1(\cdot), u_2(\cdot)), \: $ see \cref{7} and
-\cref{9}). The Hamiltonian satisfies the saddle point condition concerning
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\cref{9}). The Hamiltonian satisfies the saddle point condition [\ref{mathdefs}.\ref{math:saddlepoint}] concerning
 the control variables~$ u_1 $ and
 $ u_2 $
 \begin{equation}
@@ -362,10 +367,11 @@ $ u_2 $
   \: (p_1, p_2) \: \in \: \mathbb{R}^2
 \end{aligned}  \label{13}
 \end{equation}
-(here minimax and maximin give the same result). Due to the theoretical
-results of \cite[\S XI.6]{FlemingSoner2006}, the value function 
+(here minimax and maximin [\ref{mathdefs}.\ref{math:maximinminimax}] give the same result). Due to the theoretical
+results of \cite[\S XI.6]{FlemingSoner2006}, the value function [\ref{mathdefs}.\ref{math:valuefunction}]
 $ \: V \colon [0, T] \times G \to \mathbb{R} \: $ in the formulated feedback
-differential game is a unique solution of the following Cauchy problem for the
+
+differential game is a unique solution of the following Cauchy problem [\ref{mathdefs}.\ref{math:cauchyproblem}] for the
 Hamilton--Jacobi--Isaacs partial differential equation (HJI PDE):
 \begin{equation}
 \left\{ \begin{aligned}
@@ -376,26 +382,20 @@ Hamilton--Jacobi--Isaacs partial differential equation (HJI PDE):
 & t \in [0, T], \quad (M_1, M_2) \: \in \: G.
 \end{aligned} \right.  \label{15}
 \end{equation}
+
 In general, the solution may be 
-nonsmooth %todo: define and provide example
-and understood in a generalized
-(viscosity %todo: provide more explanation
-or 
-minimax %todo define minimax and cite
-) sense \cite{FlemingSoner2006,Subbotin1995}.
+nonsmooth [\ref{mathdefs}.\ref{math:nonsmooth}] and understood in a generalized (viscosity [\ref{mathdefs}.\ref{math:viscosity}] or minimax) sense \cite{FlemingSoner2006,Subbotin1995}. This makes it difficult, if not impossible to solve precisely.
 
 Due to the general properties of value functions of zero-sum feedback
 differential games \cite{BotkinHoffmannTurova2011}, the value function~$ V $
-in our problem is 
-Lipschitz continuous %todo: define in appendix and cite
-in $ [0, T] \times G $. 
-Rademacher's theorem, %todo: describe in appendix and cite
+in our problem is limited in how fast it can change and is therefore Lipschitz continuous [\ref{mathdefs}.\ref{math:lipschitz}] in $ [0, T] \times G $. 
+Rademacher's theorem [\ref{mathdefs}.\ref{math:rademacher}],
 is differentiable almost everywhere in $ (0, T) \times G $, except
 for possibly a 
-subset of Lebesgue measure zero. %todo: define and cite
+subset of Lebesgue measure zero. 
 
 For points~$ (t, M_1, M_2) $ at which the value function is differentiable,
-one can obtain the saddle feedback control strategies from the relations
+one can obtain the saddle feedback control strategies (where the fungi enter a stalemate) from the relations
 $$
 \begin{aligned}
 & u_1(t, M_1, M_2) \:\: \in \:\: \mathrm{Arg} \min_{w_1 \in [0, 1]}
@@ -433,27 +433,21 @@ M_1, M_2)}{\partial M_2} \: = \: 0.
 \end{cases}
 \end{aligned}  \label{16}
 \end{equation}
-These are resource allocation strategies that enable for equilibrium
-coexistence of the two pathogen cohorts. %todo: describe in more detail
+These are resource allocation strategies and functions that describe the equilibrium point and the coexistence of the two fungi. In other words, these equations describe the points where the two fungi enter a stalemate dynamically as time progresses. 
 
-\section{Code used for the Numerical ROC-HJ}
-%todo: add motivation
-%todo: add details on how and where to access
+%%%%%%%%%%%%%%%%%%%%%1 
+%todo: merge code section with the numerical solution section, or add the code section after the numerical solution section
+\section{Code used for the Numerical Solution.}
 
-As is the case with many differential equations, it is challenging to solve
-this equation, which means we need to use a numerical solver to do this task.
-We used ROC-HJ, which is written in C++ and allows for a fast and easy
-transcription of the functions above into machine code. Most of the
-preconfigured files and procedures of ROC-HJ allow for a quick transcription
-of a Hamilton-Jacobi equation.
+As described previously, these equations are extremely difficult to solve precisely, luckily, we do not necessarily need a precise answer. Numerical analysis is the math behind finding such answers of difficult to solve problems. In our case there is already a program to solve Hamilton--Jacobi equations called ROC-HJ, which is written in C++ and allows for a fast and easy
+transcription of the functions above into machine code. 
 
-
-\cite{ROCHJ2019} provides further details of the type of assignments and
+Most of the preconfigured files and procedures of ROC-HJ allow for a quick transcription
+of a Hamilton-Jacobi equation. More information about how to install ROC-HJ and were to find the package can be found at \cite{ROCHJ2019} and it also has large amount of documentation providing further details of the type of assignments and
 other variables that need additional configuration in order for ROC-HJ to find
 a solution. To use ROC-HJ, we must assign a few variables to describe the kind
 of problem. Fig. \ref{code:defaults} contains some of the variables which
 describe the problem.
-
 
 
 With these as well as many more options that we had to set to correctly assign
@@ -649,14 +643,25 @@ situation may change through evolution.
     \item\label{term:nonlinearODE} \textbf{Nonlinear ordinary differential equations}:
     \item\label{term:statevariables} \textbf{State Variables}:
     \item\label{term:saddlecontrol} \textbf{Saddle control strategies}:
+    \item\label{term:carryingcapacity} \textbf{Carrying capacity}:
     
 \end{enumerate}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1
 \section{Useful Mathematical Definitions}\label{mathdefs}
 \begin{enumerate}
     \item\label{math:jacobi} \textbf{Jacobi}
     \item\label{math:infimum} \textbf{Infimum}:
     \item\label{math:supremum} \textbf{Supremum}:
+    \item\label{math:Argmaxmin} \textbf{Argmin/Argmax}:
+    \item\label{math:saddlepoint} \textbf{Saddle point}:
+    \item\label{math:maximinminimax} \textbf{Maximin / Minimax}:
+    \item\label{math:valuefunction} \textbf{Value function}:
+    \item\label{math:cauchyproblem} \textbf{Cauchy problem}:
+    \item\label{math:nonsmooth} \textbf{Non-smooth}:
+    \item\label{math:viscosity} \textbf{Viscosity}:
+    \item\label{math:lipschitz} \textbf{Lipschitz continuous}:
+    \item\label{math:rademacher} \textbf{Rademacher's theorem}:
+    \item\label{math:lebesgue} \textbf{Lebesgue measure}:
 \end{enumerate}
 
 \section{}\label{appendix:references}Appendix
