@@ -15,6 +15,8 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{autonum}
+\usepackage{caption}
+\usepackage{subcaption}
 
 
 % Set the margin and appearance, as set by class standards.
@@ -84,7 +86,7 @@ Pathogens are what makes people, pets and every other living organism sick. They
 
 In this paper, a zero-sum feedback game [\ref{terms}.\ref{term:zerosum}] of two competing pathogens on a single plant, battling for dominance on the plant. To do this we use a system of nonlinear ordinary differential equations [\ref{terms}.\ref{term:nonlinearODE}] and use computers and numerical analysis to solve and describe the dynamics of a single growing season of two invading fungal pathogens on a single plant. 
 
-The first fungus can be understood as the resident, while the second is the mutant. The mutant fungus is of the same species, but is a different individual.  The function that describes the invasion of the fungi is the difference between the two marginal fitness criteria [\ref{terms}.\ref{term:marginal}], and represents the cost in defining the  differential game's value [\ref{terms}.\ref{term:differentialgame}].  A general dynamic game approach of \cite{YegorovGrognardMailleretHalkettBernhard2019} is explored and discussed. The Cauchy problem [\ref{terms}.\ref{term:cauchy}] for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this situation is numerically solved using the ROC-HJ software~\cite{ROCHJ2019}. 
+The first fungus can be understood as the resident, while the second is the mutant. The mutant fungus is of the same species, but is a different individual.  The function that describes the invasion of the fungi is the difference between the two marginal fitness criteria [\ref{terms}.\ref{term:marginal}], and represents the cost in defining the  differential game's value [\ref{terms}.\ref{term:differentialgame}].  A general dynamic game approach of \cite{YegorovGrognardMailleretHalkettBernhard2019} is explored and discussed. The Cauchy problem [\ref{terms}.\ref{math:cauchyproblem}] for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this situation is numerically solved using the ROC-HJ software~\cite{ROCHJ2019}. 
 
 Analysis of the numerical simulations obtained by this software package, as well as a graphical description is further investigated later in this document.
 
@@ -435,10 +437,9 @@ M_1, M_2)}{\partial M_2} \: = \: 0.
 \end{equation}
 These are resource allocation strategies and functions that describe the equilibrium point and the coexistence of the two fungi. In other words, these equations describe the points where the two fungi enter a stalemate dynamically as time progresses. 
 
-%%%%%%%%%%%%%%%%%%%%%1 
-%todo: merge code section with the numerical solution section, or add the code section after the numerical solution section
-\section{Code used for the Numerical Solution.}
 
+
+\section{Numerical solution}
 As described previously, these equations are extremely difficult to solve precisely, luckily, we do not necessarily need a precise answer. Numerical analysis is the math behind finding such answers of difficult to solve problems. In our case there is already a program to solve Hamilton--Jacobi equations called ROC-HJ, which is written in C++ and allows for a fast and easy
 transcription of the functions above into machine code. 
 
@@ -460,19 +461,15 @@ Within the \texttt{data\_*.h} file, there is much more information describing
 the function. One can find more information and details about this project's
 configuration variables by viewing the data file directly at \cite{data_ivan.h}.
 
-\section{Numerical solution}
-%todo: add motivation
-
-We consider the Cauchy problem~\cref{15} for the HJI PDE with the nutrient
-fluxes~\cref{4,5_1,5_2}, decay rate~\cref{6}, and parameter values~\cref{19}.
-The numerical solution has been obtained via a finite difference method
+In converting these equations into machine code we must consider the Cauchy problem~\cref{15} for the HJI PDE with the nutrient
+fluxes~\cref{4,5_1,5_2}, decay rate~\cref{6}, and parameter values~\cref{19}. We must further set the software to finding the solutions using a finite difference method 
 \cite{FlemingSoner2006,
       OsherShu1991,
       BotkinHoffmannTurova2011,
       BokanForcadelZidani2010}
-using the ROC-HJ software~\cite{ROCHJ2019}.
+using the ROC-HJ software~\cite{ROCHJ2019}. These ``default'' parameters can be found in figure \ref{code:defaults}.
 
-For practical purposes, it is reasonable to rewrite \cref{15} in reverse
+For practical purposes with ROC-HJ, it is reasonable to rewrite \cref{15} in reverse
 time $ \tau = T - t $ as
 \begin{equation}
 \left\{ \begin{aligned}
@@ -494,10 +491,11 @@ m_i \, = \, M_i \cdot 10^{-4}, \quad i = 1,2  \label{75_1}
 \end{equation}
 (such changes of the time and state variables lead to an equivalent problem).
 
+
 We specify the carrying capacity estimates as $ \: \bar{M}_1 = \bar{M}_2 =
 \bar{M} = 3.5 \cdot 10^4 $,
-$ \: \bar{m} = \bar{M} \cdot 10^{-4} = 3.5, \: $ and 
-discretize the computational region %todo: add more details and explain
+$ \: \bar{m} = \bar{M} \cdot 10^{-4} = 3.5 \cdot 10^{-4}, \: $ and 
+discretize the computational region (how much the computer will increase its measurements after each pass)
 $$
 \left\{ (m_1, m_2, \tau) \: \colon \: 0 \leqslant m_1 \leqslant \bar{m}, \:\: 0
 \leqslant m_2 \leqslant \bar{m}, \:\:
@@ -506,23 +504,22 @@ $$
 by the spatial step $ \: \Delta m_1 = \Delta m_2 = \Delta m = 2 \cdot 10^{-3}
 \: $ and time step $ \Delta \tau = 5 \cdot 10^{-3} $.
 
-Monotone finite difference methods %todo: cite and explain
-(including the 
-classical Lax--Friedrichs scheme %todo: define and cite
-) ensure theoretical convergence properties with error estimates, but
+Monotone [\ref{mathdefs}.\ref{math:monotone}] finite difference methods, methods where there is a strict increasing or decreasing behavior.
+%%This is not very useful since the system is not solved using this method, as it is too slow
+%(including the classical Lax--Friedrichs scheme)
+These methods ensure theoretical convergence properties (properties where the more computation is expended, the closer one can get to a precise answer) with error estimates, but
 they are mostly of the first order and may generate so-called 
-numerical diffusion problems %todo: define and cite
-on long time intervals. One way to attenuate such practical
-issues is to use 
-higher-order ENO (essentially non-oscillatory) schemes %todo: define and cite
-such as those originally proposed in \cite{OsherShu1991}. They are not necessarily
-monotone, and there is a lack of associated convergence theorems. However,
+numerical diffusion problems [\ref{mathdefs}.\ref{math:diffusionproblem}]
+on long time intervals. One way to reduce and attempt to eliminate such practical issues is to use 
+higher-order ENO (essentially non-oscillatory) schemes 
+such as those originally proposed in \cite{OsherShu1991}. Higher order ENO schemes also have been shown to have a greater amount of stability which is useful in eliminating practical issues. They are not necessarily
+monotone, and there is a lack of associated convergence theorems, meaning it is difficult to ensure that the computation will approach a steady answer. However,
 their relevance is justifiable by various numerical experiments 
 \cite{OsherShu1991,BokanForcadelZidani2010}.
 
-We have used the second-order ENO scheme (to approximate the partial
+We have used the second-order ENO scheme in ROC-HJ (fig.~\ref{code:defaults}) (to approximate the partial
 derivatives concerning the state variables), coupled with the 
-second-order Runge--Kutta time discretization scheme %todo: cite and explain
+second-order Runge--Kutta time discretization scheme (which further provides increased accuracy over other methods of discretely partitioning time intervals) 
 and implemented in \cite{ROCHJ2019}.
 To evaluate the partial derivatives $ \partial V / \partial M_i $, $ i = 1,2 $,
 in the saddle feedback control representations~\cref{16}, we have applied the
@@ -533,40 +530,109 @@ Figs.~\ref{Fig_4} and \ref{Fig_5} show the reductions of the approximate
 value function and corresponding saddle feedback control strategies to the
 coordinate plane $ (m_1, m_2) $ for the time instants 
 $ \tau = 0 $ ($ t = T = 60 $), $ \tau = 5 $ ($ t = T - 5 = 55 $),
-$ \tau = \tau^{**} %todo: define or explain tau**
+$ \tau = \tau^{**} 
 \approx 11.175 $ ($ t = T - \tau^{**} \approx 48.825 $),
-and $ \tau = T = 60 $ ($ t = 0 $). Here $ \tau^{**} $ is a 
-reverse time instant %todo: define and cite
-that triggers the appearance of singular control regimes and is obtained
-together with the equilibrium steady state~$ \left( M^{**}, M^{**} \right) $
-from the analysis based on 
-Pontryagin's principle %todo: explain and maybe cite (cones and hyperplanes)
-\cite{YegorovGrognardMailleretHalkettBernhard2019}. Note that Pontryagin's
-principle for zero-sum two-player differential games describes necessary
-conditions for saddle open-loop strategies \cite{Yong2015}.
+and $ \tau = T = 60 $ ($ t = 0 $). 
+
+
+Figure \ref{fig_4_d} shows the beginning of the simulation where neither of the fungi are able to have much of a competition with each other and there is plenty of space and resources for both of the fungi, but there are sharper edges as the fungi begins to start to either produce mycelia or produce spores. After the initial production there is a leveling off as the fungi begin conducting growth of spores and mycelia simultaneously.
+
+Figure \ref{fig_4_c} shows that at the time point of $t=48.825$ there more differentiation in the actions of the fungi. Where the fungi try and compete, as there is an attempt to try and stay in the battle. Figure \ref{fig_4_b}, shows that near the end of the simulation the competition increases much more and the slope becomes more pronounced as the competitive forces begin to increase.
+
+Figure \ref{fig_4_a} shows the end of the simulation where $t=60$. The graph is flat as there are no more resources that the fungi can expend (as it is the end of the simulation), if the simulation was allowed to continue it would continue to grow and the slope would most likely be more pronounced than in \ref{fig_4_b}. 
+
+It should be noted that in figure \ref{Fig_4}, there is no clearly defined winner. This is because we are modeling the efforts of the fungi attempting to remain at an equilibrium. However, it can be rationed that when a fungus does not attempt to achieve equilibrium it will be over taken by the other fungus and will go extinct, and the opposing fungus will win.
+
+
+% Fig.~\ref{Fig_4} determines which part of the fungus that needs to advance in order to have a stalemate with the other fungus. For example, in figure \ref{Fig_4}.\ref{fig_4_a}, there has not developed a need for either fungi to try and compete with each other, this means that there is enough resources for the two of them to coexist peacefully. This is in contrast to figure \ref{Fig_4}.\ref{fig_4_b} that shows more competition occurring between the resident $m_1$ and the mutant $m_2$, and when the resident produces more mycelia there is a lack of room for the mutant to grow its mycelia and it responds with an increase in the production of spores. 
+
+% Figure \ref{Fig_4}.\ref{fig_4_c} shows that a particular time ($t=48.825$) the particular strategies that the fungi are taking in order to enter equilibrium, again the dynamics are similar to \ref{Fig_4}.\ref{fig_4_b} where if $m_1=1$ then the resident will be expending its energy for the production of spores, and if it is zero then it is expending all of its energy producing mycelia. 
+ 
+% Here $ \tau^{**} $ is the reverse time instant
+% that triggers the appearance of singular control regimes and is obtained
+% together with the equilibrium steady state~$ \left( M^{**}, M^{**} \right) $
+% from the analysis based on 
+% Pontryagin's principle [\ref{mathdefs}.\ref{math:pontryagin}] 
+% \cite{YegorovGrognardMailleretHalkettBernhard2019}. Note that Pontryagin's
+% principle for zero-sum two-player differential games describes necessary
+% conditions for saddle open-loop strategies \cite{Yong2015}.
 
 \begin{figure}
-\center{ \includegraphics[width = 0.48 \textwidth]{figures/Figure_4a.pdf}
-\includegraphics[width = 0.48 \textwidth]{figures/Figure_4b_1.pdf} \\
-\includegraphics[width = 0.48 \textwidth]{figures/Figure_4c_1.pdf}
-\includegraphics[width = 0.48 \textwidth]{figures/Figure_4d_1.pdf}
-}
-\bf \caption{\it Finite-difference approximation of the value function~$ V $
-                 at several time instants.}
+    % \centering
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_4a.pdf}
+        \caption{Strategies conducted at the end of the simulation.}
+        \label{fig_4_a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_4b_1.pdf}
+        \caption{Competition between the fungi increases near the end the simulation.}
+        \label{fig_4_b}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_4c_1.pdf}
+        \caption{Competition and strategies begin to clearly evolve.}
+        \label{fig_4_c}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_4d_1.pdf}
+        \caption{Strategies begin to form as the fungi take their first move.}
+        \label{fig_4_d}
+    \end{subfigure}
+
+\bf \caption{\it The time instants are shown backwards to show how the computer produces the graphs using reverse time, meaning the first graph is actually the last computation.}
 \label{Fig_4}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%1
+
 \begin{figure}
-\center{ \includegraphics[width = 0.48 \textwidth]{figures/Figure_5a_1.pdf}
-\includegraphics[width = 0.48 \textwidth]{figures/Figure_5a_2.pdf} \\
-\includegraphics[width = 0.48 \textwidth]{figures/Figure_5b_1.pdf}
-\includegraphics[width = 0.48 \textwidth]{figures/Figure_5b_2.pdf} \\
-\includegraphics[width = 0.48 \textwidth]{figures/Figure_5c_1.pdf}
-\includegraphics[width = 0.48 \textwidth]{figures/Figure_5c_2.pdf} \\
-\includegraphics[width = 0.48 \textwidth]{figures/Figure_5d_1.pdf}
-\includegraphics[width = 0.48 \textwidth]{figures/Figure_5d_2.pdf}
-}
-\bf \caption{\it Finite-difference approximations of the saddle feedback
+    \centering
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_5a_1.pdf}
+        \label{fig_5_a}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_5a_2.pdf}
+        \label{fig_5_b}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_5b_1.pdf}
+        \label{fig_5_c}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_5b_2.pdf}
+        \label{fig_5_d}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_5c_1.pdf}
+        \label{fig_5_e}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_5c_2.pdf}
+        \label{fig_5_f}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_5d_1.pdf}
+        \label{fig_5_g}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{.48 \textwidth}
+        \includegraphics[width = \textwidth]{figures/Figure_5d_2.pdf}
+        \label{fig_5_h}
+    \end{subfigure}
+    
+%\bf
+\caption{\it Finite-difference approximations of the saddle feedback
 control strategies at several time instants. White and gray colors show the
 regions of the control values $ 0 $ and $ 1 ${\rm ,} respectively. Also
 illustrated are the fields of the corresponding forward-time velocities.}
@@ -637,13 +703,12 @@ situation may change through evolution.
     \item\label{term:cohort} \textbf{Cohort}: cohort typically means a person or thing that is typically on ``your side''. In this paper it typically refers to a pathogen that belongs to the same species, but differs slightly and is not of the same organism.
     \item\label{term:biotrohpic} \textbf{Biotrophic}: describes a parasite attached to plant. Describing a plant parasite.
     \item\label{term:nutrientflux} \textbf{Nutrient flux}: the amount of nutrients consumed by the pathogen.
-    \item\label{term:cauchy} \textbf{The Cauchy problem}
-    \item\label{term:differentialgame} \textbf{Differential game's value}:
+    \item\label{term:differentialgame} \textbf{Differential game's value}: The value at a certain time on a function that changes with time.
     \item\label{term:marginal} \textbf{Two marginal fitness criteria}:
     \item\label{term:nonlinearODE} \textbf{Nonlinear ordinary differential equations}:
     \item\label{term:statevariables} \textbf{State Variables}:
-    \item\label{term:saddlecontrol} \textbf{Saddle control strategies}:
-    \item\label{term:carryingcapacity} \textbf{Carrying capacity}:
+    \item\label{term:saddlecontrol} \textbf{Saddle control strategies}: A function or system determining the saddle point of an equation
+    \item\label{term:carryingcapacity} \textbf{Carrying capacity}: The maximum size of a population that can be sustained in an environment. 
     
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1
@@ -662,6 +727,9 @@ situation may change through evolution.
     \item\label{math:lipschitz} \textbf{Lipschitz continuous}:
     \item\label{math:rademacher} \textbf{Rademacher's theorem}:
     \item\label{math:lebesgue} \textbf{Lebesgue measure}:
+    \item\label{math:monotone} \textbf{Monotone function}: A function that preserves an order; a function that is always rising or decreasing. A function is monotonically increasing if for all $x$ and $y$ where $x \leq y$ then $f(x) \leq f(y)$, and reverse for monotonically decreasing.
+    \item\label{math:diffusionproblem} \textbf{Numerical Diffusion Problems}: a difficulty that often arises when the computed medium differs from the actual medium, or it arises when it shouldn't in the first place.
+    \item\label{math:pontryagin} \textbf{Pontryagin's maximum principle}:
 \end{enumerate}
 
 \section{}\label{appendix:references}Appendix
@@ -765,8 +833,7 @@ ROC-HJ to set the problem statement.}
         fontsize=\footnotesize,
         firstline=17, 
         lastline=20]{c}{code/data.h}
-\caption{A few configuration variables needed to solve the equation using
-         ROC-HJ}
+\caption{A few configuration variables needed to solve the equation using ROC-HJ, MFD being the method of monotone finite difference.}
 \label{code:defaults}
 \end{figure}
 
