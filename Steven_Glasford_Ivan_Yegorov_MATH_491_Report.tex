@@ -84,7 +84,7 @@ Fargo, ND 58108-6050, USA}
 \section{Introduction}
 Pathogens are what makes people, pets and every other living organism sick. They are a broad group and can do everything from make a person sick with COVID-19, to blight rotting potatoes in the field starving people. Plant pathogens are everywhere, going outside to the park, it is not uncommon for a person to see brown spots on leaves of trees caused by fungus or to see lichens growing on the bark of oak trees. 
 
-In this paper, a zero-sum feedback game [\ref{terms}.\ref{term:zerosum}] of two competing pathogens on a single plant, battling for dominance on the plant. To do this we use a system of nonlinear ordinary differential equations [\ref{terms}.\ref{term:nonlinearODE}] and use computers and numerical analysis to solve and describe the dynamics of a single growing season of two invading fungal pathogens on a single plant. 
+In this paper, a zero-sum feedback game [\ref{terms}.\ref{term:zerosum}] of two competing pathogens on a single plant, battling for dominance on the plant. To do this we use a system of nonlinear ordinary differential equations and use computers and numerical analysis to solve and describe the dynamics of a single growing season of two invading fungal pathogens on a single plant. 
 
 The first fungus can be understood as the resident, while the second is the mutant. The mutant fungus is of the same species, but is a different individual.  The function that describes the invasion of the fungi is the difference between the two marginal fitness criteria [\ref{terms}.\ref{term:marginal}], and represents the cost in defining the  differential game's value [\ref{terms}.\ref{term:differentialgame}].  A general dynamic game approach of \cite{YegorovGrognardMailleretHalkettBernhard2019} is explored and discussed. The Cauchy problem [\ref{terms}.\ref{math:cauchyproblem}] for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this situation is numerically solved using the ROC-HJ software~\cite{ROCHJ2019}. 
 
@@ -157,7 +157,7 @@ The reproductive success (the amount of growth on the plant) of cohort~$ i $ is 
 \end{equation}
 where $ e^{-\mu t} $ describes the exponential extinction of the infections as the plant develops immunity,
 and $ \mu $ is a positive constant. Since $ \delta $ is a positive constant,
-we can divide \cref{3_1} by $ \delta $ and arrive at the following, where $J$ is a Jacobi function [\ref{mathdefs}.\ref{math:jacobi}]
+we can divide \cref{3_1} by $ \delta $ and arrive at the following, where $J$ is a Jacobi function 
 
 \begin{equation}
 J_i\left(u_1(\cdot), u_2(\cdot)\right) \:\: = \:\: \int\limits_0^T u_i(t) \, f_i\left(M_1(t),
@@ -370,9 +370,8 @@ $ u_2 $
 \end{aligned}  \label{13}
 \end{equation}
 (here minimax and maximin [\ref{mathdefs}.\ref{math:maximinminimax}] give the same result). Due to the theoretical
-results of \cite[\S XI.6]{FlemingSoner2006}, the value function [\ref{mathdefs}.\ref{math:valuefunction}]
+results of \cite[\S XI.6]{FlemingSoner2006}, the value function 
 $ \: V \colon [0, T] \times G \to \mathbb{R} \: $ in the formulated feedback
-
 differential game is a unique solution of the following Cauchy problem [\ref{mathdefs}.\ref{math:cauchyproblem}] for the
 Hamilton--Jacobi--Isaacs partial differential equation (HJI PDE):
 \begin{equation}
@@ -587,7 +586,6 @@ It should be noted that in figure \ref{Fig_4}, there is no clearly defined winne
 \label{Fig_4}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%1
 
 \begin{figure}
 \center{ \includegraphics[width = 0.48 \textwidth]{figures/Figure_5a_1.pdf}
@@ -639,20 +637,13 @@ allocation strategy of cohort~{\rm 2} is uninvadable if $ M_1^0
 
 \section{Conclusion}
 %todo: reword the conclusion so it is not as heavily technical
+This report focuses on constructing a strategy for constructing benchmark resource allocation strategies. This paper also focuses on how differing pathogens might compete and allows us the ability to compare actual infection mechanisms.
 
-The current report discusses a mathematical development that allows for constructing 
-benchmark pathogenic resource allocation strategies %todo: explain more fully and provide desciption before mentioning it.
-against which
-we may compare actual infection mechanisms.
+In this report we focus solely on resource allocation equilibrium for the one-seasonal dynamics of two biotrophic fungal cohorts within a shared host plant. 
+Though not mentioned in this paper, it is also relevant to investigate 
+long-seasonal dynamics where the cohorts compete with each other on a much longer term, other relevant situations occur when the pathogens gain the ability to evolve and the amount and spore producing capacity, and when efficiencies of the pathogens begin to differ. Also interesting are situations where there are two separate and different species of fungi.
 
-We have studied resource allocation equilibrium for the one-seasonal dynamics
-of two biotrophic fungal cohorts within a shared host plant. It is also relevant
-to investigate 
-long-seasonal dynamics %todo: define or replace with something more descriptive
-and 
-associated evolutionary equilibria %todo: replace with something that is more understandable
-of
-competing pathogen cohorts. One may exploit specific discrete rules to
+One may exploit specific discrete rules to
 transition from one season to another \cite{MailleretLemesle2009,Akhmetzhanov2012}.
 Another important research direction is to characterize such equilibria
 themselves and whether they represent evolutionary attractors or not and how the
@@ -662,7 +653,7 @@ situation may change through evolution.
 
 \section{Common terms}\label{terms}
 \begin{enumerate}
-    \item\label{term:zerosum} \textbf{Zero-sum feedback game}: 
+    \item\label{term:zerosum} \textbf{Zero-sum feedback game}: a game in which one of the players wants the game to reach an open target (wants to take over, invade), while the want to avoid this target forever (prevent a take over, defend)\cite{zerosumgame}.
     \item\label{term:pathogen} \textbf{Pathogen}: this is an infectious organism, this paper mostly discusses fungal invaders.
     \item\label{term:resident} \textbf{Resident pathogen}: this is the original organism and has not been mutated.
     \item\label{term:mutant} \textbf{Mutant pathogen}: this is a strain of the same species of organism as the resident species, but has been mutated, through physical separation or natural mutation.
@@ -671,41 +662,43 @@ situation may change through evolution.
     \item\label{term:biotrohpic} \textbf{Biotrophic}: describes a parasite attached to plant. Describing a plant parasite.
     \item\label{term:nutrientflux} \textbf{Nutrient flux}: the amount of nutrients consumed by the pathogen.
     \item\label{term:differentialgame} \textbf{Differential game's value}: The value at a certain time on a function that changes with time.
-    \item\label{term:marginal} \textbf{Two marginal fitness criteria}:
-    \item\label{term:nonlinearODE} \textbf{Nonlinear ordinary differential equations}:
-    \item\label{term:statevariables} \textbf{State Variables}:
-    \item\label{term:saddlecontrol} \textbf{Saddle control strategies}: A function or system determining the saddle point of an equation
+    \item\label{term:marginal} \textbf{Two marginal fitness criteria}: a value or function that is wanting to be or altered or monitored. In this document it is typically the spore production, and the mycelia production.
+  
+    \item\label{term:statevariables} \textbf{State Variables}: these are variables that set the stage of the equation or system and define the initial circumstances of the problem. These include items like lesion density, or the rate of decay in the system.
+    \item\label{term:saddlecontrol} \textbf{Saddle control strategies}: A function or system determining the saddle point of an equation.
     \item\label{term:carryingcapacity} \textbf{Carrying capacity}: The maximum size of a population that can be sustained in an environment. 
     
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1
 \section{Useful Mathematical Definitions}\label{mathdefs}
 \begin{enumerate}
-    \item\label{math:jacobi} \textbf{Jacobi}
-    \item\label{math:infimum} \textbf{Infimum}:
-    \item\label{math:supremum} \textbf{Supremum}:
-    \item\label{math:Argmaxmin} \textbf{Argmin/Argmax}:
-    \item\label{math:saddlepoint} \textbf{Saddle point}:
-    \item\label{math:maximinminimax} \textbf{Maximin / Minimax}:
-    \item\label{math:valuefunction} \textbf{Value function}:
-    \item\label{math:cauchyproblem} \textbf{Cauchy problem}:
-    \item\label{math:nonsmooth} \textbf{Non-smooth}:
-    \item\label{math:viscosity} \textbf{Viscosity}:
-    \item\label{math:lipschitz} \textbf{Lipschitz continuous}:
-    \item\label{math:rademacher} \textbf{Rademacher's theorem}:
-    \item\label{math:lebesgue} \textbf{Lebesgue measure}:
+   % \item\label{math:jacobi} \textbf{Jacobi}
+    \item\label{math:infimum} \textbf{Infimum}: the subset of the greatest elements in a set; the greatest lower bound \cite{infimumsupremum}.
+    \item\label{math:supremum} \textbf{Supremum}: the subset of the least element that is greater than or equal to all elements of S if such an element exists \cite{infimumsupremum}.
+    \item\label{math:Argmaxmin} \textbf{Arg max/Arg min}: set of a function in which the values are maximized (Arg max) or minimized (Arg min).
+    \item\label{math:saddlepoint} \textbf{Saddle point}: the point in which the slopes in all directions are zero, and the graph makes a saddle shape.
+    \item\label{math:maximinminimax} \textbf{Maximin / Minimax}: the largest in a series of minima (maximin), or the smallest in a series of maxima (minimax).
+    %\item\label{math:valuefunction} \textbf{Value function}:
+    \item\label{math:cauchyproblem} \textbf{Cauchy problem}: a problem that asks for the solution of a partial differential equation that satisfies certain conditions that are given on a hypersurface.
+    \item\label{math:nonsmooth} \textbf{Non-smooth}: describes a non infinitely differential function.
+    %%%%%%%%%%%%%%%%ask ivan
+    \item\label{math:viscosity} \textbf{Viscosity solution}: a solution that is both a supersolution and a subsolution.
+    \item\label{math:lipschitz} \textbf{Lipschitz continuous}: describing a function that has a limit on how fast it changes.
+    \item\label{math:rademacher} \textbf{Rademacher's theorem}: Let $f: \mathbb{R} \rightarrow \mathbb{R} $ be any Lipschitz continuous function. Then $f$ is differentiable in almost anywhere $x \in \mathbb{R}^n$.
+    \item\label{math:lebesgue} \textbf{Lebesgue measure}: a standard method of assigning a measure to a subset. Can be thought of as an a unit of measure.
     \item\label{math:monotone} \textbf{Monotone function}: A function that preserves an order; a function that is always rising or decreasing. A function is monotonically increasing if for all $x$ and $y$ where $x \leq y$ then $f(x) \leq f(y)$, and reverse for monotonically decreasing.
     \item\label{math:diffusionproblem} \textbf{Numerical Diffusion Problems}: a difficulty that often arises when the computed medium differs from the actual medium, or it arises when it shouldn't in the first place.
-    \item\label{math:pontryagin} \textbf{Pontryagin's maximum principle}:
+    %\item\label{math:pontryagin} \textbf{Pontryagin's maximum principle}:
 \end{enumerate}
 
-\section{}\label{appendix:references}Appendix
+\section{}\label{appendix:references}
 \begin{thebibliography}{}
 
 \bibitem{YegorovGrognardMailleretHalkettBernhard2019}
 I.~Yegorov, F.~Grognard, L.~Mailleret, F.~Halkett, P.~Bernhard. A dynamic game
 approach to uninvadable strategies for biotrophic
 pathogens. {\it Dynamic Games and Applications} 2020; {\bf 10}(1): 257--296.
+
 
 \bibitem{ROCHJ2019}
 Bokanowski,~O., Desilles,~A., Zidani,~H., and Zhao,~J.
@@ -788,11 +781,20 @@ IFAC-PapersOnline 50(1):3154–3159.
 ROC-HJ to set the problem statement.}
 \url{https://raw.githubusercontent.com/stevenglasford/Seminar_NDSU_2020/main/ivan_to_2.5/data/data_user_biotroph_fungi_game.h}
 
+\bibitem{infimumsupremum}
+Rudin, Walter (1976). ""Chapter 1 The Real and Complex Number Systems"". Principles of Mathematical Analysis ("print") (3rd ed.). McGraw-Hill. p. 4. ISBN 0-07-054235-X.
+
+\bibitem{zerosumgame}
+Cardaliaguet P., Rainer C. (2016) Zero-Sum Differential Games. In: Basar T., Zaccour G. (eds) Handbook of Dynamic Game Theory. Springer, Cham. https://doi.org/10.1007/978-3-319-27335-8\_4-1
+
+\bibitem{cauchy}
+Jacques Hadamard (1923), Lectures on Cauchy's Problem in Linear Partial Differential Equations, Dover Phoenix editions
+
 \end{thebibliography}
 
 \section{Code Snippets}
 
-\begin{figure}
+\begin{figure}[h]
     \inputminted[
         frame=lines,
         framesep=2mm,
@@ -804,7 +806,7 @@ ROC-HJ to set the problem statement.}
 \label{code:defaults}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \inputminted[frame=lines,
         framesep=2mm,
@@ -817,7 +819,7 @@ ROC-HJ to set the problem statement.}
     \label{code:cost}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \inputminted[frame=lines,
         framesep=2mm,
