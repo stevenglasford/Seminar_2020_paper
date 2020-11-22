@@ -372,7 +372,6 @@ $ u_2 $
 (here minimax and maximin [\ref{mathdefs}.\ref{math:maximinminimax}] give the same result). Due to the theoretical
 results of \cite[\S XI.6]{FlemingSoner2006}, the value function 
 $ \: V \colon [0, T] \times G \to \mathbb{R} \: $ in the formulated feedback
-
 differential game is a unique solution of the following Cauchy problem [\ref{mathdefs}.\ref{math:cauchyproblem}] for the
 Hamilton--Jacobi--Isaacs partial differential equation (HJI PDE):
 \begin{equation}
@@ -654,7 +653,7 @@ situation may change through evolution.
 
 \section{Common terms}\label{terms}
 \begin{enumerate}
-    \item\label{term:zerosum} \textbf{Zero-sum feedback game}: a game in which one of the players wants the game to reach an open target (wants to take over, invade), while the want to avoid this target forever (prevent a take over, defend).
+    \item\label{term:zerosum} \textbf{Zero-sum feedback game}: a game in which one of the players wants the game to reach an open target (wants to take over, invade), while the want to avoid this target forever (prevent a take over, defend)\cite{zerosumgame}.
     \item\label{term:pathogen} \textbf{Pathogen}: this is an infectious organism, this paper mostly discusses fungal invaders.
     \item\label{term:resident} \textbf{Resident pathogen}: this is the original organism and has not been mutated.
     \item\label{term:mutant} \textbf{Mutant pathogen}: this is a strain of the same species of organism as the resident species, but has been mutated, through physical separation or natural mutation.
@@ -666,7 +665,7 @@ situation may change through evolution.
     \item\label{term:marginal} \textbf{Two marginal fitness criteria}: a value or function that is wanting to be or altered or monitored. In this document it is typically the spore production, and the mycelia production.
   
     \item\label{term:statevariables} \textbf{State Variables}: these are variables that set the stage of the equation or system and define the initial circumstances of the problem. These include items like lesion density, or the rate of decay in the system.
-    \item\label{term:saddlecontrol} \textbf{Saddle control strategies}: A function or system determining the saddle point of an equation
+    \item\label{term:saddlecontrol} \textbf{Saddle control strategies}: A function or system determining the saddle point of an equation.
     \item\label{term:carryingcapacity} \textbf{Carrying capacity}: The maximum size of a population that can be sustained in an environment. 
     
 \end{enumerate}
@@ -692,7 +691,7 @@ situation may change through evolution.
     %\item\label{math:pontryagin} \textbf{Pontryagin's maximum principle}:
 \end{enumerate}
 
-\section{}\label{appendix:references}Appendix
+\section{}\label{appendix:references}
 \begin{thebibliography}{}
 
 \bibitem{YegorovGrognardMailleretHalkettBernhard2019}
@@ -795,7 +794,7 @@ Jacques Hadamard (1923), Lectures on Cauchy's Problem in Linear Partial Differen
 
 \section{Code Snippets}
 
-\begin{figure}
+\begin{figure}[h]
     \inputminted[
         frame=lines,
         framesep=2mm,
@@ -807,7 +806,7 @@ Jacques Hadamard (1923), Lectures on Cauchy's Problem in Linear Partial Differen
 \label{code:defaults}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \inputminted[frame=lines,
         framesep=2mm,
@@ -820,7 +819,7 @@ Jacques Hadamard (1923), Lectures on Cauchy's Problem in Linear Partial Differen
     \label{code:cost}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centering
     \inputminted[frame=lines,
         framesep=2mm,
