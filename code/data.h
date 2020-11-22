@@ -118,36 +118,36 @@ const double  n_1 = 9.0,
 //---------------------------------------------------------------
 
 inline void dynamics2(const double* x, C u, C u2, double t, double* res) {
-	double  new_M_1 = x[0],
-			new_M_2 = x[1],
-			u_1 = u[0],
-			u_2 = u2[0];
-	if (new_M_1 < 0.0)
-		new_M_1 = 0.0;
-	if (new_M_2 < 0.0)
-		new_M_2 = 0.0;
-	double  compet_term = 1.0 / (1.0 + new_beta * (n_1 * new_M_1...
-				     + n_2 * new_M_2));
-	res[0] = new_M_1 * ((1.0 - u_1) * compet_term * new_alpha / ...
-		 (new_M_1 + new_k) - gamma_rate);
-	res[1] = new_M_2 * ((1.0 - u_2) * compet_term * new_alpha / ...
-		 (new_M_2 + new_k) - gamma_rate);
+     double  new_M_1 = x[0],
+             new_M_2 = x[1],
+             u_1 = u[0],
+             u_2 = u2[0];
+     if (new_M_1 < 0.0)
+         new_M_1 = 0.0;
+     if (new_M_2 < 0.0)
+         new_M_2 = 0.0;
+     double  compet_term = 1.0 / (1.0 + new_beta * (n_1 * new_M_1...
+                                  + n_2 * new_M_2));
+     res[0] = new_M_1 * ((1.0 - u_1) * compet_term * new_alpha / ...
+                         (new_M_1 + new_k) - gamma_rate);
+     res[1] = new_M_2 * ((1.0 - u_2) * compet_term * new_alpha / ...
+                         (new_M_2 + new_k) - gamma_rate);
 }
 
 inline double distributed_cost2(const double* x, C u, C u2, double t) {
-	double  new_M_1 = x[0],
-			new_M_2 = x[1],
-			u_1 = u[0],
-			u_2 = u2[0];
-	if (new_M_1 < 0.0)
-		new_M_1 = 0.0;
-	if (new_M_2 < 0.0)
-		new_M_2 = 0.0;
-	double  compet_term = 1.0 / (1.0 + new_beta * (n_1 * new_M_1 + n_2 ...
-						    * new_M_2));
-	return  compet_term * new_alpha * exp(-mu_rate * (T - t)) *
-			(u_2 * new_M_2  / (new_M_2 + new_k) - u_1 ...
-			 * new_M_1 / (new_M_1 + new_k));
+     double new_M_1 = x[0],
+            new_M_2 = x[1],
+            u_1 = u[0],
+            u_2 = u2[0];
+     if (new_M_1 < 0.0)
+            new_M_1 = 0.0;
+     if (new_M_2 < 0.0)
+            new_M_2 = 0.0;
+     double compet_term = 1.0 / (1.0 + new_beta * (n_1 * new_M_1 + n_2 ...
+                                                   * new_M_2));
+     return compet_term * new_alpha * exp(-mu_rate * (T - t)) *
+            (u_2 * new_M_2  / (new_M_2 + new_k) - u_1 ...
+             * new_M_1 / (new_M_1 + new_k));
 }
 
 
