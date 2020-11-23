@@ -77,52 +77,52 @@ Fargo, ND 58108-6050, USA}
 \maketitle
 
 \begin{abstract}
-    In the wild it is very common for fungi and other pathogens to attempt to enter plant hosts, this typically results in competition from other pathogens as well for a single host. Also common is the case when a fungus mutates, where by natural selection, or by the act of introduction into a different environment. This leads to a case where the fungus that has not mutated (the resident) might have to compete with its mutated cousin. In this paper we investigate a zero sum game between a resident and mutant strain of fungi to see if one fungi wins over the other. We also explore the case in which the two strains enter an equilibrium point where both are able to exist. Furthermore, this paper simulates this situation on a single plant for a single season, and does not discuss the potential for evolution between seasons, or the dynamics of multiple plants of the same species.
+    In the wild, it is widespread for fungi and other pathogens to enter plant hosts and typically result in competition from other pathogens for a single host. Also typical is when a fungus mutates, whereby natural selection or by the act of introduction into a different environment. The mutation leads to a case where the fungus that has not mutated (the resident) might have to compete with its mutated cousin.
+    This paper investigates a zero-sum game between a resident and mutant strain of fungi to see if one fungus wins over the other. We also explore the case in which the two strains enter an equilibrium point where both can exist. Furthermore, this paper simulates this situation on a single plant for a single season and does not discuss the potential for evolution between seasons or the dynamics of multiple plants of the same species.
 \end{abstract}
 
 
 \section{Introduction}
-Pathogens are what makes people, pets and every other living organism sick. They are a broad group and can do everything from make a person sick with COVID-19, to blight rotting potatoes in the field starving people. Plant pathogens are everywhere, going outside to the park, it is not uncommon for a person to see brown spots on leaves of trees caused by fungus or to see lichens growing on the bark of oak trees. 
+Pathogens are what make people, pets, and every other living organism sick. They are a broad group and can do everything from making a person sick with COVID-19 to blight rotting potatoes in the field starving people. Plant pathogens are everywhere. Going outside to the park, it is not uncommon for a person to see brown spots on the leaves of trees caused by fungus or to see lichens growing on oak trees' bark. 
 
-In this paper, a zero-sum feedback game [\ref{terms}.\ref{term:zerosum}] of two competing pathogens on a single plant, battling for dominance on the plant. To do this we use a system of nonlinear ordinary differential equations and use computers and numerical analysis to solve and describe the dynamics of a single growing season of two invading fungal pathogens on a single plant. 
+In this paper, a zero-sum feedback game [\ref{terms}.\ref{term:zerosum}] of two competing pathogens on a single plant, battling for dominance on the plant. To do this, we use a system of nonlinear ordinary differential equations. We use computers and numerical analysis to solve and describe the dynamics of a single growing season of two invading fungal pathogens on a single plant. 
 
-The first fungus can be understood as the resident, while the second is the mutant. The mutant fungus is of the same species, but is a different individual.  The function that describes the invasion of the fungi is the difference between the two marginal fitness criteria [\ref{terms}.\ref{term:marginal}], and represents the cost in defining the  differential game's value [\ref{terms}.\ref{term:differentialgame}].  A general dynamic game approach of \cite{YegorovGrognardMailleretHalkettBernhard2019} is explored and discussed. The Cauchy problem [\ref{terms}.\ref{math:cauchyproblem}] for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this situation is numerically solved using the ROC-HJ software~\cite{ROCHJ2019}. 
+The first fungus can be understood as the resident, while the second is the mutant. The mutant fungus is of the same species but is a different individual.  The function that describes the fungi invasion is the difference between the two marginal fitness criteria [\ref{terms}.\ref{term:marginal}], and represents the cost in defining the  differential game's value [\ref{terms}.\ref{term:differentialgame}].  A general dynamic game approach of \cite{YegorovGrognardMailleretHalkettBernhard2019} is explored and discussed. The Cauchy problem [\ref{terms}.\ref{math:cauchyproblem}] for the first-order Hamilton--Jacobi partial differential equation (HJ PDE) created by this situation is solved using the ROC-HJ software~\cite{ROCHJ2019}. 
 
-Analysis of the numerical simulations obtained by this software package, as well as a graphical description is further investigated later in this document.
+Analysis of the numerical simulations obtained by this software package, and a graphical description is further investigated later in this document.
 
 
 \section{Statement of the model}
-Before we can properly analyze the numerical solutions we must first define the model. We consider the dynamics of two biotrophic [\ref{terms}.\ref{term:biotrohpic}] fungal cohorts [\ref{terms}.\ref{term:cohort}] on one plant in a single season.  Let us refer to them as to cohorts~$ 1 $ and $ 2 $. For
+Before we can adequately analyze the numerical solutions, we must first define the model. We consider the dynamics of two biotrophic [\ref{terms}.\ref{term:biotrohpic}] fungal cohorts [\ref{terms}.\ref{term:cohort}] on one plant in a single season.  Let us refer to them as cohorts~$ 1 $ and $ 2 $. For
 cohort~$ i $, let $ n_i $ the lesion density, which is the number of mycelia [\ref{terms}.\ref{term:mycelia}]
 per unit area of the host. For simplicity, assume $ n_1 $ and $ n_2 $ to be
 constant during the entire infection period within the season, which means that
-only the resident and the mutant exist on the plant, and there are no new invaders do not penetrate the host during the analyzed period.
-In the wild this is  a substantial restriction for infections in, but it still allows for us to draw significant conclusions with relevant
+only the resident and the mutant exist on the plant. There are no new invaders that do not penetrate the host during the analyzed period.
+In the wild, this is a substantial restriction for infections. However, it still allows us to draw significant conclusions with relevant
 biological interpretations while adhering to standard experimental infection protocols.
 
-We denote the average size of a mycelium in cohort~$ i $ by $ M_i $. and Let $ S_i $
+We denote the average size of a mycelium in cohort~$ i $ by $ M_i $. Let $ S_i $
 be the average quantity of spores produced by a mycelium in cohort~$ i $. The duration of the
-infection ~$ t $ within the season is a time variable. Note that the
+infection~$ t $ within the season is a time variable. Note that the
 mycelial sizes~$ M_1 $ and $ M_2 $ are measured in terms of equivalent amounts
-of infecting spores (for instance, if a mycelium appears from one spore at the
-beginning of the infection period, the initial mycelial size can be set as one
-equivalent of an infecting spore or only as one spore).
+of infecting spores. For instance, if a mycelium appears from one spore at the
+beginning of the infection period, the initial mycelial size can be set as one or only as one spore.
 
-To determine the nutrient flux [\ref{terms}.\ref{term:nutrientflux}],
-by cohort~$ i $ we use the function,
-$ f_i = f_i(M_1, M_2) $, which is allocated between two different pathogen
+To determine the nutrient flux [\ref{terms}.\ref{term:nutrientflux}]
+of cohort~$ i $, we use the function,
+$ f_i = f_i(M_1, M_2) $, where the flux allocation is between mycelia growth and producing spores. which is allocated between two different pathogen
 activities such as within-host multiplication (mycelial growth) and producing
 asexual spores. For brevity, we do not explicitly show the dependence on the
 constant parameters $ n_1, n_2 $ when writing $ f_i = f_i(M_1, M_2) $,
 $ i = 1,2 $. Let $ u_i = u_i(t) $ be a related resource allocation (control)
 function, taking values between zero and one. 
-When $ u_i(t) = 0 $ the particular fungus only produces mycelia, while when $ u_i(t) = 1 $ the fungus produces spores, and when $ 0 < u_i(t) < 1 $ the fungus is doing both at some degree.
+When $ u_i(t) = 0 $, the particular fungus only produces mycelia, while when $ u_i(t) = 1 $, the fungus produces spores, and when $ 0 < u_i(t) < 1 $, the fungus is doing both to some degree.
 % Suppose that the whole flux goes
 % to mycelial growth when $ u_i(t) = 0 $ and to spore production when
 % $ u_i(t) = 1 $, while, for $ 0 < u_i(t) < 1 $, there is an intermediate
 % configuration. In other words, the fungus expends all of its energy to produce mycelia when 
 
-Let $ g = g(M) $ be the rate of mycelial decay for both cohorts, we assume that the mutation does not. We assume a constant yield of spores, $ \delta > 0 $, as compared to mycelial growth. 
+Let $ g = g(M) $ be the rate of mycelial decay for both cohorts; we assume that the mutation does not. We assume a constant yield of spores, $ \delta > 0 $, as compared to mycelial growth. 
 
 The period of the infections within the season is a fixed interval~$ [0, T] $.
 
@@ -146,8 +146,7 @@ The following dynamic model can thus be formulated
 \end{equation}
 Since the right-hand sides of the third and fourth equations in (\ref{1}) do
 not contain $ S_1 $ and $ S_2 $, one does not need to treat $ S_1 $ and $ S_2 $
-explicitly, so that $ M_1 $ and $ M_2 $ can be considered as the only
-state variables [\ref{terms}.\ref{term:statevariables}]. %todo: define and cite
+explicitly, which makes $ M_1 $ and $ M_2 $ considered only as state variables [\ref{terms}.\ref{term:statevariables}].
 
 The reproductive success (the amount of growth on the plant) of cohort~$ i $ is determined by:
 \begin{equation}
@@ -157,7 +156,7 @@ The reproductive success (the amount of growth on the plant) of cohort~$ i $ is 
 \end{equation}
 where $ e^{-\mu t} $ describes the exponential extinction of the infections as the plant develops immunity,
 and $ \mu $ is a positive constant. Since $ \delta $ is a positive constant,
-we can divide \cref{3_1} by $ \delta $ and arrive at the following, where $J$ is a Jacobi function 
+we can divide \cref{3_1} by $ \delta $ and arrive at the following, where $J$ is a Jacobi function, 
 
 \begin{equation}
 J_i\left(u_1(\cdot), u_2(\cdot)\right) \:\: = \:\: \int\limits_0^T u_i(t) \, f_i\left(M_1(t),
@@ -165,10 +164,9 @@ J_i\left(u_1(\cdot), u_2(\cdot)\right) \:\: = \:\: \int\limits_0^T u_i(t) \, f_i
 \end{equation}
 
 
-Following with \cite{YegorovGrognardMailleretHalkettBernhard2019,
-BernhardGrognardMailleretAkhmetzhanov2010},
-we look at the competition between the two cohorts in a single season by investigating their individual reproductive outputs and seeking the saddle control strategies [\ref{terms}.\ref{term:saddlecontrol}] (where the two pathogens enter a sort of ``tie'')
-in the following zero-sum two-player differential game:
+In the next equations, we look at the zero-sum two-player differential game, in line with \cite{YegorovGrognardMailleretHalkettBernhard2019,
+BernhardGrognardMailleretAkhmetzhanov2010}.
+We look at the competition between the two cohorts in a single season by investigating their reproductive outputs and seeking the saddle control strategies [\ref{terms}.\ref{term:saddlecontrol}]. In other words, we try and find the point/s in which the two pathogens enter a stalemate and what actions the fungi need to do in order to enter this situation.
 \begin{equation}
 \left\{ \begin{aligned}
 & \frac{\mathrm{d} M_1(t)}{\mathrm{d} t} \:\: = \:\: \left(1 - u_1(t)\right) \,
@@ -219,7 +217,7 @@ f_i(M_1, M_2) \: = \: \nu(n_1 M_1 + n_2 M_2) \, \cdot \, \rho(M_i) \:\:\:
 \begin{equation}
 g(M) \: = \: \gamma M \quad \forall M \geqslant 0.  \label{6}
 \end{equation}
-Where $\rho$ is a positive function that specifies the flow of resources obtained by a single mycelium, and $\nu$ describes the negative consequences as the pathogens compete for resources from the single plant  \cite{YegorovGrognardMailleretHalkettBernhard2019}.
+$\rho$ is a positive function that specifies the flow of resources obtained by a single mycelium, and $\nu$ describes the negative consequences as the pathogens compete for resources from the single plant  \cite{YegorovGrognardMailleretHalkettBernhard2019}.
 
 Furthermore, the following parameter values are also useful for the numerical
 simulations and arise from the analysis of
@@ -257,7 +255,7 @@ carrying capacity [\ref{terms}.\ref{term:carryingcapacity}] estimates.
 
 
 \section{Uninvadable and evolutionarily stable strategies}
-In war there are times in which neither party wins. Where there is a boundary or other concession exist, under this circumstance the resident is uninvadable. In this section we describe the strategies and functions used to model a stable and uninvadable resident pathogen, in other words we see see were the two pathogens enter a stalemate and we look deeper at the game-theoretic statements from {\rm \cref{7,8,9}}.
+In war, there are times in which neither party wins. Where there is a boundary or other concessions exist, the resident is uninvadable under this circumstance. This section describes the strategies and functions used to model a stable and uninvadable resident pathogen. In other words, we see where the two pathogens enter a stalemate, and we look deeper at the game-theoretic statements from {\rm \cref{7,8,9}}.
 
 Based on the terminology of Adaptive Dynamics \cite{DercoleRinaldi2008}, let
 us interpret cohort~{\rm 1} as a resident and cohort~{\rm 2} as a mutant.
@@ -302,30 +300,24 @@ second one{\rm ,} and vice versa. In other words, the resident fungus tries to g
 
 If $ M_1^0 = M_2^0 $ and $ \mathcal{U}_1 = \mathcal{U}_2 = \mathcal{U} ${\rm ,}
 then $ J(u, u) = 0 $ for all $ u \in \mathcal{U} ${\rm ,} and {\rm (\ref{9_2})}
-is simplified to
-
-%todo: define Arg or remove if meaningless
+simplifies to
 \begin{equation}
 \min_{u_1 \, \in \, \mathcal{U}} \: \sup_{u_2 \, \in \, \mathcal{U}} \:
   J(u_1, u_2) \:\: = \:\: 0  \label{9_3}
 \end{equation}
-
-
-This is the boundary where neither the resident and the mutant win, and there is a stalemate.
+This equation is the boundary where neither the resident and the mutant win, and there is a stalemate.
 In this case{\rm ,} a strategy
-
 $$
 \hat{u}_1 \:\: \in \:\: \mathrm{Arg} \min_{u_1 \, \in \, \mathcal{U}}
   \left( \sup_{u_2 \, \in \, \mathcal{U}} \: J(u_1, u_2) \right)
 $$
-
 where $\mathrm{Arg} \min$ is the argument of the minimum [\ref{mathdefs}.\ref{math:Argmaxmin}]. The strategy is called evolutionary stable, and there is a boundary where neither pathogen wins if the related maximum for $ u_2 $ is
 unique:
 $$
 \mathrm{Arg} \max_{u_2 \, \in \, \mathcal{U}} \: J \left( \hat{u}_1, u_2
   \right) \:\: = \:\: \left\{ \hat{u}_1 \right\}.
 $$
-where $\mathrm{Arg}\max$ is the argument of the maximum [\ref{mathdefs}.\ref{math:Argmaxmin}]
+where $\mathrm{Arg}\max$ is the argument of the maximum [\ref{mathdefs}.\ref{math:Argmaxmin}].
 
 
 This approach to defining stable evolutionary strategies was initially proposed
@@ -334,7 +326,7 @@ in \cite{YegorovGrognardMailleretHalkettBernhard2019}.
 
 
 \section{Hamilton--Jacobi--Isaacs equation}
-In order to determine how the evolutionary strategies change over time we must develop a system of differential functions. This circumstance is very well able to be solved using a Hamilton--Jacobi-Isaacs equation, and for brevity we exclude the reasoning behind using this, but more information and futher analysis can be found in \cite{YegorovGrognardMailleretHalkettBernhard2019}.
+To determine how evolutionary strategies change over time, we must develop a system of differential functions. This circumstance can be solved using a Hamilton--Jacobi-Isaacs equation. We exclude the reasoning behind using this for brevity, \cite{YegorovGrognardMailleretHalkettBernhard2019} contains more information and further analysis.
 
 We introduce the following function known as Hamiltonian:
 \begin{equation}
@@ -385,12 +377,11 @@ Hamilton--Jacobi--Isaacs partial differential equation (HJI PDE):
 \end{equation}
 
 In general, the solution may be 
-nonsmooth [\ref{mathdefs}.\ref{math:nonsmooth}] and understood in a generalized (viscosity [\ref{mathdefs}.\ref{math:viscosity}] or minimax) sense \cite{FlemingSoner2006,Subbotin1995}. This makes it difficult, if not impossible to solve precisely.
+nonsmooth [\ref{mathdefs}.\ref{math:nonsmooth}] and understood in a generalized (viscosity [\ref{mathdefs}.\ref{math:viscosity}] or minimax) sense \cite{FlemingSoner2006,Subbotin1995}. These conditions make it difficult, if not impossible, to find an exact solution.
 
-Due to the general properties of value functions of zero-sum feedback
-differential games \cite{BotkinHoffmannTurova2011}, the value function~$ V $
-in our problem is limited in how fast it can change and is therefore Lipschitz continuous [\ref{mathdefs}.\ref{math:lipschitz}] in $ [0, T] \times G $. 
-Rademacher's theorem [\ref{mathdefs}.\ref{math:rademacher}],
+The general properties of value functions of zero-sum feedback
+differential games \cite{BotkinHoffmannTurova2011} limit how fast the value function~$ V $ changes. These limitations make it Lipschitz continuous [\ref{mathdefs}.\ref{math:lipschitz}] in $ [0, T] \times G $. 
+Rademacher's theorem [\ref{mathdefs}.\ref{math:rademacher}]
 is differentiable almost everywhere in $ (0, T) \times G $, except
 for possibly a 
 subset of Lebesgue measure zero. 
@@ -434,39 +425,31 @@ M_1, M_2)}{\partial M_2} \: = \: 0.
 \end{cases}
 \end{aligned}  \label{16}
 \end{equation}
-These are resource allocation strategies and functions that describe the equilibrium point and the coexistence of the two fungi. In other words, these equations describe the points where the two fungi enter a stalemate dynamically as time progresses. 
+These are resource allocation strategies and functions that describe the equilibrium point and the cohorts coexisting. In other words, these equations describe the points where the two fungi enter a stalemate dynamically as time progresses. 
 
 
 
 \section{Numerical solution}
-As described previously, these equations are extremely difficult to solve precisely, luckily, we do not necessarily need a precise answer. Numerical analysis is the math behind finding such answers of difficult to solve problems. In our case there is already a program to solve Hamilton--Jacobi equations called ROC-HJ, which is written in C++ and allows for a fast and easy
+As described previously, these equations are complicated to solve exactly. luckily, we do not necessarily need an exact answer. Numerical analysis is the math behind finding such answers from challenging problems. In our case, there is already a program to solve Hamilton--Jacobi equations called ROC-HJ \cite{ROCHJ2019}. It is written in C++ and allows for a fast and easy
 transcription of the functions above into machine code. 
 
 Most of the preconfigured files and procedures of ROC-HJ allow for a quick transcription
-of a Hamilton-Jacobi equation. More information about how to install ROC-HJ and were to find the package can be found at \cite{ROCHJ2019} and it also has large amount of documentation providing further details of the type of assignments and
-other variables that need additional configuration in order for ROC-HJ to find
-a solution. To use ROC-HJ, we must assign a few variables to describe the kind
+of a Hamilton-Jacobi equation. \cite{ROCHJ2019} provides more information about how to install ROC-HJ, including further documentation.To use ROC-HJ, we must assign a few variables to describe the kind
 of problem. Fig. \ref{code:defaults} contains some of the variables which
-describe the problem.
-
-
-With these as well as many more options that we had to set to correctly assign
-the type of problem that we needed for the system to function precisely, we
-also needed to specify both a cost function (fig. \ref{code:cost}) and a
-dynamic equation (fig. \ref{code:dynamic}) to produce the data that we need.
+describe the problem. We also need to specify both a cost function (fig. \ref{code:cost}) and a dynamic equation (fig. \ref{code:dynamic}) to produce the data that we need.
 
 
 Within the \texttt{data\_*.h} file, there is much more information describing
 the function. One can find more information and details about this project's
-configuration variables by viewing the data file directly at \cite{data_ivan.h}.
+configuration variables by directly viewing the data file \cite{data_ivan.h}.
 
-In converting these equations into machine code we must consider the Cauchy problem~\cref{15} for the HJI PDE with the nutrient
+In converting these equations into machine code, we must consider the Cauchy problem~\cref{15} for the HJI PDE with the nutrient
 fluxes~\cref{4,5_1,5_2}, decay rate~\cref{6}, and parameter values~\cref{19}. We must further set the software to finding the solutions using a finite difference method 
 \cite{FlemingSoner2006,
       OsherShu1991,
       BotkinHoffmannTurova2011,
       BokanForcadelZidani2010}
-using the ROC-HJ software~\cite{ROCHJ2019}. These ``default'' parameters can be found in figure \ref{code:defaults}.
+using the ROC-HJ software~\cite{ROCHJ2019}. One can find these ``default'' parameters in figure \ref{code:defaults}.
 
 For practical purposes with ROC-HJ, it is reasonable to rewrite \cref{15} in reverse
 time $ \tau = T - t $ as
@@ -503,23 +486,21 @@ $$
 by the spatial step $ \: \Delta m_1 = \Delta m_2 = \Delta m = 2 \cdot 10^{-3}
 \: $ and time step $ \Delta \tau = 5 \cdot 10^{-3} $.
 
-Monotone [\ref{mathdefs}.\ref{math:monotone}] finite difference methods, methods where there is a strict increasing or decreasing behavior.
+Monotone [\ref{mathdefs}.\ref{math:monotone}] finite difference methods, where there is a strictly increasing or decreasing behavior.
 %%This is not very useful since the system is not solved using this method, as it is too slow
 %(including the classical Lax--Friedrichs scheme)
-These methods ensure theoretical convergence properties (properties where the more computation is expended, the closer one can get to a precise answer) with error estimates, but
-they are mostly of the first order and may generate so-called 
+These methods ensure theoretical convergence properties (properties where an increase in computational expenditure increases precision) with error estimates. However, they are mostly of the first order. They may generate so-called 
 numerical diffusion problems [\ref{mathdefs}.\ref{math:diffusionproblem}]
-on long time intervals. One way to reduce and attempt to eliminate such practical issues is to use 
+on long time intervals. One way to reduce and eliminate such practical issues is to use 
 higher-order ENO (essentially non-oscillatory) schemes 
-such as those originally proposed in \cite{OsherShu1991}. Higher order ENO schemes also have been shown to have a greater amount of stability which is useful in eliminating practical issues. They are not necessarily
-monotone, and there is a lack of associated convergence theorems, meaning it is difficult to ensure that the computation will approach a steady answer. However,
+such as those initially proposed \cite{OsherShu1991}. Higher-order ENO schemes also have been shown to have a more significant amount of stability, which is useful in eliminating practical issues. They are not necessarily
+monotone. There is a lack of associated convergence theorems, meaning it is challenging to ensure that the computation will approach a steady answer. However,
 their relevance is justifiable by various numerical experiments 
 \cite{OsherShu1991,BokanForcadelZidani2010}.
 
-We have used the second-order ENO scheme in ROC-HJ (fig.~\ref{code:defaults}) (to approximate the partial
-derivatives concerning the state variables), coupled with the 
-second-order Runge--Kutta time discretization scheme (which further provides increased accuracy over other methods of discretely partitioning time intervals) 
-and implemented in \cite{ROCHJ2019}.
+We have used the second-order ENO scheme in ROC-HJ (fig.~\ref{code:defaults}) to approximate the partial
+derivatives concerning the state variables, coupled with the 
+second-order Runge--Kutta time discretization scheme. Runge--Kutta provides provides increased accuracy over other methods of discretely partitioning time intervals \cite{ROCHJ2019}.
 To evaluate the partial derivatives $ \partial V / \partial M_i $, $ i = 1,2 $,
 in the saddle feedback control representations~\cref{16}, we have applied the
 standard second-order symmetrized approximation
@@ -534,13 +515,13 @@ $ \tau = \tau^{**}
 and $ \tau = T = 60 $ ($ t = 0 $). 
 
 
-Figure \ref{fig_4_d} shows the beginning of the simulation where neither of the fungi are able to have much of a competition with each other and there is plenty of space and resources for both of the fungi, but there are sharper edges as the fungi begins to start to either produce mycelia or produce spores. After the initial production there is a leveling off as the fungi begin conducting growth of spores and mycelia simultaneously.
+Figure \ref{fig_4_d} shows the ``beginning'' of the simulation, where competitive strategies have not developed. There is plenty of space and resources for both of the fungi. However, sharper edges appear as the fungi begin to either produce mycelia or produce spores. After the initial production, there is a leveling off as the fungi begin conducting spore and mycelia growth simultaneously.
 
-Figure \ref{fig_4_c} shows that at the time point of $t=48.825$ there more differentiation in the actions of the fungi. Where the fungi try and compete, as there is an attempt to try and stay in the battle. Figure \ref{fig_4_b}, shows that near the end of the simulation the competition increases much more and the slope becomes more pronounced as the competitive forces begin to increase.
+Figure \ref{fig_4_c} shows that at the time point of $t=48.825$, there is more differentiation in the fungi's actions where the fungi try and compete, as there is an attempt to try and stay in the battle. Figure \ref{fig_4_b} shows that the competition increases much more near the end of the simulation. The slope becomes more pronounced as the competitive forces begin to increase.
 
-Figure \ref{fig_4_a} shows the end of the simulation where $t=60$. The graph is flat as there are no more resources that the fungi can expend (as it is the end of the simulation), if the simulation was allowed to continue it would continue to grow and the slope would most likely be more pronounced than in \ref{fig_4_b}. 
+Figure \ref{fig_4_a} shows the end of the simulation, where $t=60$. The graph is flat as there are no more resources that the fungi can expend (as it is the end of the simulation). If the simulation were allowed to continue, it would continue to grow, and the slope would most likely be more pronounced than in \ref{fig_4_b}. 
 
-It should be noted that in figure \ref{Fig_4}, there is no clearly defined winner. This is because we are modeling the efforts of the fungi attempting to remain at an equilibrium. However, it can be rationed that when a fungus does not attempt to achieve equilibrium it will be over taken by the other fungus and will go extinct, and the opposing fungus will win.
+In figure \ref{Fig_4}, there is no clearly defined winner. This model focuses on the efforts of the fungi attempting to remain at equilibrium. However, if the resident does not attempt to remain at equilibrium, it will be invaded and eliminated.
 
 
 % Fig.~\ref{Fig_4} determines which part of the fungus that needs to advance in order to have a stalemate with the other fungus. For example, in figure \ref{Fig_4}.\ref{fig_4_a}, there has not developed a need for either fungi to try and compete with each other, this means that there is enough resources for the two of them to coexist peacefully. This is in contrast to figure \ref{Fig_4}.\ref{fig_4_b} that shows more competition occurring between the resident $m_1$ and the mutant $m_2$, and when the resident produces more mycelia there is a lack of room for the mutant to grow its mycelia and it responds with an increase in the production of spores. 
@@ -566,13 +547,13 @@ It should be noted that in figure \ref{Fig_4}, there is no clearly defined winne
     \hfill
     \begin{subfigure}{.48 \textwidth}
         \includegraphics[width = \textwidth]{figures/Figure_4b_1.pdf}
-        \caption{Competition between the fungi increases near the end the simulation.}
+        \caption{Competition between the fungi increases near the end of the simulation.}
         \label{fig_4_b}
     \end{subfigure}
     \hfill
     \begin{subfigure}{.48 \textwidth}
         \includegraphics[width = \textwidth]{figures/Figure_4c_1.pdf}
-        \caption{Competition and strategies begin to clearly evolve.}
+        \caption{Competition and strategies begin to evolve.}
         \label{fig_4_c}
     \end{subfigure}
     \hfill
@@ -582,7 +563,7 @@ It should be noted that in figure \ref{Fig_4}, there is no clearly defined winne
         \label{fig_4_d}
     \end{subfigure}
 
-\bf \caption{\it The time instants are shown backwards to show how the computer produces the graphs using reverse time, meaning the first graph is actually the last computation.}
+\bf \caption{\it The time instants are in reverse order to show how the computer computes the strategies using reverse time meaning the first graph is the last computation.}
 \label{Fig_4}
 \end{figure}
 
@@ -597,7 +578,7 @@ It should be noted that in figure \ref{Fig_4}, there is no clearly defined winne
 \includegraphics[width = 0.48 \textwidth]{figures/Figure_5d_1.pdf}
 \includegraphics[width = 0.48 \textwidth]{figures/Figure_5d_2.pdf}
 }
-\bf \caption{\it The regions that are shaded white, the fungus enters spore production, while in the gray it enters mycelia production at the particular time instance. Also, the field corresponds to the its velocity of production.
+\bf \caption{\it In the white regions, the fungus enters spore production. In contrast in the gray, it enters mycelia production at a particular time instance. Also, the field corresponds to its velocity of production.
 % Finite-difference approximations of the saddle feedback
 % control strategies at several time instants. White and gray colors show the
 % regions of the control values $ 0 $ and $ 1 ${\rm ,} respectively. Also
@@ -610,12 +591,12 @@ Fig.~\ref{Fig_5} illustrates the appearance and time evolution of four
 approximate switching curves. For $ \tau \geqslant \tau^{**} $, they intersect
 at the point~$ \: \left( m^{**}, m^{**} \right) \, = \, 10^{-4}
 \cdot \left( M^{**}, M^{**} \right) $. With the further increase of $ \tau $, the 
-feedback control approaches a stationary form and there is less competition for resources between the fungi. Fig.~\ref{Fig_7}
+feedback control approaches a stationary form. There is less competition for resources between the fungi. Fig.~\ref{Fig_7}
 is a three-dimensional graph of the 
-four control switching surfaces (the direction for the fungi to progress and avoid invasion). 
+four control switching surfaces (the fungi's direction to progress and avoid invasion). 
 For $ \tau \geqslant \tau^{**} $, the point~$ \left( m^{**}, m^{**} \right) $
-attracts forward-time trajectories and determines a steady-state equilibrium
-strategy for both cohorts, while one can interpret the four surfaces as necessary actions of the cohorts to avoid invasion.
+attracts forward-time trajectories. It determines a steady-state equilibrium
+strategy for both cohorts. Simultaneously, one can interpret the four surfaces as necessary actions of the cohorts to avoid invasion.
 
 %todo: describe what is happening in the figures
 \begin{figure}
@@ -628,45 +609,40 @@ space~$ (m_1, m_2, \tau) $.}
 From Fig.~{\rm \ref{Fig_4},} one can see that{\rm ,} in the considered domain
 of initial states{\rm ,} the value $ V \left( 0, M_1^0, M_2^0 \right) $ of
 the zero-sum feedback differential game is negative for $ M_1^0 > M_2^0 ${\rm ,}
-zero for $ M_1^0 = M_2^0 ${\rm ,} and positive for $ M_1^0 < M_2^0 $. The
-saddle feedback resource allocation strategy of cohort~{\rm 1} is uninvadable
-if $ M_1^0 \geqslant M_2^0 $. Similarly{\rm ,} the saddle feedback resource
-allocation strategy of cohort~{\rm 2} is uninvadable if $ M_1^0
+zero for $ M_1^0 = M_2^0 ${\rm ,} and positive for $ M_1^0 < M_2^0 $. The strategy of cohort~{\rm 1} is uninvadable
+if $ M_1^0 \geqslant M_2^0 $. Similarly{\rm ,} the strategy of cohort~{\rm 2} is uninvadable if $ M_1^0
 \leqslant M_2^0 $. 
 
 
 \section{Conclusion}
-%todo: reword the conclusion so it is not as heavily technical
 This report focuses on constructing a strategy for constructing benchmark resource allocation strategies. This paper also focuses on how differing pathogens might compete and allows us the ability to compare actual infection mechanisms.
+We also focus solely on resource allocation equilibrium for the one-seasonal dynamics of two biotrophic fungal cohorts within a shared host plant. 
 
-In this report we focus solely on resource allocation equilibrium for the one-seasonal dynamics of two biotrophic fungal cohorts within a shared host plant. 
-Though not mentioned in this paper, it is also relevant to investigate 
-long-seasonal dynamics where the cohorts compete with each other on a much longer term, other relevant situations occur when the pathogens gain the ability to evolve and the amount and spore producing capacity, and when efficiencies of the pathogens begin to differ. Also interesting are situations where there are two separate and different species of fungi.
+Though not mentioned in this paper, it is also relevant to investigate long-seasonal dynamics where the cohorts compete longer. Other relevant situations occur when the pathogens gain the ability to evolve, and the amount and spore-producing capacity, and when efficiencies of the pathogens begin to differ. Also interesting are situations where there are two separate and different species of fungi.
 
 One may exploit specific discrete rules to
 transition from one season to another \cite{MailleretLemesle2009,Akhmetzhanov2012}.
 Another important research direction is to characterize such equilibria
-themselves and whether they represent evolutionary attractors or not and how the
+themselves and whether they represent evolutionary attractors or not, and how the
 situation may change through evolution.
 
 \appendix
 
 \section{Common terms}\label{terms}
 \begin{enumerate}
-    \item\label{term:zerosum} \textbf{Zero-sum feedback game}: a game in which one of the players wants the game to reach an open target (wants to take over, invade), while the want to avoid this target forever (prevent a take over, defend)\cite{zerosumgame}.
-    \item\label{term:pathogen} \textbf{Pathogen}: this is an infectious organism, this paper mostly discusses fungal invaders.
-    \item\label{term:resident} \textbf{Resident pathogen}: this is the original organism and has not been mutated.
-    \item\label{term:mutant} \textbf{Mutant pathogen}: this is a strain of the same species of organism as the resident species, but has been mutated, through physical separation or natural mutation.
+    \item\label{term:zerosum} \textbf{Zero-sum feedback game}: a game in which one of the players wants the game to reach an open target (wants to take over, invade), while the want to avoid this target forever (prevent a takeover, defend)\cite{zerosumgame}.
+    \item\label{term:pathogen} \textbf{Pathogen}: this is an infectious organism; this paper mostly discusses fungal invaders.
+    \item\label{term:resident} \textbf{Resident pathogen}: this is the original organism, the first pathogen.
+    \item\label{term:mutant} \textbf{Mutant pathogen}: this is a strain of the same species of the organism as the resident species but has a mutation through physical separation or natural mutation or otherwise.
     \item\label{term:mycelia} \textbf{Mycelia}: the ``roots'' of a fungus, made of extremely fine branches called hyphae. 
-    \item\label{term:cohort} \textbf{Cohort}: cohort typically means a person or thing that is typically on ``your side''. In this paper it typically refers to a pathogen that belongs to the same species, but differs slightly and is not of the same organism.
-    \item\label{term:biotrohpic} \textbf{Biotrophic}: describes a parasite attached to plant. Describing a plant parasite.
-    \item\label{term:nutrientflux} \textbf{Nutrient flux}: the amount of nutrients consumed by the pathogen.
-    \item\label{term:differentialgame} \textbf{Differential game's value}: The value at a certain time on a function that changes with time.
-    \item\label{term:marginal} \textbf{Two marginal fitness criteria}: a value or function that is wanting to be or altered or monitored. In this document it is typically the spore production, and the mycelia production.
-  
-    \item\label{term:statevariables} \textbf{State Variables}: these are variables that set the stage of the equation or system and define the initial circumstances of the problem. These include items like lesion density, or the rate of decay in the system.
-    \item\label{term:saddlecontrol} \textbf{Saddle control strategies}: A function or system determining the saddle point of an equation.
-    \item\label{term:carryingcapacity} \textbf{Carrying capacity}: The maximum size of a population that can be sustained in an environment. 
+    \item\label{term:cohort} \textbf{Cohort}: typically means a person or thing that is typically on ``your side.'' This paper typically refers to a pathogen that belongs to the same species but differs slightly and is not of the same organism.
+    \item\label{term:biotrohpic} \textbf{Biotrophic}: describes a parasite attached to a plant, a plant parasite. 
+    \item\label{term:nutrientflux} \textbf{Nutrient flux}: the number of nutrients consumed by the pathogen.
+    \item\label{term:differentialgame} \textbf{Differential game's value}:  the value of a function at a particular time when the function changes with time. 
+    \item\label{term:marginal} \textbf{Two marginal fitness criteria}: a value or function that is wanting to be or altered or monitored, in this document, it is typically the spore production, and the mycelia production.
+    \item\label{term:statevariables} \textbf{State Variables}: these are variables that set the equation or system stage and define the initial circumstances of the problem. These include items like lesion density or the rate of decay in the system.
+    \item\label{term:saddlecontrol} \textbf{Saddle control strategies}: a function or system determining the saddle point of an equation.
+    \item\label{term:carryingcapacity} \textbf{Carrying capacity}: the maximum size of a population that is sustainable in an environment.
     
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1
@@ -674,20 +650,20 @@ situation may change through evolution.
 \begin{enumerate}
    % \item\label{math:jacobi} \textbf{Jacobi}
     \item\label{math:infimum} \textbf{Infimum}: the subset of the greatest elements in a set; the greatest lower bound \cite{infimumsupremum}.
-    \item\label{math:supremum} \textbf{Supremum}: the subset of the least element that is greater than or equal to all elements of S if such an element exists \cite{infimumsupremum}.
-    \item\label{math:Argmaxmin} \textbf{Arg max/Arg min}: set of a function in which the values are maximized (Arg max) or minimized (Arg min).
+    \item\label{math:supremum} \textbf{Supremum}: the subset of the least element that is greater than or equal to all S elements if such an element exists  \cite{infimumsupremum}.
+    \item\label{math:Argmaxmin} \textbf{Arg max/Arg min}: a set of a function in which the values are maximized (Arg max) or minimized (Arg min).
     \item\label{math:saddlepoint} \textbf{Saddle point}: the point in which the slopes in all directions are zero, and the graph makes a saddle shape.
-    \item\label{math:maximinminimax} \textbf{Maximin / Minimax}: the largest in a series of minima (maximin), or the smallest in a series of maxima (minimax).
+    \item\label{math:maximinminimax} \textbf{Maximin / Minimax}: the largest in a series of minima (maximin) or the smallest in a maxima series (minimax).
     %\item\label{math:valuefunction} \textbf{Value function}:
-    \item\label{math:cauchyproblem} \textbf{Cauchy problem}: a problem that asks for the solution of a partial differential equation that satisfies certain conditions that are given on a hypersurface.
+    \item\label{math:cauchyproblem} \textbf{Cauchy problem}: a problem that asks for a partial differential equation that satisfies certain conditions given by a hypersurface.
     \item\label{math:nonsmooth} \textbf{Non-smooth}: describes a non infinitely differential function.
     %%%%%%%%%%%%%%%%ask ivan
     \item\label{math:viscosity} \textbf{Viscosity solution}: a solution that is both a supersolution and a subsolution.
     \item\label{math:lipschitz} \textbf{Lipschitz continuous}: describing a function that has a limit on how fast it changes.
     \item\label{math:rademacher} \textbf{Rademacher's theorem}: Let $f: \mathbb{R} \rightarrow \mathbb{R} $ be any Lipschitz continuous function. Then $f$ is differentiable in almost anywhere $x \in \mathbb{R}^n$.
-    \item\label{math:lebesgue} \textbf{Lebesgue measure}: a standard method of assigning a measure to a subset. Can be thought of as an a unit of measure.
-    \item\label{math:monotone} \textbf{Monotone function}: A function that preserves an order; a function that is always rising or decreasing. A function is monotonically increasing if for all $x$ and $y$ where $x \leq y$ then $f(x) \leq f(y)$, and reverse for monotonically decreasing.
-    \item\label{math:diffusionproblem} \textbf{Numerical Diffusion Problems}: a difficulty that often arises when the computed medium differs from the actual medium, or it arises when it shouldn't in the first place.
+    \item\label{math:lebesgue} \textbf{Lebesgue measure}: a standard method of assigning a measure to a subset, a unit of measure.
+    \item\label{math:monotone} \textbf{Monotone function}: A function that preserves order, a function that is always rising or decreasing. A function is monotonically increasing if for all $x$ and $y$ where $x \leq y$ then $f(x) \leq f(y)$, and reverse for monotonically decreasing.
+    \item\label{math:diffusionproblem} \textbf{Numerical Diffusion Problems}: a difficulty that often arises when the computed medium differs from the actual medium, or it arises when it should not in the first place.
     %\item\label{math:pontryagin} \textbf{Pontryagin's maximum principle}:
 \end{enumerate}
 
@@ -802,7 +778,7 @@ Jacques Hadamard (1923), Lectures on Cauchy's Problem in Linear Partial Differen
         fontsize=\footnotesize,
         firstline=15, 
         lastline=17]{c}{code/data.h}
-\caption{A few configuration variables needed to solve the equation using ROC-HJ, MFD being the method of monotone finite difference.}
+\caption{A few configuration variables are needed to solve the equation using ROC-HJ, MFD being the monotone finite difference method.}
 \label{code:defaults}
 \end{figure}
 
