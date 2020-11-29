@@ -56,7 +56,7 @@
 \makeatother
 
 \author{Steven~Glasford}
-\title{Modeling~warring~fungi~on~a~plant.}
+\title{Modeling~competing~fungi~on~a~plant.}
 
 \thanks{Advisor: Dr. Ivan Yegorov}
 \email{steven.glasford@ndsu.edu}
@@ -103,7 +103,7 @@ beginning of the infection period, the initial mycelial size can be set as one o
 
 To determine the nutrient flux [\ref{terms}.\ref{term:nutrientflux}]
 of cohort~$ i $, we use the function,
-$ f_i = f_i(M_1, M_2) $, where the flux allocation is between mycelia growth and producing spores. which is allocated between two different pathogen
+$ f_i = f_i(M_1, M_2) $, where the flux allocation is between mycelial growth and producing spores. which is allocated between two different pathogen
 activities such as within-host multiplication (mycelial growth) and producing
 asexual spores. For brevity, we do not explicitly show the dependence on the
 constant parameters $ n_1, n_2 $ when writing $ f_i = f_i(M_1, M_2) $,
@@ -245,7 +245,7 @@ carrying capacity [\ref{terms}.\ref{term:carryingcapacity}] estimates.
 
 
 \section{Uninvadable and evolutionarily stable strategies}
-In war, there are times in which neither party wins. Where there is a boundary or other concessions exist, the resident is uninvadable (and resists other pathogens) under this circumstance. This section describes the strategies and functions used to model a stable and uninvadable resident pathogen. In other words, we see where the two pathogens enter a stalemate, and we look deeper at the game-theoretic statements from {\rm \cref{7,8,9}}.
+In competition, there are times in which neither party wins. Where there is a boundary or other concessions exist, the resident is uninvadable (and resists other pathogens) under this circumstance. This section describes the strategies and functions used to model a stable and uninvadable resident pathogen. In other words, we see where the two pathogens enter a stalemate, and we look deeper at the game-theoretic statements from {\rm \cref{7,8,9}}.
 
 Based on the terminology of Adaptive Dynamics \cite{DercoleRinaldi2008}, let
 us interpret cohort~{\rm 1} as a resident and cohort~{\rm 2} as a mutant.
@@ -258,7 +258,7 @@ J(u_1, u_2) \: = \: J_2(u_1, u_2) - J_1(u_1, u_2) \: \leqslant \: 0.
 $$
 A strategy 
 $ \hat{u}_1 \in \mathcal{U}_1 $
-is hence uninvadable, and the winner of the war is the resident if and only if
+is hence uninvadable, and the winner of the competition is the resident if and only if
 $$
 J \left( \hat{u}_1, u_2 \right) \: \leqslant \: 0 \quad \forall u_2 \in
   \mathcal{U}_2,
@@ -503,7 +503,7 @@ $ \tau = \tau^{**}
 and $ \tau = T = 60 $ ($ t = 0 $). 
 
 
-Figure \ref{fig_4_d} shows the ``beginning'' of the simulation, where competitive strategies have not developed. There is plenty of space and resources for both of the fungi. However, sharper edges appear as the fungi begin to either produce mycelia or produce spores. After the initial production, there is a leveling off as the fungi begin conducting spore and mycelia growth simultaneously.
+Figure \ref{fig_4_d} shows the ``beginning'' of the simulation, where competitive strategies have not developed. There is plenty of space and resources for both of the fungi. However, sharper edges appear as the fungi begin to either produce mycelia or produce spores. After the initial production, there is a leveling off as the fungi begin conducting spore and mycelial growth simultaneously.
 
 Figure \ref{fig_4_c} shows that at the time point of $t=48.825$, there is more differentiation in the fungi's actions where the fungi try and compete, as there is an attempt to try and stay in the battle. Figure \ref{fig_4_b} shows that the competition increases much more near the end of the simulation. The slope becomes more pronounced as the competitive forces begin to increase.
 
@@ -569,7 +569,7 @@ strategy for both cohorts. Simultaneously, one can interpret the four surfaces a
 \begin{figure}
 \center{ \includegraphics[width = 0.98 \textwidth]{figures/Figure_7.pdf} }
 \bf \caption{\it The four control turnpike switching surfaces in the three-dimensional
-space~$ (m_1, m_2, \tau) $. A turnpike is the most efficient route in which the cohort can go in order to obtain the outcome it desires.}
+space~$ (m_1, m_2, \tau) $. A turnpike is the most efficient route in order to reach the steady-state equilibrium regimes.}
 \label{Fig_7}
 \end{figure}
 
