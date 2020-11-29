@@ -57,12 +57,6 @@
 
 \author{Steven~Glasford}
 \title{Modeling~warring~fungi~on~a~plant.}
-%Title of the first draft
-%\title{Numerical Solution of a dynamic equilibrium of pathogen cohorts.}
-%The following is the first title that we chose, 
-%but we changed it to allow for a shorter and sleeker title.
-%%%% Numerical solution of a first-order Hamilton--Jacobi equation for dynamic 
-%%%% equilibrium of pathogen cohorts.
 
 \thanks{Advisor: Dr. Ivan Yegorov}
 \email{steven.glasford@ndsu.edu}
@@ -71,7 +65,6 @@ Fargo, ND 58108-6050, USA}
 
 \begin{document}
 
-%The first draft of this paper is due 4 November 2020
 \date{Fall~2020}
 
 \maketitle
@@ -117,11 +110,6 @@ constant parameters $ n_1, n_2 $ when writing $ f_i = f_i(M_1, M_2) $,
 $ i = 1,2 $. Let $ u_i = u_i(t) $ be a related resource allocation (control)
 function, taking values between zero and one. 
 When $ u_i(t) = 0 $, the particular fungus only produces mycelia, while when $ u_i(t) = 1 $, the fungus produces spores, and when $ 0 < u_i(t) < 1 $, the fungus is doing both to some degree.
-%%%%%%%%%%%%%%%%%%%%%%1
-% Suppose that the whole flux goes
-% to mycelial growth when $ u_i(t) = 0 $ and to spore production when
-% $ u_i(t) = 1 $, while, for $ 0 < u_i(t) < 1 $, there is an intermediate
-% configuration. In other words, the fungus expends all of its energy to produce mycelia when 
 
 Let $ g = g(M) $ be the rate of mycelial decay for both cohorts; we assume that the mutation does not. We assume a constant yield of spores, $ \delta > 0 $, as compared to mycelial growth. 
 
@@ -489,8 +477,6 @@ by the spatial step $ \: \Delta m_1 = \Delta m_2 = \Delta m = 2 \cdot 10^{-3}
 \: $ and time step $ \Delta \tau = 5 \cdot 10^{-3} $.
 
 Monotone [\ref{mathdefs}.\ref{math:monotone}] finite difference methods, where there is a strictly increasing or decreasing behavior.
-%%This is not very useful since the system is not solved using this method, as it is too slow
-%(including the classical Lax--Friedrichs scheme)
 These methods ensure theoretical convergence properties (properties where an increase in computational expenditure increases precision) with error estimates. However, they are mostly of the first order. They may generate so-called 
 numerical diffusion problems [\ref{mathdefs}.\ref{math:diffusionproblem}]
 on long time intervals. One way to reduce and eliminate such practical issues is to use 
@@ -526,21 +512,7 @@ Figure \ref{fig_4_a} shows the end of the simulation, where $t=60$. The graph is
 In figure \ref{Fig_4}, there is no clearly defined winner. This model focuses on the efforts of the fungi attempting to remain at equilibrium. However, if the resident does not attempt to remain at equilibrium, it will be invaded and eliminated.
 
 
-% Fig.~\ref{Fig_4} determines which part of the fungus that needs to advance in order to have a stalemate with the other fungus. For example, in figure \ref{Fig_4}.\ref{fig_4_a}, there has not developed a need for either fungi to try and compete with each other, this means that there is enough resources for the two of them to coexist peacefully. This is in contrast to figure \ref{Fig_4}.\ref{fig_4_b} that shows more competition occurring between the resident $m_1$ and the mutant $m_2$, and when the resident produces more mycelia there is a lack of room for the mutant to grow its mycelia and it responds with an increase in the production of spores. 
-
-% Figure \ref{Fig_4}.\ref{fig_4_c} shows that a particular time ($t=48.825$) the particular strategies that the fungi are taking in order to enter equilibrium, again the dynamics are similar to \ref{Fig_4}.\ref{fig_4_b} where if $m_1=1$ then the resident will be expending its energy for the production of spores, and if it is zero then it is expending all of its energy producing mycelia. 
- 
-% Here $ \tau^{**} $ is the reverse time instant
-% that triggers the appearance of singular control regimes and is obtained
-% together with the equilibrium steady state~$ \left( M^{**}, M^{**} \right) $
-% from the analysis based on 
-% Pontryagin's principle [\ref{mathdefs}.\ref{math:pontryagin}] 
-% \cite{YegorovGrognardMailleretHalkettBernhard2019}. Note that Pontryagin's
-% principle for zero-sum two-player differential games describes necessary
-% conditions for saddle open-loop strategies \cite{Yong2015}.
-
 \begin{figure}
-    % \centering
     \begin{subfigure}{.48 \textwidth}
         \includegraphics[width = \textwidth]{figures/Figure_4a.pdf}
         \caption{Strategies conducted at the end of the simulation.}
@@ -569,7 +541,6 @@ In figure \ref{Fig_4}, there is no clearly defined winner. This model focuses on
 \label{Fig_4}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%1
 \begin{figure}
 \center{ \includegraphics[width = 0.48 \textwidth]{figures/Figure_5a_1.pdf}
 \includegraphics[width = 0.48 \textwidth]{figures/Figure_5a_2.pdf} \\
@@ -580,12 +551,7 @@ In figure \ref{Fig_4}, there is no clearly defined winner. This model focuses on
 \includegraphics[width = 0.48 \textwidth]{figures/Figure_5d_1.pdf}
 \includegraphics[width = 0.48 \textwidth]{figures/Figure_5d_2.pdf}
 }
-\bf \caption{\it In the white regions, the fungus enters mycelia production. In contrast in the gray, it enters spore production at a particular time instance. Also, the field corresponds to its velocity of production. 
-% Finite-difference approximations of the saddle feedback
-% control strategies at several time instants. White and gray colors show the
-% regions of the control values $ 0 $ and $ 1 ${\rm ,} respectively. Also
-% illustrated are the fields of the corresponding forward-time velocities.
-}
+\bf \caption{\it In the white regions, the fungus enters mycelia production. In contrast in the gray, it enters spore production at a particular time instance. Also, the field corresponds to its velocity of production. }
 \label{Fig_5}
 \end{figure}
 
@@ -643,19 +609,16 @@ situation may change through evolution.
     \item\label{term:marginal} \textbf{Two marginal fitness criteria}: a value or function that is wanting to be or altered or monitored, in this document, it is typically the spore production, and the mycelia production.
     \item\label{term:statevariables} \textbf{State Variables}: these variables set the equation or system stage and define the problem's initial circumstances. These include items like lesion density or the rate of decay in the system.
     \item\label{term:saddlecontrol} \textbf{Saddle control strategies}: a function or system determining the saddle point of an equation.
-    \item\label{term:carryingcapacity} \textbf{Carrying capacity}: the maximum size of a population that is sustainable in an environment.
+    \item\label{term:carryingcapacity} \textbf{Carrying capacity}: the maximum size of a population that is sustainable in an environment \cite{carryingcapacity}.
     
 \end{enumerate}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%1
 \section{Useful Mathematical Definitions}\label{mathdefs}
 \begin{enumerate}
-   % \item\label{math:jacobi} \textbf{Jacobi}
     \item\label{math:infimum} \textbf{Infimum}: the subset of the greatest elements in a set; the greatest lower bound \cite{infimumsupremum}.
     \item\label{math:supremum} \textbf{Supremum}: the subset of the least element that is greater than or equal to all S elements if such an element exists  \cite{infimumsupremum}.
     \item\label{math:Argmaxmin} \textbf{Arg max/Arg min}: a set of a function in which the values are maximized (Arg max) or minimized (Arg min).
     \item\label{math:saddlepoint} \textbf{Saddle point}: the point in which the slopes in all directions are zero, and the graph makes a saddle shape.
     \item\label{math:maximinminimax} \textbf{Maximin / Minimax}: the largest in a series of minima (maximin) or the smallest in a maxima series (minimax).
-    %\item\label{math:valuefunction} \textbf{Value function}:
     \item\label{math:cauchyproblem} \textbf{Cauchy problem}: a problem that asks for a partial differential equation that satisfies certain conditions given by a hypersurface.
     \item\label{math:nonsmooth} \textbf{Non-smooth}: if a smooth function differentiable everywhere, then a nonsmooth function may not be differentiable everywhere, and may not have well defined gradients. 
     \item\label{math:viscosity} \textbf{Viscosity solution}: a solution that is both a supersolution and a subsolution.
